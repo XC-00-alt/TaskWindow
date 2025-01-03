@@ -1,4 +1,6 @@
 package GUIdelegate.component.big;
 
-public class WindowPanel {
+import javax.swing.*;
+
+public class WindowPanel extends JPanel {
 }

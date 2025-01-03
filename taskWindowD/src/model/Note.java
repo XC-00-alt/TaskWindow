@@ -7,7 +7,7 @@ public class Note {
     private Point centre;
     private Color paperColor;
     
-    private String title;
+    private String title="默认标题";
     private Color titleColor=Color.black;
     
     private String description;
@@ -16,6 +16,9 @@ public class Note {
     private int halfWidth=25;
     // half of the height of this note
     private int halfHeight=25;
+
+    private double marginXRatio=0.125;
+    private double marginYRatio=0.333;
 
     //the flag indicating whether this note is selected or not
     private boolean isSelected=false;
@@ -55,6 +58,27 @@ public class Note {
 
     public int getErrorAllowance() {
         return errorAllowance;
+    }
+
+    public int getMarginX() {
+        return (int)(getWidth()*marginXRatio);
+    }
+
+    public void setMarginXRatio(double marginXRatio) {
+        this.marginXRatio = validRatio(marginXRatio);
+    }
+
+    public double validRatio(double ratio)
+    {
+        if(ratio>0&&ratio<1) return ratio;
+        else return 0.2;
+    }
+    public int getMarginY() {
+        return (int)(getHeight()*marginYRatio);
+    }
+
+    public void setMarginYRatio(double marginYRatio) {
+        this.marginYRatio = validRatio(marginYRatio);
     }
 
     public Color getPaperColor() {

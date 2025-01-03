@@ -1,4 +1,6 @@
 package GUIdelegate.component.big;
 
-public class BottomPanel {
+import javax.swing.*;
+
+public class BottomPanel extends JPanel {
 }
