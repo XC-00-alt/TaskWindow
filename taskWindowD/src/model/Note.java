@@ -5,9 +5,10 @@ import java.awt.*;
 public class Note {
 //    private MyVector centre;
     private Point centre;
-    private Color color;
+    private Color paperColor;
     
     private String title;
+    private Color titleColor=Color.black;
     
     private String description;
     
@@ -19,8 +20,8 @@ public class Note {
     //the flag indicating whether this note is selected or not
     private boolean isSelected=false;
     
-    private int quadrant;
-
+//    private Integer quadrant;
+    private QuadrantEnum quadrantCode;
     // used in the isInRange method, allows the note to be selected with this acceptable tolerance
     private int errorAllowance=5;
     
@@ -29,10 +30,11 @@ public class Note {
     // the color to fill the selection box
     private final static Color SELECTED_FILL =new Color(0x3200FFF7, true);
     
-    public Note(int x, int y)
+    public Note(int x, int y,QuadrantEnum quadrantEnum)
     {
         centre=new Point(x,y);
-        color=new Color(0xFFE562);
+        paperColor =new Color(0xFFE562);
+        quadrantCode=quadrantEnum;
     }
 
     public static Color getSelectedColor() {
@@ -55,12 +57,28 @@ public class Note {
         return errorAllowance;
     }
 
-    public Color getColor() {
-        return color;
+    public Color getPaperColor() {
+        return paperColor;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public void setPaperColor(Color paperColor) {
+        this.paperColor = paperColor;
+    }
+
+    public Color getTitleColor() {
+        return titleColor;
+    }
+
+    public void setTitleColor(Color titleColor) {
+        this.titleColor = titleColor;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
