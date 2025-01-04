@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class CustomizedLabel {
     private String text;
+
+    private Color color;
     private double rotationRadians;
 
     private float positionXRatio=0;
@@ -11,9 +13,10 @@ public class CustomizedLabel {
     private double centrePositionXRatio=0.5;
     private double centrePositionYRatio=0.5;
 
-    public CustomizedLabel(String text,float degree)
+    public CustomizedLabel(String text,double degree)
     {
         this.text=text;
+        color=Color.BLACK;
         rotationRadians =Math.toRadians(degree);
     }
 
@@ -38,6 +41,7 @@ public class CustomizedLabel {
         float y=panelHeight*positionYRatio;
         double rotationX=panelWidth*centrePositionXRatio;
         double rotationY=panelHeight*centrePositionYRatio;
+        g2d.setColor(color);
         g2d.rotate(rotationRadians,rotationX,rotationY);
         g2d.drawString(text,x,y);
         g2d.rotate(-rotationRadians,rotationX,rotationY);
