@@ -26,11 +26,11 @@ public class LeftPanel extends JPanel{
         g.fillRect(0,0,getWidth(),getHeight());
         g.setColor(Color.black);
         Graphics2D g2d=(Graphics2D)g;
-        g2d.rotate(rotationRadius,getWidth()/2,getHeight()/3);
-        g2d.drawString(importantLabel,0,getHeight()/3);
+        g2d.rotate(rotationRadius,getWidth()/2,getHeight()/4);
+        g2d.drawString(importantLabel,0,getHeight()/4);
         // should rotate back first
-        g2d.rotate(-rotationRadius,getWidth()/2,getHeight()/3);
-        g2d.rotate(rotationRadius,getWidth()/2,getHeight()*2/3);
-        g2d.drawString(unimportantLabel,0,getHeight()*2/3);
+        g2d.rotate(-rotationRadius,getWidth()/2,getHeight()/4);
+        g2d.rotate(rotationRadius,getWidth()/2,getHeight()*3/4);
+        g2d.drawString(unimportantLabel,0,getHeight()*3/4);
     }
 }
