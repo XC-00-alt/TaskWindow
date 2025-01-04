@@ -18,7 +18,7 @@ public class IntegrationDelegate implements ActionListener {
     private TopMenuBar topMenuBar;
 
     private TopPanel topPanel=new TopPanel();
-    private LeftPanel leftPanel=new LeftPanel();
+    private LeftPanel leftPanel;
     private WindowPanel windowPanel=new WindowPanel();
     private BottomPanel bottomPanel=new BottomPanel();
     private ListPanel listPanel=new ListPanel();
@@ -46,7 +46,7 @@ public class IntegrationDelegate implements ActionListener {
         int windowPanelHeight=FRAME_HEIGHT-topPanelHeight*2;
 
         topPanel.setPreferredSize(new Dimension(FRAME_WIDTH,topPanelHeight));
-        leftPanel.setPreferredSize(new Dimension(leftPanelWidth,FRAME_HEIGHT));
+        leftPanel=new LeftPanel(leftPanelWidth,FRAME_HEIGHT);
         windowPanel.setPreferredSize(new Dimension(windowPanelWidth,windowPanelHeight));
         bottomPanel.setPreferredSize(new Dimension(FRAME_WIDTH,topPanelHeight));
         listPanel.setPreferredSize(new Dimension(listPanelWidth,FRAME_HEIGHT));
