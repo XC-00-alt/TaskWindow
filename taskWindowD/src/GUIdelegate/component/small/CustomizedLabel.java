@@ -1,25 +1,45 @@
 package GUIdelegate.component.small;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
-public class CustomizedLabel extends JLabel {
-    private double rotationRadius;
+public class CustomizedLabel {
+    private String text;
+    private double rotationRadians;
 
-    public CustomizedLabel(String text,double degree)
+    private float positionXRatio=0;
+    private float positionYRatio=0;
+    private double centrePositionXRatio=0.5;
+    private double centrePositionYRatio=0.5;
+
+    public CustomizedLabel(String text,float degree)
     {
-        super(text);
-        rotationRadius=Math.toRadians(degree);
-//        FontMetrics metrics = new FontMetrics(getFont()){};
-//        Rectangle2D bounds = metrics.getStringBounds(text, null);
-//        setBounds(0, 0, (int) bounds.getWidth(), (int) bounds.getHeight());
+        this.text=text;
+        rotationRadians =Math.toRadians(degree);
     }
-    @Override
-    public void paintComponent(Graphics g)
+
+    public String getText() {
+        return text;
+    }
+
+    public void setRatios(float xr,float yr,double rxr, double ryr)
     {
-        Graphics2D g2d=(Graphics2D)g;
-        g2d.rotate(rotationRadius,getX()+getWidth()/2,getY()+getHeight()/2);
-        super.paintComponent(g);
+        positionXRatio=xr;
+        positionYRatio=yr;
+        centrePositionXRatio=rxr;
+        centrePositionYRatio=ryr;
+    }
+
+    public double getRotationRadians() {
+        return rotationRadians;
+    }
+    public void drawString(Graphics2D g2d,int panelWidth,int panelHeight)
+    {
+        float x=panelWidth*positionXRatio;
+        float y=panelHeight*positionYRatio;
+        double rotationX=panelWidth*centrePositionXRatio;
+        double rotationY=panelHeight*centrePositionYRatio;
+        g2d.rotate(rotationRadians,rotationX,rotationY);
+        g2d.drawString(text,x,y);
+        g2d.rotate(-rotationRadians,rotationX,rotationY);
     }
 }
