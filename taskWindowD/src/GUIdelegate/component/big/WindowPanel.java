@@ -45,6 +45,8 @@ public class WindowPanel extends JPanel {
     {
         int halfWidth=getWidth()/2;
         int halfHeight=getHeight()/2;
+        g.setColor(Color.black);
+        g.fillRect(0,0,getWidth(),getHeight());
         // Q2
         g.setColor(IMPORTANT_URGENT);
         g.fillRect(0,0,halfWidth,halfHeight);

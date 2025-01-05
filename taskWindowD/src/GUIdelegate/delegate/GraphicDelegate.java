@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.List;
 
 public class GraphicDelegate {
+    private static final BasicStroke noteBoundWidth=new BasicStroke(1);
     //ref:https://www.cnblogs.com/LiuFqiang/p/16949220.html
 
     /**
@@ -61,8 +62,13 @@ public class GraphicDelegate {
     }
     public static void drawNotes(Graphics g, List<Note> noteList)
     {
+        Graphics2D g2d = (Graphics2D) g;
         for(Note note:noteList)
         {
+            // Draws the bound
+            g2d.setStroke(noteBoundWidth);
+            g.setColor(note.getBoundColor());
+            g.drawRect(note.getX(),note.getY(),note.getWidth(),note.getHeight());
             // Draw note paper
             g.setColor(note.getPaperColor());
             g.fillRect(note.getX(),note.getY(),note.getWidth(),note.getHeight());
@@ -76,7 +82,6 @@ public class GraphicDelegate {
             // Draws selection box
             if(note.isSelected())
             {
-                Graphics2D g2d = (Graphics2D) g;
                 g2d.setStroke(new BasicStroke(note.getErrorAllowance()));
                 g2d.setColor(Note.getSelectedColor());
                 g2d.drawRect(note.getX()-note.getErrorAllowance(),

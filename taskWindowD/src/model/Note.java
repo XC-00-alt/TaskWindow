@@ -5,6 +5,7 @@ import java.awt.*;
 public class Note {
 //    private MyVector centre;
     private Point centre;
+    private Color boundColor;
     private Color paperColor;
     
     private String title="默认标题";
@@ -36,6 +37,7 @@ public class Note {
     public Note(int x, int y,QuadrantEnum quadrantEnum)
     {
         centre=new Point(x,y);
+        boundColor=Color.black;
         paperColor =new Color(0xFFE562);
         setQuadrantCode(quadrantEnum);
     }
@@ -88,6 +90,10 @@ public class Note {
 
     public void setMarginYRatio(double marginYRatio) {
         this.marginYRatio = validRatio(marginYRatio);
+    }
+
+    public Color getBoundColor() {
+        return boundColor;
     }
 
     public Color getPaperColor() {
