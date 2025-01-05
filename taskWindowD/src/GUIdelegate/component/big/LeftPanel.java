@@ -24,9 +24,8 @@ public class LeftPanel extends JPanel{
     @Override
     public void paintComponent(Graphics g)
     {
-        g.setColor(Color.YELLOW);
-        g.fillRect(0,0,getWidth(),getHeight());
-//        g.setColor(Color.black);
+//        g.setColor(Color.YELLOW);
+//        g.fillRect(0,0,getWidth(),getHeight());
         Graphics2D g2d=(Graphics2D)g;
         importantLabel.drawString(g2d,getWidth(),getHeight());
         unimportantLabel.drawString(g2d,getWidth(),getHeight());

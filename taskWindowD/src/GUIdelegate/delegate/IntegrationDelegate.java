@@ -1,6 +1,7 @@
 package GUIdelegate.delegate;
 
 import GUIdelegate.component.big.*;
+import model.Note;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,11 +51,6 @@ public class IntegrationDelegate implements ActionListener {
         windowPanel.setPreferredSize(new Dimension(windowPanelWidth,windowPanelHeight));
         bottomPanel=new BottomPanel(FRAME_WIDTH,topPanelHeight);
         listPanel.setPreferredSize(new Dimension(listPanelWidth,FRAME_HEIGHT));
-//        topPanel.setSize(new Dimension(FRAME_WIDTH,topPanelHeight));
-//        leftPanel.setSize(new Dimension(leftPanelWidth,FRAME_HEIGHT));
-//        windowPanel.setSize(new Dimension(windowPanelWidth,windowPanelHeight));
-//        bottomPanel.setSize(new Dimension(FRAME_WIDTH,topPanelHeight));
-//        listPanel.setSize(new Dimension(listPanelWidth,FRAME_HEIGHT));
     }
 
     public void setupFrame()
@@ -81,7 +77,14 @@ public class IntegrationDelegate implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==topMenuBar.getNoteAdder())
         {
-            System.out.println("test menu adder");
+            // randomly generates the position of the new note
+            int x=randomN.nextInt(0, windowPanel.getWidth());
+            int y=randomN.nextInt(0, windowPanel.getHeight());
+            Note newNote=new Note(x, y,windowPanel.getQuadrantCode(x,y));
+            newNote.setTitle(newNote.getQuadrantCode().getCode().toString()+newNote.getQuadrantCode().getDescription());
+            windowPanel.addNote(newNote);
+            // repaint to refresh the view
+            windowPanel.repaint();
         }
     }
 }

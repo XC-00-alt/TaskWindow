@@ -37,7 +37,16 @@ public class Note {
     {
         centre=new Point(x,y);
         paperColor =new Color(0xFFE562);
-        quadrantCode=quadrantEnum;
+        setQuadrantCode(quadrantEnum);
+    }
+
+    public QuadrantEnum getQuadrantCode() {
+        return quadrantCode;
+    }
+
+    public void setQuadrantCode(QuadrantEnum quadrantCode) {
+        this.quadrantCode = quadrantCode;
+        setTitle(getQuadrantCode().getCode().toString()+getQuadrantCode().getDescription());
     }
 
     public static Color getSelectedColor() {

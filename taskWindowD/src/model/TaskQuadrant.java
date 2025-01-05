@@ -6,8 +6,17 @@ import java.util.List;
 
 public class TaskQuadrant {
     private List<Note> noteList=new ArrayList<>();
-    public Integer getQuadrantCode(Point point)
+    public boolean add(Note note)
     {
-        return 1;
+        return noteList.add(note);
+    }
+
+    public List<Note> getNoteList() {
+        return noteList;
+    }
+
+    public boolean remove(Note note)
+    {
+        return noteList.remove(note);
     }
 }
