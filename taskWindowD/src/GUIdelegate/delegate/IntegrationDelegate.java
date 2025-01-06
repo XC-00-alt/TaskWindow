@@ -70,7 +70,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 //        ref:https://stackoverflow.com/questions/6777135/java-jframe-size-according-to-screen-resolution
         mainframe.setVisible(true);
 
-//        mainframe.setResizable(false);
+        mainframe.setResizable(false);
 
         mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -101,11 +101,11 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         {
             System.out.println("received");
             System.out.println(eventSrc.getClass());
-//            SwingUtilities.invokeLater(new Runnable() {
-//                public void run() {
-//                    System.out.println("test propChange");
-//                }
-//            });
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    listPanel.changeNote((Note)eventSrc,(Integer) event.getOldValue(),(Integer) event.getNewValue());
+                }
+            });
         }
     }
 }

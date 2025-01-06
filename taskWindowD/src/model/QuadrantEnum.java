@@ -22,20 +22,26 @@ public enum QuadrantEnum {
         return description;
     }
 
-    public static QuadrantEnum getQuadrantEnum(Integer code)
+    @Override
+    public String toString()
     {
-        return switch (code) {
-            case 1 -> IMPORTANT_NON_URGENT;
-            case 3 -> UNIMPORTANT_URGENT;
-            case 4 -> UNIMPORTANT_NON_URGENT;
-            default -> IMPORTANT_URGENT;
-        };
-//        switch (code)
-//        {
-//            case 1 :return IMPORTANT_NON_URGENT;
-//            case 3 :return UNIMPORTANT_URGENT;
-//            case 4 :return UNIMPORTANT_NON_URGENT;
-//            default:return IMPORTANT_URGENT;
-//        }
+        return code+" "+description;
     }
+
+//    public static QuadrantEnum getQuadrantEnum(Integer code)
+//    {
+//        return switch (code) {
+//            case 1 -> {IMPORTANT_NON_URGENT;break;}
+//            case 3 -> {UNIMPORTANT_URGENT;break;}
+//            case 4 -> {UNIMPORTANT_NON_URGENT;break;}
+//            default -> IMPORTANT_URGENT;
+//        };
+////        switch (code)
+////        {
+////            case 1 :return IMPORTANT_NON_URGENT;
+////            case 3 :return UNIMPORTANT_URGENT;
+////            case 4 :return UNIMPORTANT_NON_URGENT;
+////            default:return IMPORTANT_URGENT;
+////        }
+//    }
 }

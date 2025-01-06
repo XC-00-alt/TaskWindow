@@ -1,5 +1,6 @@
 package model;
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -9,6 +10,7 @@ public class Note {
     private Point centre;
     private Color boundColor;
     private Color paperColor;
+    private DefaultMutableTreeNode node;
     
     private String title="默认标题";
     private Color titleColor=Color.black;
@@ -68,8 +70,16 @@ public class Note {
         if(!old.equals(quadrantCode))
         {
             System.out.println("notify");
-            notifier.firePropertyChange(PROP_NAME,old, quadrantCode);
+            notifier.firePropertyChange(PROP_NAME,old.getCode(), quadrantCode.getCode());
         }
+    }
+
+    public void setNode(DefaultMutableTreeNode node) {
+        this.node = node;
+    }
+
+    public DefaultMutableTreeNode getNode() {
+        return node;
     }
 
     public static Color getSelectedColor() {
