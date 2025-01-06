@@ -104,6 +104,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     listPanel.changeNote((Note)eventSrc,(Integer) event.getOldValue(),(Integer) event.getNewValue());
+                    listPanel.repaint();
                 }
             });
         }
