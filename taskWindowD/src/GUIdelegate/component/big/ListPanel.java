@@ -21,7 +21,10 @@ public class ListPanel extends JScrollPane  {
         root.add(root1);
         root.add(root2);
         t=new JTree(root);
-        container.add(t,BorderLayout.EAST);
+        t.setBackground(Color.MAGENTA);
+        container.setBackground(Color.MAGENTA);
+        container.setLayout(new FlowLayout(FlowLayout.LEFT));
+        container.add(t);
         setViewportView(container);
         setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
