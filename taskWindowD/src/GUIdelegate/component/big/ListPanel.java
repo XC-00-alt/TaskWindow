@@ -8,22 +8,20 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 
 public class ListPanel extends JScrollPane  {
-    private JTree t1;
-    private JTree t2;
+    private JTree t;
+    private DefaultMutableTreeNode root = new DefaultMutableTreeNode("Tasks");
     private DefaultMutableTreeNode root1 = new DefaultMutableTreeNode("1");
     private DefaultMutableTreeNode node=new DefaultMutableTreeNode(new Note(0,0, QuadrantEnum.IMPORTANT_NON_URGENT));
     private DefaultMutableTreeNode root2=new DefaultMutableTreeNode("2");
     private JPanel container=new JPanel();
-    public ListPanel()
+    public ListPanel(Dimension d)
     {
+        this.setPreferredSize(d);
         root1.add(node);
-        t1=new JTree(root1);
-        t2=new JTree(root2);
-        BoxLayout boxLayout=new BoxLayout(container,BoxLayout.Y_AXIS);
-        container.setLayout(boxLayout);
-        container.add(t1);
-        container.add(new JSeparator());
-        container.add(t2);
+        root.add(root1);
+        root.add(root2);
+        t=new JTree(root);
+        container.add(t,BorderLayout.EAST);
         setViewportView(container);
         setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -31,7 +29,7 @@ public class ListPanel extends JScrollPane  {
     @Override
     public void paintComponent(Graphics g)
     {
-        g.setColor(Color.CYAN);
-        g.fillRect(0,0,getWidth(),getHeight());
+//        g.setColor(Color.CYAN);
+//        g.fillRect(0,0,getWidth(),getHeight());
     }
 }

@@ -22,7 +22,7 @@ public class IntegrationDelegate implements ActionListener {
     private LeftPanel leftPanel;
     private WindowPanel windowPanel=new WindowPanel();
     private BottomPanel bottomPanel;
-    private ListPanel listPanel=new ListPanel();
+    private ListPanel listPanel;
 
     public IntegrationDelegate()
     {
@@ -50,7 +50,7 @@ public class IntegrationDelegate implements ActionListener {
         leftPanel=new LeftPanel(leftPanelWidth,FRAME_HEIGHT);
         windowPanel.setPreferredSize(new Dimension(windowPanelWidth,windowPanelHeight));
         bottomPanel=new BottomPanel(FRAME_WIDTH,topPanelHeight);
-        listPanel.setPreferredSize(new Dimension(listPanelWidth,FRAME_HEIGHT));
+        listPanel=new ListPanel(new Dimension(listPanelWidth,FRAME_HEIGHT));
     }
 
     public void setupFrame()
