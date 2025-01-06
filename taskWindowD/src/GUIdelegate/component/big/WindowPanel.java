@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class WindowPanel extends JPanel {
     private TaskQuadrant taskQuadrant;
@@ -36,10 +38,10 @@ public class WindowPanel extends JPanel {
     {
         return taskQuadrant.remove(note);
     }
-    public void paintAgain()
-    {
-        this.repaint();
-    }
+//    public void paintAgain()
+//    {
+//        this.repaint();
+//    }
     @Override
     public void paintComponent(Graphics g)
     {
@@ -78,6 +80,9 @@ public class WindowPanel extends JPanel {
             else return QuadrantEnum.UNIMPORTANT_NON_URGENT;
         }
     }
+
+
+
     /**
      * A private MouseAdapter class
      */
@@ -97,7 +102,7 @@ public class WindowPanel extends JPanel {
                     break;
                 } else System.out.println("nah");
             }
-            paintAgain();
+            repaint();
         }
 
         @Override
@@ -109,7 +114,7 @@ public class WindowPanel extends JPanel {
                 selectedNote.setCentre(vector);
                 selectedNote.setQuadrantCode(getQuadrantCode(vector.x, vector.y));
                 startPoint = endPoint;
-                paintAgain();
+                repaint();
             }
         }
 

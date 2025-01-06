@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class Note {
 //    private MyVector centre;
@@ -33,22 +35,41 @@ public class Note {
     private final static Color SELECTED_COLOR =new Color(0xFF00FFF7, true);
     // the color to fill the selection box
     private final static Color SELECTED_FILL =new Color(0x3200FFF7, true);
+    public static final String PROP_NAME="noteQuadrantChange";
+
+    private PropertyChangeSupport notifier;
     
     public Note(int x, int y,QuadrantEnum quadrantEnum)
     {
         centre=new Point(x,y);
         boundColor=Color.black;
         paperColor =new Color(0xFFE562);
-        setQuadrantCode(quadrantEnum);
+        this.quadrantCode = quadrantEnum;
+        notifier = new PropertyChangeSupport(this);
+    }
+    @Override
+    public String toString()
+    {
+        return getTitle();
     }
 
     public QuadrantEnum getQuadrantCode() {
         return quadrantCode;
     }
 
+    public void addObserver(PropertyChangeListener listener) {
+        notifier.addPropertyChangeListener(listener);
+    }
+
     public void setQuadrantCode(QuadrantEnum quadrantCode) {
+        QuadrantEnum old=this.quadrantCode;
         this.quadrantCode = quadrantCode;
-        setTitle(getQuadrantCode().getCode().toString()+getQuadrantCode().getDescription());
+        setTitle(getQuadrantCode().getCode()+getQuadrantCode().getDescription());
+        if(!old.equals(quadrantCode))
+        {
+            System.out.println("notify");
+            notifier.firePropertyChange(PROP_NAME,old, quadrantCode);
+        }
     }
 
     public static Color getSelectedColor() {

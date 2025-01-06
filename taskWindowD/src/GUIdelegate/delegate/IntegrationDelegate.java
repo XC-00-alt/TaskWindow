@@ -7,10 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Random;
 
-public class IntegrationDelegate implements ActionListener {
+public class IntegrationDelegate implements ActionListener, PropertyChangeListener {
     private int FRAME_WIDTH;
     private int FRAME_HEIGHT;
     // the Random instance that generates random numbers
@@ -68,7 +70,7 @@ public class IntegrationDelegate implements ActionListener {
 //        ref:https://stackoverflow.com/questions/6777135/java-jframe-size-according-to-screen-resolution
         mainframe.setVisible(true);
 
-        mainframe.setResizable(false);
+//        mainframe.setResizable(false);
 
         mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -81,10 +83,29 @@ public class IntegrationDelegate implements ActionListener {
             int x=randomN.nextInt(0, windowPanel.getWidth());
             int y=randomN.nextInt(0, windowPanel.getHeight());
             Note newNote=new Note(x, y,windowPanel.getQuadrantCode(x,y));
-            newNote.setTitle(newNote.getQuadrantCode().getCode().toString()+newNote.getQuadrantCode().getDescription());
+            newNote.setTitle(newNote.getQuadrantCode().toString()+newNote.getQuadrantCode().getDescription());
+            newNote.addObserver(this);
             windowPanel.addNote(newNote);
+            listPanel.addNote(newNote);
             // repaint to refresh the view
             windowPanel.repaint();
+            listPanel.repaint();
+        }
+    }
+    @Override
+    public void propertyChange(PropertyChangeEvent event) {
+        Object eventSrc=event.getSource();
+        String propName=event.getPropertyName();
+        System.out.println(propName);
+        if(propName.equals(Note.PROP_NAME))
+        {
+            System.out.println("received");
+            System.out.println(eventSrc.getClass());
+//            SwingUtilities.invokeLater(new Runnable() {
+//                public void run() {
+//                    System.out.println("test propChange");
+//                }
+//            });
         }
     }
 }
