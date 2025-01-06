@@ -4,6 +4,7 @@ import GUIdelegate.delegate.GraphicDelegate;
 import model.Note;
 import model.QuadrantEnum;
 import model.TaskQuadrant;
+import util.CalculationWithBound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -109,8 +110,11 @@ public class WindowPanel extends JPanel {
         public void mouseDragged(MouseEvent e) {
             if (selectedNote != null && startPoint != null) {
                 endPoint = e.getPoint();
-                Point vector = new Point((int) (endPoint.getX() - startPoint.getX() + selectedNote.getCentre().getX()),
-                        (int) (endPoint.getY() - startPoint.getY() + selectedNote.getCentre().getY()));
+//                Point vector = new Point((int) (endPoint.getX() - startPoint.getX() + selectedNote.getCentre().getX()),
+//                        (int) (endPoint.getY() - startPoint.getY() + selectedNote.getCentre().getY()));
+                Point vector= CalculationWithBound.minusOp(endPoint,startPoint);
+                vector=CalculationWithBound.addOp(vector,selectedNote.getCentre());
+                vector=CalculationWithBound.refineOp(vector,getWidth(),getHeight());
                 selectedNote.setCentre(vector);
                 selectedNote.setQuadrantCode(getQuadrantCode(vector.x, vector.y));
                 startPoint = endPoint;
