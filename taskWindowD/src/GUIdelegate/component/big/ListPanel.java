@@ -56,7 +56,7 @@ public class ListPanel extends JScrollPane  {
     {
         deleteNote(note,oldVal);
         quadrantNodes[newVal-1].add(note.getNode());
-        t.repaint();
+//        t.repaint();
 //        addNote(note);
     }
     public void addNote(Note note)
@@ -72,6 +72,14 @@ public class ListPanel extends JScrollPane  {
     @Override
     public void paintComponent(Graphics g)
     {
+        // UI needs to be updated
+        t.updateUI();
+        // and these have to be called again, otherwise UI will be default again
+        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) t.getCellRenderer();
+        renderer.setLeafIcon(null);
+        renderer.setClosedIcon(null);
+        renderer.setOpenIcon(null);
+
 //        System.out.println("rowCount"+t.getRowCount());
 //        for(int i=0;i<t.getRowCount();i++)
 //        {
