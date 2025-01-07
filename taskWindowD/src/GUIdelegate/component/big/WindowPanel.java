@@ -25,8 +25,6 @@ public class WindowPanel extends JPanel {
     public void setMouseAdapter()
     {
         mouseAdapter=new DragMouseAdapter(this);
-        noteMenu.addMouseListener(mouseAdapter);
-        noteMenu.addMouseMotionListener(mouseAdapter);
         this.addMouseListener(mouseAdapter);
         this.addMouseMotionListener(mouseAdapter);
     }
@@ -103,7 +101,6 @@ public class WindowPanel extends JPanel {
         }
         @Override
         public void mousePressed(MouseEvent e) {
-            if(e.getSource()==noteMenu) System.out.println("noteMenu");
             noteMenu.setSelectedNote(null);
             noteMenu.setVisible(false);
             for (int i = taskQuadrant.getNoteList().size() - 1; i > -1; i--) {
