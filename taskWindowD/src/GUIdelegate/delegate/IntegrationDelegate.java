@@ -55,7 +55,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         leftPanel=new LeftPanel(leftPanelWidth,FRAME_HEIGHT);
         windowPanel=new WindowPanel(this,windowPanelWidth,windowPanelHeight);
         bottomPanel=new BottomPanel(FRAME_WIDTH,topPanelHeight);
-        listPanel=new ListPanel(new Dimension(listPanelWidth,FRAME_HEIGHT));
+        listPanel=new ListPanel(this,new Dimension(listPanelWidth,FRAME_HEIGHT));
     }
 
     public void setupFrame()
@@ -139,6 +139,25 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     noteMenu.reset();
                 }
             });
+        }
+        else if (propName.equals(ListPanel.OPEN_POPUPMENU))
+        {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    // set the menu target on the selected note
+                    MouseEvent e = (MouseEvent) event.getNewValue();
+                    Note selectedNote=listPanel.getSelectedNote(e);
+                    if(selectedNote!=null)
+                    {
+                        noteMenu.show(e.getComponent(), e.getX(), e.getY());
+                        // set the menu target on the selected note
+                        noteMenu.setSelectedNote(selectedNote);
+                        windowPanel.repaint();
+                    }
+
+                }
+            });
+
         }
     }
 }

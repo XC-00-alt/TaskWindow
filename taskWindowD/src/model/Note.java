@@ -205,4 +205,5 @@ public class Note {
     public Point getCentre() {
         return centre;
     }
+
 }

@@ -13,14 +13,20 @@ import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-public class ListPanel extends JScrollPane/**  implements TreeSelectionListener */{
+public class ListPanel extends JScrollPane{
+    // again, only for the sake of referencing
+    private Note selectedNote;
     private JTree jTree;
     private DefaultMutableTreeNode root = new DefaultMutableTreeNode("Tasks");
     private DefaultMutableTreeNode[] quadrantNodes=new DefaultMutableTreeNode[4];
     private JPanel container=new JPanel();
     private TreeMouseAdapter treeMouseAdapter=new TreeMouseAdapter();
-    public ListPanel(Dimension d)
+    private PropertyChangeSupport notifier;
+    public static final String OPEN_POPUPMENU="open list-noteMenu";
+    public ListPanel(PropertyChangeListener propertyChangeListener,Dimension d)
     {
         this.setPreferredSize(d);
         quadrantNodes[0]=new DefaultMutableTreeNode(QuadrantEnum.IMPORTANT_NON_URGENT);
@@ -47,6 +53,9 @@ public class ListPanel extends JScrollPane/**  implements TreeSelectionListener 
         renderer.setLeafIcon(null);
         renderer.setClosedIcon(null);
         renderer.setOpenIcon(null);
+
+        notifier=new PropertyChangeSupport(this);
+        notifier.addPropertyChangeListener(propertyChangeListener);
 
         container.setBackground(Color.MAGENTA);
         container.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -75,6 +84,17 @@ public class ListPanel extends JScrollPane/**  implements TreeSelectionListener 
         quadrantNodes[qId2].add(newNode);
         note.setNode(newNode);
     }
+//
+//    public Note getSelectedNote() {
+//        return selectedNote;
+//    }
+//
+//    public void setSelectedNote(Note selectedNote) {
+//        if(this.selectedNote!=null) this.selectedNote.setSelected(false);
+//        else if(selectedNote!=null) selectedNote.setSelected(true);
+//        this.selectedNote = selectedNote;
+//    }
+
     @Override
     public void paintComponent(Graphics g)
     {
@@ -90,6 +110,7 @@ public class ListPanel extends JScrollPane/**  implements TreeSelectionListener 
 //        g.fillRect(0,0,getWidth(),getHeight());
     }
 
+//    /**  implements TreeSelectionListener */
 //    @Override
 //    public void valueChanged(TreeSelectionEvent e) {
 //        //ref:https://blog.csdn.net/dd_Mr/article/details/122262024
@@ -97,6 +118,21 @@ public class ListPanel extends JScrollPane/**  implements TreeSelectionListener 
 //        System.out.println(node.getUserObject().getClass());
 //        System.out.println(node.getUserObject().toString());
 //    }
+    public Note getSelectedNote(MouseEvent event)
+    {
+        if(event.isPopupTrigger()) {
+            TreePath selPath = jTree.getPathForLocation(event.getX(), event.getY());
+            if (selPath != null) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath.getLastPathComponent();
+                int selRow = jTree.getRowForLocation(event.getX(), event.getY());
+                jTree.setSelectionRow(selRow);
+                if (node.getUserObject().getClass() == Note.class) {
+                    return (Note) node.getUserObject();
+                }
+            }
+        }
+        return null;
+    }
     /**
      * A private MouseAdapter class
      */
@@ -107,19 +143,21 @@ public class ListPanel extends JScrollPane/**  implements TreeSelectionListener 
         @Override
         public void mouseReleased(MouseEvent event)
         {
-            if(event.isPopupTrigger())
-            {
-                TreePath selPath = jTree.getPathForLocation(event.getX(), event.getY());
-                if(selPath != null) {
-                    DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath.getLastPathComponent();
-                    int selRow = jTree.getRowForLocation(event.getX(), event.getY());
-                    jTree.setSelectionRow(selRow);
-                    System.out.println(node.getUserObject().getClass());
-                }
-//                DefaultMutableTreeNode node=(DefaultMutableTreeNode)jTree.getLastSelectedPathComponent();
-//                System.out.println(node.getUserObject().getClass());
-//                System.out.println(node.getUserObject().toString());
-            }
+            notifier.firePropertyChange(OPEN_POPUPMENU, null, event);
+//            if(event.isPopupTrigger())
+//            {
+//                TreePath selPath = jTree.getPathForLocation(event.getX(), event.getY());
+//                if(selPath != null) {
+//                    DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath.getLastPathComponent();
+//                    int selRow = jTree.getRowForLocation(event.getX(), event.getY());
+//                    jTree.setSelectionRow(selRow);
+//                    if(node.getUserObject().getClass()== Note.class)
+//                    {
+////                        setSelectedNote((Note)node.getUserObject());
+//                        notifier.firePropertyChange(OPEN_POPUPMENU, null, event);
+//                    }
+//                }
+//            }
         }
     }
 }

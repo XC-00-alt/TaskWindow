@@ -15,6 +15,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class WindowPanel extends JPanel {
+    // this is only used for the convenience of the process when dragging and dropping
+    // not a strong requirement for the selected note among the list
+    // since painting selection doesn't require it
     private Note selectedNote;
     private TaskQuadrant taskQuadrant;
     private Color IMPORTANT_URGENT=new Color(0xFFE562);
