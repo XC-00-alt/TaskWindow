@@ -98,6 +98,8 @@ public class WindowPanel extends JPanel {
         private Point endPoint;
         private Note selectedNote;
 
+        private boolean popUp=false;
+
         private JComponent invokerComp;
         public DragMouseAdapter(JComponent jComponent)
         {
@@ -105,20 +107,22 @@ public class WindowPanel extends JPanel {
         }
         @Override
         public void mousePressed(MouseEvent e) {
-            noteMenu.reset();
+            // if it's handled at the release that it's a right click
+            // then the popUp menu should be reset when a new press is coming
+            if(popUp)
+            {
+                noteMenu.reset();
+                selectedNote.setSelected(false);
+                selectedNote=null;
+                popUp=false;
+            }
+
             for (int i = taskQuadrant.getNoteList().size() - 1; i > -1; i--) {
                 Note currNote = taskQuadrant.getNoteList().get(i);
                 if (currNote.isInRange(e.getPoint())) {
                     currNote.setSelected(true);
                     startPoint = e.getPoint();
                     selectedNote = currNote;
-                    if(e.getButton()==MouseEvent.BUTTON3)
-                    {
-                        System.out.println("right click");
-//                        noteMenu.show(null,currNote.getCentre().x,currNote.getCentre().y);
-                        noteMenu.show(invokerComp,e.getX(),e.getY());
-                        noteMenu.setSelectedNote(currNote);
-                    }
                     break;
                 } else System.out.println("nah");
             }
@@ -144,12 +148,33 @@ public class WindowPanel extends JPanel {
         @Override
         public void mouseReleased(MouseEvent e) {
             if (selectedNote != null && startPoint != null) {
+
                 endPoint = e.getPoint();
                 Point vector = new Point((int) (endPoint.getX() - startPoint.getX() + selectedNote.getCentre().getX()),
                         (int) (endPoint.getY() - startPoint.getY() + selectedNote.getCentre().getY()));
                 selectedNote.setCentre(vector);
-                selectedNote.setSelected(false);
-                selectedNote = null;
+                // if it's a right click
+                if(e.isPopupTrigger())
+                {
+                    // set popUp flag true
+                    popUp=true;
+//                    System.out.println("right click");
+//                        noteMenu.show(null,currNote.getCentre().x,currNote.getCentre().y);
+                    // show the popUp menu
+                    noteMenu.show(invokerComp,e.getX(),e.getY());
+                    // set the menu target on the selected note
+                    noteMenu.setSelectedNote(selectedNote);
+                    // don't reset the selection just yet since we wish to see the note being selected
+                    // when we edit or delete it
+                }
+                // if not a right click then it's the Drop in Drag and Drop
+                else
+                {
+                    // reset the selection
+                    selectedNote.setSelected(false);
+                    selectedNote = null;
+                    repaint();
+                }
                 startPoint = null;
                 endPoint = null;
             }

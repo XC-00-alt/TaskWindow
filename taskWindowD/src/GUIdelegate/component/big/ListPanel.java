@@ -10,12 +10,15 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListPanel extends JScrollPane  implements TreeSelectionListener {
     private JTree jTree;
     private DefaultMutableTreeNode root = new DefaultMutableTreeNode("Tasks");
     private DefaultMutableTreeNode[] quadrantNodes=new DefaultMutableTreeNode[4];
     private JPanel container=new JPanel();
+    private TreeMouseAdapter treeMouseAdapter=new TreeMouseAdapter();
     public ListPanel(Dimension d)
     {
         this.setPreferredSize(d);
@@ -90,5 +93,17 @@ public class ListPanel extends JScrollPane  implements TreeSelectionListener {
         DefaultMutableTreeNode node=(DefaultMutableTreeNode)jTree.getLastSelectedPathComponent();
         System.out.println(node.getUserObject().getClass());
         System.out.println(node.getUserObject().toString());
+    }
+    /**
+     * A private MouseAdapter class
+     */
+    private class TreeMouseAdapter extends MouseAdapter
+    {
+        //ref: https://www.tutorialspoint.com/how-to-implement-the-mouse-right-click-on-each-node-of-jtree-in-java
+        @Override
+        public void mouseReleased(MouseEvent event)
+        {
+
+        }
     }
 }
