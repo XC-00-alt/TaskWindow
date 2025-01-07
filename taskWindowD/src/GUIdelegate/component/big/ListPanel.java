@@ -8,12 +8,13 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ListPanel extends JScrollPane  implements TreeSelectionListener {
+public class ListPanel extends JScrollPane/**  implements TreeSelectionListener */{
     private JTree jTree;
     private DefaultMutableTreeNode root = new DefaultMutableTreeNode("Tasks");
     private DefaultMutableTreeNode[] quadrantNodes=new DefaultMutableTreeNode[4];
@@ -32,13 +33,15 @@ public class ListPanel extends JScrollPane  implements TreeSelectionListener {
             root.add(node);
         }
         jTree =new JTree(root);
-        jTree.addTreeSelectionListener(this);
+//        jTree.addTreeSelectionListener(this);
         jTree.setBackground(Color.MAGENTA);
 //        https://docs.oracle.com/javase/tutorial/uiswing/components/tree.html#display
 //        jTree.setEditable(true);
 //        jTree.getSelectionModel().setSelectionMode
 //                (TreeSelectionModel.SINGLE_TREE_SELECTION);
 //        jTree.setShowsRootHandles(true);
+
+        jTree.addMouseListener(treeMouseAdapter);
 
         DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) jTree.getCellRenderer();
         renderer.setLeafIcon(null);
@@ -87,23 +90,36 @@ public class ListPanel extends JScrollPane  implements TreeSelectionListener {
 //        g.fillRect(0,0,getWidth(),getHeight());
     }
 
-    @Override
-    public void valueChanged(TreeSelectionEvent e) {
-        //ref:https://blog.csdn.net/dd_Mr/article/details/122262024
-        DefaultMutableTreeNode node=(DefaultMutableTreeNode)jTree.getLastSelectedPathComponent();
-        System.out.println(node.getUserObject().getClass());
-        System.out.println(node.getUserObject().toString());
-    }
+//    @Override
+//    public void valueChanged(TreeSelectionEvent e) {
+//        //ref:https://blog.csdn.net/dd_Mr/article/details/122262024
+//        DefaultMutableTreeNode node=(DefaultMutableTreeNode)jTree.getLastSelectedPathComponent();
+//        System.out.println(node.getUserObject().getClass());
+//        System.out.println(node.getUserObject().toString());
+//    }
     /**
      * A private MouseAdapter class
      */
     private class TreeMouseAdapter extends MouseAdapter
     {
         //ref: https://www.tutorialspoint.com/how-to-implement-the-mouse-right-click-on-each-node-of-jtree-in-java
+        //https://www.experts-exchange.com/questions/21259761/Right-Click-on-JTree.html
         @Override
         public void mouseReleased(MouseEvent event)
         {
-
+            if(event.isPopupTrigger())
+            {
+                TreePath selPath = jTree.getPathForLocation(event.getX(), event.getY());
+                if(selPath != null) {
+                    DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath.getLastPathComponent();
+                    int selRow = jTree.getRowForLocation(event.getX(), event.getY());
+                    jTree.setSelectionRow(selRow);
+                    System.out.println(node.getUserObject().getClass());
+                }
+//                DefaultMutableTreeNode node=(DefaultMutableTreeNode)jTree.getLastSelectedPathComponent();
+//                System.out.println(node.getUserObject().getClass());
+//                System.out.println(node.getUserObject().toString());
+            }
         }
     }
 }
