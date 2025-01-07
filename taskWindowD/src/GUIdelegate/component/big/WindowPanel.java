@@ -1,5 +1,6 @@
 package GUIdelegate.component.big;
 
+import GUIdelegate.component.small.NoteMenu;
 import GUIdelegate.delegate.GraphicDelegate;
 import model.Note;
 import model.QuadrantEnum;
@@ -10,8 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public class WindowPanel extends JPanel {
     private TaskQuadrant taskQuadrant;
@@ -20,16 +19,21 @@ public class WindowPanel extends JPanel {
     private Color UNIMPORTANT_URGENT=new Color(0xFFB662);
     private Color UNIMPORTANT_NON_URGENT=new Color(0xEE9D9D);
 
+    private NoteMenu noteMenu=new NoteMenu();
+
     private DragMouseAdapter mouseAdapter;
     public void setMouseAdapter()
     {
-        mouseAdapter=new DragMouseAdapter();
+        mouseAdapter=new DragMouseAdapter(this);
+        noteMenu.addMouseListener(mouseAdapter);
+        noteMenu.addMouseMotionListener(mouseAdapter);
         this.addMouseListener(mouseAdapter);
         this.addMouseMotionListener(mouseAdapter);
     }
     public WindowPanel()
     {
         taskQuadrant=new TaskQuadrant();
+//        add(noteMenu);
         setMouseAdapter();
     }
     public boolean addNote(Note note) {
@@ -92,14 +96,29 @@ public class WindowPanel extends JPanel {
         private Point endPoint;
         private Note selectedNote;
 
+        private JComponent invokerComp;
+        public DragMouseAdapter(JComponent jComponent)
+        {
+            this.invokerComp =jComponent;
+        }
         @Override
         public void mousePressed(MouseEvent e) {
+            if(e.getSource()==noteMenu) System.out.println("noteMenu");
+            noteMenu.setSelectedNote(null);
+            noteMenu.setVisible(false);
             for (int i = taskQuadrant.getNoteList().size() - 1; i > -1; i--) {
                 Note currNote = taskQuadrant.getNoteList().get(i);
                 if (currNote.isInRange(e.getPoint())) {
                     currNote.setSelected(true);
                     startPoint = e.getPoint();
                     selectedNote = currNote;
+                    if(e.getButton()==MouseEvent.BUTTON3)
+                    {
+                        System.out.println("right click");
+//                        noteMenu.show(null,currNote.getCentre().x,currNote.getCentre().y);
+                        noteMenu.show(invokerComp,e.getX(),e.getY());
+                        noteMenu.setSelectedNote(currNote);
+                    }
                     break;
                 } else System.out.println("nah");
             }

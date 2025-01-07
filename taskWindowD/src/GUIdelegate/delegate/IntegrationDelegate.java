@@ -1,6 +1,7 @@
 package GUIdelegate.delegate;
 
 import GUIdelegate.component.big.*;
+import GUIdelegate.component.small.NoteMenu;
 import model.Note;
 
 import javax.swing.*;
@@ -99,8 +100,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         System.out.println(propName);
         if(propName.equals(Note.PROP_NAME))
         {
-            System.out.println("received");
-            System.out.println(eventSrc.getClass());
+//            System.out.println("received");
+//            System.out.println(eventSrc.getClass());
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     listPanel.changeNote((Note)eventSrc,(Integer) event.getOldValue(),(Integer) event.getNewValue());

@@ -49,7 +49,7 @@ public class ListPanel extends JScrollPane  {
     public void deleteNote(Note note,Integer oldVal)
     {
         quadrantNodes[oldVal-1].remove(note.getNode());
-        System.out.println(quadrantNodes[oldVal-1].getChildCount());
+//        System.out.println(quadrantNodes[oldVal-1].getChildCount());
 //        note.getNode().removeFromParent();
     }
     public void changeNote(Note note,Integer oldVal,Integer newVal)
@@ -80,15 +80,6 @@ public class ListPanel extends JScrollPane  {
         renderer.setClosedIcon(null);
         renderer.setOpenIcon(null);
 
-//        System.out.println("rowCount"+t.getRowCount());
-//        for(int i=0;i<t.getRowCount();i++)
-//        {
-//            if(t.isExpanded(i))
-//            {
-//                t.collapseRow(i);
-//                t.expandRow(i);
-//            }
-//        }
 //        g.setColor(Color.CYAN);
 //        g.fillRect(0,0,getWidth(),getHeight());
     }
