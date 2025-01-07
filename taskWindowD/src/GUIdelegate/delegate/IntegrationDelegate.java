@@ -82,6 +82,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==topMenuBar.getNoteAdder())
         {
+            noteMenu.reset();
             // randomly generates the position of the new note
             int x=randomN.nextInt(0, windowPanel.getWidth());
             int y=randomN.nextInt(0, windowPanel.getHeight());
@@ -113,6 +114,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
+                    noteMenu.reset();
                     Note noteDel=(Note)eventSrc;
                     listPanel.deleteNote(noteDel);
                     windowPanel.removeNote(noteDel);
@@ -137,6 +139,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     noteMenu.reset();
+                    windowPanel.setListRequested(false);
                 }
             });
         }
@@ -152,6 +155,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                         noteMenu.show(e.getComponent(), e.getX(), e.getY());
                         // set the menu target on the selected note
                         noteMenu.setSelectedNote(selectedNote);
+                        windowPanel.setListRequested(true);
                         windowPanel.repaint();
                     }
 

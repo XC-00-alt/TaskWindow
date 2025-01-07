@@ -28,7 +28,7 @@ public class NoteMenu extends JPopupMenu implements ActionListener {
 
     public void setSelectedNote(Note selectedNote) {
         if(this.selectedNote!=null) this.selectedNote.setSelected(false);
-        else if(selectedNote!=null) selectedNote.setSelected(true);
+        if(selectedNote!=null) selectedNote.setSelected(true);
         this.selectedNote = selectedNote;
     }
     public void reset()

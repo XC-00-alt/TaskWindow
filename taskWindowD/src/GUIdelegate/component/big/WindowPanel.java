@@ -1,6 +1,5 @@
 package GUIdelegate.component.big;
 
-import GUIdelegate.component.small.NoteMenu;
 import GUIdelegate.delegate.GraphicDelegate;
 import model.Note;
 import model.QuadrantEnum;
@@ -97,7 +96,11 @@ public class WindowPanel extends JPanel {
         }
     }
 
+    public boolean listRequested =false;
 
+    public void setListRequested(boolean listRequested) {
+        this.listRequested = listRequested;
+    }
 
     /**
      * A private MouseAdapter class
@@ -117,13 +120,16 @@ public class WindowPanel extends JPanel {
         public void mousePressed(MouseEvent e) {
             // if it's handled at the release that it's a right click
             // then the popUp menu should be reset when a new press is coming
-            if(popUp)
+            if(popUp|| listRequested)
             {
 //                noteMenu.reset();
                 notifier.firePropertyChange(CLOSE_POPUPMENU,true,false);
-                selectedNote.setSelected(false);
-                selectedNote=null;
-                popUp=false;
+                if(popUp)
+                {
+                    selectedNote.setSelected(false);
+                    selectedNote=null;
+                    popUp=false;
+                }
             }
 
             for (int i = taskQuadrant.getNoteList().size() - 1; i > -1; i--) {
