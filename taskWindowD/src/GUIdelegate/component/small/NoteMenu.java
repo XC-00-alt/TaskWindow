@@ -42,6 +42,11 @@ public class NoteMenu extends JPopupMenu implements ActionListener {
             selectedNote.delete();
             selectedNote=null;
         }
-        else if(e.getSource()==itemEdit) System.out.println("EDI");
+        else if(e.getSource()==itemEdit)
+        {
+            System.out.println("EDI");
+            // potential bug here
+//            selectedNote.setSelected(true);
+        }
     }
 }

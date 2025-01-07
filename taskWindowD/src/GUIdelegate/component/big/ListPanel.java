@@ -4,13 +4,15 @@ import model.Note;
 import model.QuadrantEnum;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 
-public class ListPanel extends JScrollPane  {
-    private JTree t;
+public class ListPanel extends JScrollPane  implements TreeSelectionListener {
+    private JTree jTree;
     private DefaultMutableTreeNode root = new DefaultMutableTreeNode("Tasks");
     private DefaultMutableTreeNode[] quadrantNodes=new DefaultMutableTreeNode[4];
     private JPanel container=new JPanel();
@@ -26,22 +28,23 @@ public class ListPanel extends JScrollPane  {
         {
             root.add(node);
         }
-        t=new JTree(root);
-        t.setBackground(Color.MAGENTA);
-////        https://docs.oracle.com/javase/tutorial/uiswing/components/tree.html#display
-//        t.setEditable(true);
-//        t.getSelectionModel().setSelectionMode
+        jTree =new JTree(root);
+        jTree.addTreeSelectionListener(this);
+        jTree.setBackground(Color.MAGENTA);
+//        https://docs.oracle.com/javase/tutorial/uiswing/components/tree.html#display
+//        jTree.setEditable(true);
+//        jTree.getSelectionModel().setSelectionMode
 //                (TreeSelectionModel.SINGLE_TREE_SELECTION);
-//        t.setShowsRootHandles(true);
+//        jTree.setShowsRootHandles(true);
 
-        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) t.getCellRenderer();
+        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) jTree.getCellRenderer();
         renderer.setLeafIcon(null);
         renderer.setClosedIcon(null);
         renderer.setOpenIcon(null);
 
         container.setBackground(Color.MAGENTA);
         container.setLayout(new FlowLayout(FlowLayout.LEFT));
-        container.add(t);
+        container.add(jTree);
         setViewportView(container);
         setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -70,14 +73,22 @@ public class ListPanel extends JScrollPane  {
     public void paintComponent(Graphics g)
     {
         // UI needs to be updated
-        t.updateUI();
+        jTree.updateUI();
         // and these have to be called again, otherwise UI will be default again
-        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) t.getCellRenderer();
+        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) jTree.getCellRenderer();
         renderer.setLeafIcon(null);
         renderer.setClosedIcon(null);
         renderer.setOpenIcon(null);
 
 //        g.setColor(Color.CYAN);
 //        g.fillRect(0,0,getWidth(),getHeight());
+    }
+
+    @Override
+    public void valueChanged(TreeSelectionEvent e) {
+        //ref:https://blog.csdn.net/dd_Mr/article/details/122262024
+        DefaultMutableTreeNode node=(DefaultMutableTreeNode)jTree.getLastSelectedPathComponent();
+        System.out.println(node.getUserObject().getClass());
+        System.out.println(node.getUserObject().toString());
     }
 }
