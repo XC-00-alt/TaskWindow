@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Random;
@@ -22,7 +23,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
     private TopPanel topPanel=new TopPanel();
     private LeftPanel leftPanel;
-    private WindowPanel windowPanel=new WindowPanel();
+    private WindowPanel windowPanel;
     private BottomPanel bottomPanel;
     private ListPanel listPanel;
 
@@ -52,7 +53,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
         topPanel.setPreferredSize(new Dimension(FRAME_WIDTH,topPanelHeight));
         leftPanel=new LeftPanel(leftPanelWidth,FRAME_HEIGHT);
-        windowPanel.setPreferredSize(new Dimension(windowPanelWidth,windowPanelHeight));
+        windowPanel=new WindowPanel(this,windowPanelWidth,windowPanelHeight);
         bottomPanel=new BottomPanel(FRAME_WIDTH,topPanelHeight);
         listPanel=new ListPanel(new Dimension(listPanelWidth,FRAME_HEIGHT));
     }
@@ -117,6 +118,25 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     windowPanel.removeNote(noteDel);
                     listPanel.repaint();
                     windowPanel.repaint();
+                }
+            });
+        }
+        else if(propName.equals(WindowPanel.OPEN_POPUPMENU))
+        {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    // set the menu target on the selected note
+                    MouseEvent e = (MouseEvent) event.getNewValue();
+                    noteMenu.show(e.getComponent(), e.getX(), e.getY());
+                    // set the menu target on the selected note
+                    noteMenu.setSelectedNote(windowPanel.getSelectedNote());
+                }
+            });
+        }
+        else if (propName.equals(WindowPanel.CLOSE_POPUPMENU)) {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    noteMenu.reset();
                 }
             });
         }

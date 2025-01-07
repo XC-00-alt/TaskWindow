@@ -11,32 +11,37 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class WindowPanel extends JPanel {
+    private Note selectedNote;
     private TaskQuadrant taskQuadrant;
     private Color IMPORTANT_URGENT=new Color(0xFFE562);
     private Color IMPORTANT_NON_URGENT=new Color(0xA6EE9D);
     private Color UNIMPORTANT_URGENT=new Color(0xFFB662);
     private Color UNIMPORTANT_NON_URGENT=new Color(0xEE9D9D);
 
-    private NoteMenu noteMenu=new NoteMenu();
-//    private PropertyChangeSupport notifier;
-//    public static final String REQUEST_POPUPMENU="win-noteMenu";
+//    private NoteMenu noteMenu=new NoteMenu();
+    private PropertyChangeSupport notifier;
+    public static final String OPEN_POPUPMENU="open win-noteMenu";
+    public static final String CLOSE_POPUPMENU="close win-noteMenu";
 
     private DragMouseAdapter mouseAdapter;
     public void setMouseAdapter()
     {
-        mouseAdapter=new DragMouseAdapter(this);
+        mouseAdapter=new DragMouseAdapter();
         this.addMouseListener(mouseAdapter);
         this.addMouseMotionListener(mouseAdapter);
     }
-    public WindowPanel()
+    public WindowPanel(PropertyChangeListener propertyChangeListener,int width,int height)
     {
+        this.setPreferredSize(new Dimension(width,height));
         taskQuadrant=new TaskQuadrant();
 //        add(noteMenu);
         setMouseAdapter();
-//        notifier=new PropertyChangeSupport(this);
+        notifier=new PropertyChangeSupport(this);
+        notifier.addPropertyChangeListener(propertyChangeListener);
     }
     public boolean addNote(Note note) {
         return taskQuadrant.add(note);
@@ -45,10 +50,11 @@ public class WindowPanel extends JPanel {
     {
         return taskQuadrant.remove(note);
     }
-//    public void paintAgain()
-//    {
-//        this.repaint();
-//    }
+
+    public Note getSelectedNote() {
+        return selectedNote;
+    }
+
     @Override
     public void paintComponent(Graphics g)
     {
@@ -96,22 +102,22 @@ public class WindowPanel extends JPanel {
     private class DragMouseAdapter extends MouseAdapter {
         private Point startPoint;
         private Point endPoint;
-        private Note selectedNote;
 
         private boolean popUp=false;
 
-        private JComponent invokerComp;
-        public DragMouseAdapter(JComponent jComponent)
-        {
-            this.invokerComp =jComponent;
-        }
+//        private JComponent invokerComp;
+//        public DragMouseAdapter(JComponent jComponent)
+//        {
+//            this.invokerComp =jComponent;
+//        }
         @Override
         public void mousePressed(MouseEvent e) {
             // if it's handled at the release that it's a right click
             // then the popUp menu should be reset when a new press is coming
             if(popUp)
             {
-                noteMenu.reset();
+//                noteMenu.reset();
+                notifier.firePropertyChange(CLOSE_POPUPMENU,true,false);
                 selectedNote.setSelected(false);
                 selectedNote=null;
                 popUp=false;
@@ -158,12 +164,15 @@ public class WindowPanel extends JPanel {
                 {
                     // set popUp flag true
                     popUp=true;
-//                    System.out.println("right click");
-//                        noteMenu.show(null,currNote.getCentre().x,currNote.getCentre().y);
+
                     // show the popUp menu
-                    noteMenu.show(invokerComp,e.getX(),e.getY());
+                    notifier.firePropertyChange(OPEN_POPUPMENU,null,e);
+                    System.out.println("!");
+//                    noteMenu.show(e.getComponent(),e.getX(),e.getY());
+
                     // set the menu target on the selected note
-                    noteMenu.setSelectedNote(selectedNote);
+//                    noteMenu.setSelectedNote(selectedNote);
+
                     // don't reset the selection just yet since we wish to see the note being selected
                     // when we edit or delete it
                 }
