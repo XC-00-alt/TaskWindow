@@ -37,7 +37,8 @@ public class Note {
     private final static Color SELECTED_COLOR =new Color(0xFF00FFF7, true);
     // the color to fill the selection box
     private final static Color SELECTED_FILL =new Color(0x3200FFF7, true);
-    public static final String PROP_NAME="noteQuadrantChange";
+    public static final String NOTE_QUADRANT_CHANGE ="noteQuadrantChange";
+    public static final String NOTE_DELETE ="noteDelete";
 
     private PropertyChangeSupport notifier;
     
@@ -70,8 +71,11 @@ public class Note {
         if(!old.equals(quadrantCode))
         {
 //            System.out.println("notify");
-            notifier.firePropertyChange(PROP_NAME,old.getCode(), quadrantCode.getCode());
+            notifier.firePropertyChange(NOTE_QUADRANT_CHANGE,old.getCode(), quadrantCode.getCode());
         }
+    }
+    public void delete(){
+        notifier.firePropertyChange(NOTE_DELETE,this,null);
     }
 
     public void setNode(DefaultMutableTreeNode node) {

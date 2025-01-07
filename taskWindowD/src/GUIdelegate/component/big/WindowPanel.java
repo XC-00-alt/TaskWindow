@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeSupport;
 
 public class WindowPanel extends JPanel {
     private TaskQuadrant taskQuadrant;
@@ -20,6 +21,8 @@ public class WindowPanel extends JPanel {
     private Color UNIMPORTANT_NON_URGENT=new Color(0xEE9D9D);
 
     private NoteMenu noteMenu=new NoteMenu();
+//    private PropertyChangeSupport notifier;
+//    public static final String REQUEST_POPUPMENU="win-noteMenu";
 
     private DragMouseAdapter mouseAdapter;
     public void setMouseAdapter()
@@ -33,6 +36,7 @@ public class WindowPanel extends JPanel {
         taskQuadrant=new TaskQuadrant();
 //        add(noteMenu);
         setMouseAdapter();
+//        notifier=new PropertyChangeSupport(this);
     }
     public boolean addNote(Note note) {
         return taskQuadrant.add(note);
@@ -101,8 +105,7 @@ public class WindowPanel extends JPanel {
         }
         @Override
         public void mousePressed(MouseEvent e) {
-            noteMenu.setSelectedNote(null);
-            noteMenu.setVisible(false);
+            noteMenu.reset();
             for (int i = taskQuadrant.getNoteList().size() - 1; i > -1; i--) {
                 Note currNote = taskQuadrant.getNoteList().get(i);
                 if (currNote.isInRange(e.getPoint())) {

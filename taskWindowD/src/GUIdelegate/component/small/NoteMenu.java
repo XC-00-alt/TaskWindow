@@ -29,10 +29,19 @@ public class NoteMenu extends JPopupMenu implements ActionListener {
     public void setSelectedNote(Note selectedNote) {
         this.selectedNote = selectedNote;
     }
+    public void reset()
+    {
+        setSelectedNote(null);
+        setVisible(false);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==itemDelete) System.out.println("DEL");
+        if(e.getSource()==itemDelete)
+        {
+            selectedNote.delete();
+            selectedNote=null;
+        }
         else if(e.getSource()==itemEdit) System.out.println("EDI");
     }
 }

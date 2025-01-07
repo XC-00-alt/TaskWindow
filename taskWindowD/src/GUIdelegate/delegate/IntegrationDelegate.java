@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 import java.util.Random;
 
 public class IntegrationDelegate implements ActionListener, PropertyChangeListener {
@@ -26,6 +25,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
     private WindowPanel windowPanel=new WindowPanel();
     private BottomPanel bottomPanel;
     private ListPanel listPanel;
+
+    private NoteMenu noteMenu=new NoteMenu();
 
     public IntegrationDelegate()
     {
@@ -98,14 +99,24 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         Object eventSrc=event.getSource();
         String propName=event.getPropertyName();
         System.out.println(propName);
-        if(propName.equals(Note.PROP_NAME))
+        if(propName.equals(Note.NOTE_QUADRANT_CHANGE))
         {
-//            System.out.println("received");
-//            System.out.println(eventSrc.getClass());
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     listPanel.changeNote((Note)eventSrc,(Integer) event.getOldValue(),(Integer) event.getNewValue());
                     listPanel.repaint();
+                }
+            });
+        }
+        else if(propName.equals(Note.NOTE_DELETE))
+        {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    Note noteDel=(Note)eventSrc;
+                    listPanel.deleteNote(noteDel);
+                    windowPanel.removeNote(noteDel);
+                    listPanel.repaint();
+                    windowPanel.repaint();
                 }
             });
         }

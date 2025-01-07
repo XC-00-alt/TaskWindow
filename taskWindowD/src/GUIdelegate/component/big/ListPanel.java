@@ -46,18 +46,15 @@ public class ListPanel extends JScrollPane  {
         setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     }
-    public void deleteNote(Note note,Integer oldVal)
+    public void deleteNote(Note note)
     {
-        quadrantNodes[oldVal-1].remove(note.getNode());
-//        System.out.println(quadrantNodes[oldVal-1].getChildCount());
-//        note.getNode().removeFromParent();
+//        quadrantNodes[oldVal-1].remove(note.getNode());
+        note.getNode().removeFromParent();
     }
     public void changeNote(Note note,Integer oldVal,Integer newVal)
     {
-        deleteNote(note,oldVal);
+        deleteNote(note);
         quadrantNodes[newVal-1].add(note.getNode());
-//        t.repaint();
-//        addNote(note);
     }
     public void addNote(Note note)
     {
