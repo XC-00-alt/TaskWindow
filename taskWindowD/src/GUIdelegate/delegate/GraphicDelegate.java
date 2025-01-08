@@ -31,30 +31,26 @@ public class GraphicDelegate {
             int rowLen=0;
             int nRow=0;
             int lastOutputEnd=0;
-            for(int i=0;i<text.length();i++)
+            for(int i=0;i<=text.length();i++)
             {
-                rowLen+=metrics.charWidth(text.charAt(i));
                 // if it's the last line
                 if(marginY+font.getSize()*nRow>=textBoxHeight-marginY)
                 {
                     g.drawString("...",x+marginX,y+marginY+font.getSize()*nRow);
                     break;
                 }
+                if(i==text.length())
+                {
+                    g.drawString(text.substring(lastOutputEnd),x+marginX,y+marginY+font.getSize()*nRow);
+                    break;
+                }
+                rowLen+=metrics.charWidth(text.charAt(i));
                 if(rowLen>textBoxWidth-marginX*2)
                 {
                     g.drawString(text.substring(lastOutputEnd,i),x+marginX,y+marginY+font.getSize()*nRow);
                     rowLen=metrics.charWidth(text.charAt(i));
                     lastOutputEnd=i;
                     nRow++;
-                }
-                else {
-                    if(i==text.length()-1)
-                    {
-                        g.drawString(text.substring(lastOutputEnd),x+marginX,y+marginY+font.getSize()*nRow);
-                        rowLen=0;
-                        lastOutputEnd=text.length();
-                        nRow++;
-                    }
                 }
             }
         }

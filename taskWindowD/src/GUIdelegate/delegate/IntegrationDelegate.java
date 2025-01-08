@@ -80,21 +80,26 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // adding a new note
         if(e.getSource()==topMenuBar.getNoteAdder())
         {
+            // close noteMenu and set its reference to selected note to be null
             noteMenu.reset();
+            // clear selected note
+            windowPanel.setSelectedNote(null);
+            listPanel.clearSelectedRow();
+
             // randomly generates the position of the new note
             int x=randomN.nextInt(0, windowPanel.getWidth());
             int y=randomN.nextInt(0, windowPanel.getHeight());
             Note newNote=new Note(x, y,windowPanel.getQuadrantCode(x,y));
-            newNote.setTitle(newNote.getQuadrantCode().toString()+newNote.getQuadrantCode().getDescription());
             newNote.addObserver(this);
+
+            // add the note
             windowPanel.addNote(newNote);
-            windowPanel.setSelectedNote(null);
             listPanel.addNote(newNote);
             // repaint to refresh the view
             windowPanel.repaint();
-            listPanel.clearSelectedRow();
             listPanel.repaint();
         }
     }
@@ -105,9 +110,12 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         System.out.println(propName);
         if(propName.equals(Note.NOTE_QUADRANT_CHANGE))
         {
+            // when the note fires the change in quadrant
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
+                    // change the position of the note in the jTree of the listPanel
                     listPanel.changeNote((Note)eventSrc,(Integer) event.getOldValue(),(Integer) event.getNewValue());
+                    // when the note is dragged (selected), the list should be updated
                     listPanel.showSelectedNote(windowPanel.getSelectedNote());
                     listPanel.repaint();
                 }
