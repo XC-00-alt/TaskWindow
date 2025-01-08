@@ -84,16 +84,6 @@ public class ListPanel extends JScrollPane{
         quadrantNodes[qId2].add(newNode);
         note.setNode(newNode);
     }
-//
-//    public Note getSelectedNote() {
-//        return selectedNote;
-//    }
-//
-//    public void setSelectedNote(Note selectedNote) {
-//        if(this.selectedNote!=null) this.selectedNote.setSelected(false);
-//        else if(selectedNote!=null) selectedNote.setSelected(true);
-//        this.selectedNote = selectedNote;
-//    }
 
     @Override
     public void paintComponent(Graphics g)
@@ -105,9 +95,6 @@ public class ListPanel extends JScrollPane{
         renderer.setLeafIcon(null);
         renderer.setClosedIcon(null);
         renderer.setOpenIcon(null);
-
-//        g.setColor(Color.CYAN);
-//        g.fillRect(0,0,getWidth(),getHeight());
     }
 
 //    /**  implements TreeSelectionListener */
@@ -144,20 +131,6 @@ public class ListPanel extends JScrollPane{
         public void mouseReleased(MouseEvent event)
         {
             notifier.firePropertyChange(OPEN_POPUPMENU, null, event);
-//            if(event.isPopupTrigger())
-//            {
-//                TreePath selPath = jTree.getPathForLocation(event.getX(), event.getY());
-//                if(selPath != null) {
-//                    DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath.getLastPathComponent();
-//                    int selRow = jTree.getRowForLocation(event.getX(), event.getY());
-//                    jTree.setSelectionRow(selRow);
-//                    if(node.getUserObject().getClass()== Note.class)
-//                    {
-////                        setSelectedNote((Note)node.getUserObject());
-//                        notifier.firePropertyChange(OPEN_POPUPMENU, null, event);
-//                    }
-//                }
-//            }
         }
     }
 }

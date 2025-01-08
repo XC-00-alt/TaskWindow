@@ -17,7 +17,7 @@ public class WindowPanel extends JPanel {
     // this is only used for the convenience of the process when dragging and dropping
     // not a strong requirement for the selected note among the list
     // since painting selection doesn't require it
-    private Note selectedNote;
+//    private Note selectedNote;
     private TaskQuadrant taskQuadrant;
     private Color IMPORTANT_URGENT=new Color(0xFFE562);
     private Color IMPORTANT_NON_URGENT=new Color(0xA6EE9D);
@@ -40,7 +40,6 @@ public class WindowPanel extends JPanel {
     {
         this.setPreferredSize(new Dimension(width,height));
         taskQuadrant=new TaskQuadrant();
-//        add(noteMenu);
         setMouseAdapter();
         notifier=new PropertyChangeSupport(this);
         notifier.addPropertyChangeListener(propertyChangeListener);
@@ -54,7 +53,7 @@ public class WindowPanel extends JPanel {
     }
 
     public Note getSelectedNote() {
-        return selectedNote;
+        return taskQuadrant.getSelectedNote();
     }
 
     @Override
@@ -111,11 +110,6 @@ public class WindowPanel extends JPanel {
 
         private boolean popUp=false;
 
-//        private JComponent invokerComp;
-//        public DragMouseAdapter(JComponent jComponent)
-//        {
-//            this.invokerComp =jComponent;
-//        }
         @Override
         public void mousePressed(MouseEvent e) {
             // if it's handled at the release that it's a right click
@@ -126,8 +120,10 @@ public class WindowPanel extends JPanel {
                 notifier.firePropertyChange(CLOSE_POPUPMENU,true,false);
                 if(popUp)
                 {
-                    selectedNote.setSelected(false);
-                    selectedNote=null;
+//                    taskQuadrant.getSelectedNote().setSelected(false);
+                    taskQuadrant.setSelectedNote(null);
+//                    selectedNote.setSelected(false);
+//                    selectedNote=null;
                     popUp=false;
                 }
             }
@@ -135,9 +131,11 @@ public class WindowPanel extends JPanel {
             for (int i = taskQuadrant.getNoteList().size() - 1; i > -1; i--) {
                 Note currNote = taskQuadrant.getNoteList().get(i);
                 if (currNote.isInRange(e.getPoint())) {
-                    currNote.setSelected(true);
                     startPoint = e.getPoint();
-                    selectedNote = currNote;
+
+//                    currNote.setSelected(true);
+                    taskQuadrant.setSelectedNote(currNote);
+//                    selectedNote = currNote;
                     break;
                 } else System.out.println("nah");
             }
@@ -146,13 +144,14 @@ public class WindowPanel extends JPanel {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            if (selectedNote != null && startPoint != null) {
+            Note selectedNote=taskQuadrant.getSelectedNote();
+            if (selectedNote!= null && startPoint != null) {
                 endPoint = e.getPoint();
-//                Point vector = new Point((int) (endPoint.getX() - startPoint.getX() + selectedNote.getCentre().getX()),
-//                        (int) (endPoint.getY() - startPoint.getY() + selectedNote.getCentre().getY()));
+
                 Point vector= CalculationWithBound.minusOp(endPoint,startPoint);
                 vector=CalculationWithBound.addOp(vector,selectedNote.getCentre());
                 vector=CalculationWithBound.refineOp(vector,getWidth(),getHeight());
+
                 selectedNote.setCentre(vector);
                 selectedNote.setQuadrantCode(getQuadrantCode(vector.x, vector.y));
                 startPoint = endPoint;
@@ -162,6 +161,7 @@ public class WindowPanel extends JPanel {
 
         @Override
         public void mouseReleased(MouseEvent e) {
+            Note selectedNote=taskQuadrant.getSelectedNote();
             if (selectedNote != null && startPoint != null) {
 
                 endPoint = e.getPoint();
@@ -176,11 +176,6 @@ public class WindowPanel extends JPanel {
 
                     // show the popUp menu
                     notifier.firePropertyChange(OPEN_POPUPMENU,null,e);
-                    System.out.println("!");
-//                    noteMenu.show(e.getComponent(),e.getX(),e.getY());
-
-                    // set the menu target on the selected note
-//                    noteMenu.setSelectedNote(selectedNote);
 
                     // don't reset the selection just yet since we wish to see the note being selected
                     // when we edit or delete it
@@ -189,8 +184,8 @@ public class WindowPanel extends JPanel {
                 else
                 {
                     // reset the selection
-                    selectedNote.setSelected(false);
-                    selectedNote = null;
+//                    selectedNote.setSelected(false);
+                    taskQuadrant.setSelectedNote(null);
                     repaint();
                 }
                 startPoint = null;
