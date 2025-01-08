@@ -90,9 +90,11 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             newNote.setTitle(newNote.getQuadrantCode().toString()+newNote.getQuadrantCode().getDescription());
             newNote.addObserver(this);
             windowPanel.addNote(newNote);
+            windowPanel.setSelectedNote(null);
             listPanel.addNote(newNote);
             // repaint to refresh the view
             windowPanel.repaint();
+            listPanel.clearSelectedRow();
             listPanel.repaint();
         }
     }
@@ -106,6 +108,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     listPanel.changeNote((Note)eventSrc,(Integer) event.getOldValue(),(Integer) event.getNewValue());
+                    listPanel.showSelectedNote(windowPanel.getSelectedNote());
                     listPanel.repaint();
                 }
             });
@@ -140,10 +143,21 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                 public void run() {
                     noteMenu.reset();
                     windowPanel.setListRequested(false);
+                    listPanel.clearSelectedRow();
                 }
             });
         }
-        else if (propName.equals(ListPanel.OPEN_POPUPMENU))
+        else if(propName.equals(WindowPanel.SELECT_NOTE))
+        {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    Note newSelectedNote=(Note)event.getNewValue();
+                    listPanel.showSelectedNote(newSelectedNote);
+                    listPanel.repaint();
+                }
+            });
+        }
+        else if (propName.equals(ListPanel.SELECT_NOTE))
         {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
@@ -152,10 +166,14 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     Note selectedNote=listPanel.getSelectedNote(e);
                     if(selectedNote!=null)
                     {
-                        noteMenu.show(e.getComponent(), e.getX(), e.getY());
-                        // set the menu target on the selected note
-                        noteMenu.setSelectedNote(selectedNote);
-                        windowPanel.setListRequested(true);
+                        windowPanel.setSelectedNote(selectedNote);
+                        if(e.isPopupTrigger()) {
+                            noteMenu.show(e.getComponent(), e.getX(), e.getY());
+                            // set the menu target on the selected note
+                            noteMenu.setSelectedNote(selectedNote);
+                            windowPanel.setListRequested(true);
+                        }
+                        listPanel.showSelectedNote(selectedNote);
                         windowPanel.repaint();
                     }
 

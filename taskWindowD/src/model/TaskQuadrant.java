@@ -6,7 +6,11 @@ import java.util.List;
 
 public class TaskQuadrant {
     private Note selectedNote;
-    private List<Note> noteList=new ArrayList<>();
+    private List<Note> noteList;
+    public TaskQuadrant()
+    {
+        noteList=new ArrayList<>();
+    }
     public boolean add(Note note)
     {
         return noteList.add(note);

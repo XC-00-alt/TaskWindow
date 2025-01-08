@@ -25,7 +25,7 @@ public class ListPanel extends JScrollPane{
     private JPanel container=new JPanel();
     private TreeMouseAdapter treeMouseAdapter=new TreeMouseAdapter();
     private PropertyChangeSupport notifier;
-    public static final String OPEN_POPUPMENU="open list-noteMenu";
+    public static final String SELECT_NOTE="select note on the list";
     public ListPanel(PropertyChangeListener propertyChangeListener,Dimension d)
     {
         this.setPreferredSize(d);
@@ -105,20 +105,36 @@ public class ListPanel extends JScrollPane{
 //        System.out.println(node.getUserObject().getClass());
 //        System.out.println(node.getUserObject().toString());
 //    }
+    public void showSelectedNote(Note selectedNote)
+    {
+        clearSelectedRow();
+        if(selectedNote!=null&&selectedNote.isSelected())
+        {
+            System.out.println("listPane call");
+            DefaultMutableTreeNode node =selectedNote.getNode();
+            TreePath path=new TreePath(node.getPath());
+            jTree.setSelectionPath(path);
+        }
+    }
     public Note getSelectedNote(MouseEvent event)
     {
-        if(event.isPopupTrigger()) {
-            TreePath selPath = jTree.getPathForLocation(event.getX(), event.getY());
-            if (selPath != null) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath.getLastPathComponent();
-                int selRow = jTree.getRowForLocation(event.getX(), event.getY());
-                jTree.setSelectionRow(selRow);
-                if (node.getUserObject().getClass() == Note.class) {
-                    return (Note) node.getUserObject();
-                }
+//        if(event.isPopupTrigger()) {
+//
+//        }
+        TreePath selPath = jTree.getPathForLocation(event.getX(), event.getY());
+        if (selPath != null) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath.getLastPathComponent();
+            int selRow = jTree.getRowForLocation(event.getX(), event.getY());
+            jTree.setSelectionRow(selRow);
+            if (node.getUserObject().getClass() == Note.class) {
+                return (Note) node.getUserObject();
             }
         }
         return null;
+    }
+    public void clearSelectedRow()
+    {
+        jTree.setSelectionRow(-1);
     }
     /**
      * A private MouseAdapter class
@@ -130,7 +146,7 @@ public class ListPanel extends JScrollPane{
         @Override
         public void mouseReleased(MouseEvent event)
         {
-            notifier.firePropertyChange(OPEN_POPUPMENU, null, event);
+            notifier.firePropertyChange(SELECT_NOTE, null, event);
         }
     }
 }

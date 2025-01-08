@@ -70,7 +70,6 @@ public class Note {
         setTitle(getQuadrantCode().getCode()+getQuadrantCode().getDescription());
         if(!old.equals(quadrantCode))
         {
-//            System.out.println("notify");
             notifier.firePropertyChange(NOTE_QUADRANT_CHANGE,old.getCode(), quadrantCode.getCode());
         }
     }

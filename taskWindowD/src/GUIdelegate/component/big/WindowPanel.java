@@ -29,6 +29,8 @@ public class WindowPanel extends JPanel {
     public static final String OPEN_POPUPMENU="open win-noteMenu";
     public static final String CLOSE_POPUPMENU="close win-noteMenu";
 
+    public static final String SELECT_NOTE="select note in the window";
+
     private DragMouseAdapter mouseAdapter;
     public void setMouseAdapter()
     {
@@ -54,6 +56,12 @@ public class WindowPanel extends JPanel {
 
     public Note getSelectedNote() {
         return taskQuadrant.getSelectedNote();
+    }
+    public void setSelectedNote(Note note)
+    {
+        Note oldNote=taskQuadrant.getSelectedNote();
+        taskQuadrant.setSelectedNote(note);
+        notifier.firePropertyChange(SELECT_NOTE,oldNote,taskQuadrant.getSelectedNote());
     }
 
     @Override
@@ -116,14 +124,10 @@ public class WindowPanel extends JPanel {
             // then the popUp menu should be reset when a new press is coming
             if(popUp|| listRequested)
             {
-//                noteMenu.reset();
                 notifier.firePropertyChange(CLOSE_POPUPMENU,true,false);
                 if(popUp)
                 {
-//                    taskQuadrant.getSelectedNote().setSelected(false);
                     taskQuadrant.setSelectedNote(null);
-//                    selectedNote.setSelected(false);
-//                    selectedNote=null;
                     popUp=false;
                 }
             }
@@ -133,9 +137,8 @@ public class WindowPanel extends JPanel {
                 if (currNote.isInRange(e.getPoint())) {
                     startPoint = e.getPoint();
 
-//                    currNote.setSelected(true);
-                    taskQuadrant.setSelectedNote(currNote);
-//                    selectedNote = currNote;
+                    setSelectedNote(currNote);
+
                     break;
                 } else System.out.println("nah");
             }
@@ -184,7 +187,6 @@ public class WindowPanel extends JPanel {
                 else
                 {
                     // reset the selection
-//                    selectedNote.setSelected(false);
                     taskQuadrant.setSelectedNote(null);
                     repaint();
                 }
