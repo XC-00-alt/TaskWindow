@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 public class NoteMenu extends JPopupMenu implements ActionListener {
     private final JMenuItem itemEdit=new JMenuItem("Edit");
     private final JMenuItem itemDelete=new JMenuItem("Delete");
+
     private Note selectedNote=null;
     public NoteMenu()
     {
@@ -47,7 +48,7 @@ public class NoteMenu extends JPopupMenu implements ActionListener {
         }
         else if(e.getSource()==itemEdit)
         {
-            System.out.println("EDI");
+            selectedNote.summonEdit();
             // potential bug here
 //            selectedNote.setSelected(true);
         }

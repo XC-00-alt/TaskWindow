@@ -38,8 +38,9 @@ public class Note {
     // the color to fill the selection box
     private final static Color SELECTED_FILL =new Color(0x3200FFF7, true);
     public static final String NOTE_QUADRANT_CHANGE ="noteQuadrantChange";
-    public static final String NOTE_DELETE ="noteDelete";
+    public static final String NOTE_DELETE ="delete note";
 
+    public static final String NOTE_TO_BE_EDIT ="summon edit note";
     private PropertyChangeSupport notifier;
     
     public Note(int x, int y,QuadrantEnum quadrantEnum)
@@ -75,6 +76,9 @@ public class Note {
     }
     public void delete(){
         notifier.firePropertyChange(NOTE_DELETE,this,null);
+    }
+    public void summonEdit(){
+        notifier.firePropertyChange(NOTE_TO_BE_EDIT,null,this);
     }
 
     public void setNode(DefaultMutableTreeNode node) {

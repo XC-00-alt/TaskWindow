@@ -29,6 +29,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
     private NoteMenu noteMenu=new NoteMenu();
 
+    private NoteDialog noteDialog;
+
     public IntegrationDelegate()
     {
         topMenuBar=new TopMenuBar(this);
@@ -56,6 +58,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         windowPanel=new WindowPanel(this,windowPanelWidth,windowPanelHeight);
         bottomPanel=new BottomPanel(FRAME_WIDTH,topPanelHeight);
         listPanel=new ListPanel(this,new Dimension(listPanelWidth,FRAME_HEIGHT));
+
+        noteDialog=new NoteDialog(windowPanelWidth/2,windowPanelHeight/2);
     }
 
     public void setupFrame()
@@ -137,6 +141,16 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     // refresh the view
                     listPanel.repaint();
                     windowPanel.repaint();
+                }
+            });
+        }
+        else if (propName.equals(Note.NOTE_TO_BE_EDIT))
+        {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    Note note2bEdit=(Note)eventSrc;
+                    noteDialog.setSelectedNote(note2bEdit);
+                    noteDialog.setVisible(true);
                 }
             });
         }
