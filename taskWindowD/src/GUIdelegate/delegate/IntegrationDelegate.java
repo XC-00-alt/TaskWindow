@@ -123,12 +123,18 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         }
         else if(propName.equals(Note.NOTE_DELETE))
         {
+            // when the note is set to be deleted
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
+                    // close the noteMenu and set its target to be null
                     noteMenu.reset();
+
                     Note noteDel=(Note)eventSrc;
+                    // remove the note from the jTree and arrayList
                     listPanel.deleteNote(noteDel);
                     windowPanel.removeNote(noteDel);
+
+                    // refresh the view
                     listPanel.repaint();
                     windowPanel.repaint();
                 }
@@ -136,6 +142,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         }
         else if(propName.equals(WindowPanel.OPEN_POPUPMENU))
         {
+            // when the noteMenu is opened from windowPanel
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     // set the menu target on the selected note
@@ -147,44 +154,65 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             });
         }
         else if (propName.equals(WindowPanel.CLOSE_POPUPMENU)) {
+            // when the noteMenu is closed from windowPanel
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
+                    // close the noteMenu and set its target to be null
                     noteMenu.reset();
+
+                    // either way the noteMenu is no longer requested by the listPanel
                     windowPanel.setListRequested(false);
+
+                    // clear the selection
+                    windowPanel.setSelectedNote(null);
+
+                    // clear the selection in the jTree
                     listPanel.clearSelectedRow();
+
+                    windowPanel.repaint();
+                    listPanel.repaint();
                 }
             });
         }
         else if(propName.equals(WindowPanel.SELECT_NOTE))
         {
+            // if the note is selected from the windowPanel
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     Note newSelectedNote=(Note)event.getNewValue();
+
+                    // update the selection in jTree
                     listPanel.showSelectedNote(newSelectedNote);
-                    listPanel.repaint();
+//                    listPanel.repaint();
                 }
             });
         }
         else if (propName.equals(ListPanel.SELECT_NOTE))
         {
+            // if the note is selected from the listPanel
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    // set the menu target on the selected note
                     MouseEvent e = (MouseEvent) event.getNewValue();
+
+                    // get the selected note from the jTree
                     Note selectedNote=listPanel.getSelectedNote(e);
+                    // set the selectedNote in the windowPanel
+                    windowPanel.setSelectedNote(selectedNote);
                     if(selectedNote!=null)
                     {
-                        windowPanel.setSelectedNote(selectedNote);
+                        // if it should trigger the noteMenu
                         if(e.isPopupTrigger()) {
+                            // show the noteMenu at the place where it should be
                             noteMenu.show(e.getComponent(), e.getX(), e.getY());
                             // set the menu target on the selected note
                             noteMenu.setSelectedNote(selectedNote);
+                            // tell the windowPanel that noteMenu is requested by the listPanel
                             windowPanel.setListRequested(true);
                         }
+                        // update the selection in jTree
                         listPanel.showSelectedNote(selectedNote);
-                        windowPanel.repaint();
                     }
-
+                    windowPanel.repaint();
                 }
             });
 

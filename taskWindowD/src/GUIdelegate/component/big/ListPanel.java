@@ -118,9 +118,6 @@ public class ListPanel extends JScrollPane{
     }
     public Note getSelectedNote(MouseEvent event)
     {
-//        if(event.isPopupTrigger()) {
-//
-//        }
         TreePath selPath = jTree.getPathForLocation(event.getX(), event.getY());
         if (selPath != null) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath.getLastPathComponent();

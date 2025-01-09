@@ -57,11 +57,16 @@ public class WindowPanel extends JPanel {
     public Note getSelectedNote() {
         return taskQuadrant.getSelectedNote();
     }
-    public void setSelectedNote(Note note)
+    private void setSelectedNotePrivate(Note note)
+    {
+        Note oldNote=setSelectedNote(note);
+        notifier.firePropertyChange(SELECT_NOTE,oldNote,taskQuadrant.getSelectedNote());
+    }
+    public Note setSelectedNote(Note note)
     {
         Note oldNote=taskQuadrant.getSelectedNote();
         taskQuadrant.setSelectedNote(note);
-        notifier.firePropertyChange(SELECT_NOTE,oldNote,taskQuadrant.getSelectedNote());
+        return oldNote;
     }
 
     @Override
@@ -103,6 +108,7 @@ public class WindowPanel extends JPanel {
         }
     }
 
+    // flags whether noteMenu is requested by the listPanel
     public boolean listRequested =false;
 
     public void setListRequested(boolean listRequested) {
@@ -116,18 +122,18 @@ public class WindowPanel extends JPanel {
         private Point startPoint;
         private Point endPoint;
 
+        // flags whether noteMenu is requested by this windowPanel
         private boolean popUp=false;
 
         @Override
         public void mousePressed(MouseEvent e) {
             // if it's handled at the release that it's a right click
-            // then the popUp menu should be reset when a new press is coming
+            // then the noteMenu that is shown on the screen should be reset when a new press is coming
             if(popUp|| listRequested)
             {
                 notifier.firePropertyChange(CLOSE_POPUPMENU,true,false);
                 if(popUp)
                 {
-                    taskQuadrant.setSelectedNote(null);
                     popUp=false;
                 }
             }
@@ -137,7 +143,7 @@ public class WindowPanel extends JPanel {
                 if (currNote.isInRange(e.getPoint())) {
                     startPoint = e.getPoint();
 
-                    setSelectedNote(currNote);
+                    setSelectedNotePrivate(currNote);
 
                     break;
                 } else System.out.println("nah");
@@ -187,7 +193,8 @@ public class WindowPanel extends JPanel {
                 else
                 {
                     // reset the selection
-                    taskQuadrant.setSelectedNote(null);
+//                    taskQuadrant.setSelectedNote(null);
+                    setSelectedNotePrivate(null);
                     repaint();
                 }
                 startPoint = null;
