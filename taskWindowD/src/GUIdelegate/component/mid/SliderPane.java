@@ -22,10 +22,10 @@ public class SliderPane extends JPanel{
         attributeName.setText(attributeStr);
         addComponent();
     }
-    public void addKeyListener(KeyListener kl) {
-        valueSlider.addKeyListener(kl);
-        valueField.addKeyListener(kl);
-    }
+//    public void addKeyListener(KeyListener kl) {
+//        valueSlider.addKeyListener(kl);
+//        valueField.addKeyListener(kl);
+//    }
 //    public void setLabel(String attributeStr)
 //    {
 //        attributeName.setText(attributeStr);

@@ -4,6 +4,7 @@ import GUIdelegate.component.small.ColorButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class ColorPane extends JPanel {
     private JLabel attributeName;
@@ -15,10 +16,16 @@ public class ColorPane extends JPanel {
         add(attributeName);
         add(colorButton);
     }
+
 //    public void setLabel(String attributeStr)
 //    {
 //        attributeName.setText(attributeStr);
 //    }
+
+    public void addActionListener(ActionListener al)
+    {
+        colorButton.addActionListener(al);
+    }
     public void setColor(Color color)
     {
         colorButton.setBackground(color);
