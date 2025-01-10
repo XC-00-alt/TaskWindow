@@ -59,7 +59,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         bottomPanel=new BottomPanel(FRAME_WIDTH,topPanelHeight);
         listPanel=new ListPanel(this,new Dimension(listPanelWidth,FRAME_HEIGHT));
 
-        noteDialog=new NoteDialog(windowPanelWidth/2,windowPanelHeight/2);
+        noteDialog=new NoteDialog(this,windowPanelWidth/2,windowPanelHeight/2);
     }
 
     public void setupFrame()
@@ -229,7 +229,21 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     windowPanel.repaint();
                 }
             });
+        }
+        else if(propName.equals(NoteDialog.CLOSE_DIALOG))
+        {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    noteDialog.reset();
 
+                    windowPanel.setSelectedNote(null);
+                    windowPanel.setListRequested(false);
+                    listPanel.clearSelectedRow();
+
+                    windowPanel.repaint();
+                    listPanel.repaint();
+                }
+            });
         }
     }
 }

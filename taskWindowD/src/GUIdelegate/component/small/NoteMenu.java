@@ -44,7 +44,6 @@ public class NoteMenu extends JPopupMenu implements ActionListener {
         if(e.getSource()==itemDelete)
         {
             selectedNote.delete();
-            selectedNote=null;
         }
         else if(e.getSource()==itemEdit)
         {
@@ -52,5 +51,6 @@ public class NoteMenu extends JPopupMenu implements ActionListener {
             // potential bug here
 //            selectedNote.setSelected(true);
         }
+        selectedNote=null;
     }
 }
