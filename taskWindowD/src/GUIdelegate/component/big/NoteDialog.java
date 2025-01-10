@@ -89,13 +89,19 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==paperColorPane.getColorButton())
+        try {
+            if(e.getSource()==paperColorPane.getColorButton())
+            {
+                Color newColor=paperColorPane.showColorDialog();
+                selectedNote.setPaperColor(newColor);
+            }
+            // if requires undo and redo then not a good setting here
+//        notifier.firePropertyChange(UPDATE_NOTE,null,selectedNote);
+        }catch (Exception exception)
         {
-            Color newColor=paperColorPane.showColorDialog();
-
+            System.out.print(exception.getMessage());
         }
-        // if requires undo and redo then not a good setting here
-        notifier.firePropertyChange(UPDATE_NOTE,null,selectedNote);
+
     }
 
     @Override
