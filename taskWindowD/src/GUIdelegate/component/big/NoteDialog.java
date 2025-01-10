@@ -1,5 +1,6 @@
 package GUIdelegate.component.big;
 
+import GUIdelegate.component.mid.ColorPane;
 import model.Note;
 
 import javax.swing.*;
@@ -14,6 +15,8 @@ public class NoteDialog extends JDialog {
     private int width;
     private int height;
 
+    private ColorPane paperColorPane;
+
     public static final String CLOSE_DIALOG="close edit dialog";
     public NoteDialog(PropertyChangeListener listener,int width, int height)
     {
@@ -26,11 +29,23 @@ public class NoteDialog extends JDialog {
         setTitle("Edit Note");
         notifier=new PropertyChangeSupport(this);
         notifier.addPropertyChangeListener(listener);
+
+        int buttonLen=height/12;
+        setComponents(buttonLen);
+    }
+    public void setComponents(int buttonLen)
+    {
+        setLayout(new FlowLayout());
+        paperColorPane=new ColorPane("paper color",buttonLen);
+        add(paperColorPane);
     }
 
     public void setSelectedNote(Note selectedNote) {
         if(this.selectedNote!=null) this.selectedNote.setSelected(false);
-        if(selectedNote!=null) selectedNote.setSelected(true);
+        if(selectedNote!=null) {
+            selectedNote.setSelected(true);
+            paperColorPane.setColor(selectedNote.getPaperColor());
+        }
         this.selectedNote = selectedNote;
     }
     public void reset()

@@ -111,8 +111,14 @@ public class WindowPanel extends JPanel {
     // flags whether noteMenu is requested by the listPanel
     public boolean listRequested =false;
 
+    // flags whether noteMenu is requested by this windowPanel
+    private boolean popUp=false;
     public void setListRequested(boolean listRequested) {
         this.listRequested = listRequested;
+    }
+
+    public void setPopUp(boolean popUp) {
+        this.popUp = popUp;
     }
 
     /**
@@ -122,8 +128,6 @@ public class WindowPanel extends JPanel {
         private Point startPoint;
         private Point endPoint;
 
-        // flags whether noteMenu is requested by this windowPanel
-        private boolean popUp=false;
 
         @Override
         public void mousePressed(MouseEvent e) {

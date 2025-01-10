@@ -238,6 +238,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
                     windowPanel.setSelectedNote(null);
                     windowPanel.setListRequested(false);
+                    windowPanel.setPopUp(false);
                     listPanel.clearSelectedRow();
 
                     windowPanel.repaint();
