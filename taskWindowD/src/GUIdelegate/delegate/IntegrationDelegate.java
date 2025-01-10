@@ -3,6 +3,8 @@ package GUIdelegate.delegate;
 import GUIdelegate.component.big.*;
 import GUIdelegate.component.small.NoteMenu;
 import model.Note;
+import model.NoteUpdateEnum;
+import model.QuadrantEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -153,6 +155,15 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     noteDialog.setVisible(true);
                 }
             });
+        }
+        else if(NoteUpdateEnum.isUpdateProp(propName))
+        {
+            Note noteUpdate=(Note)eventSrc;
+            if(propName.equals(NoteUpdateEnum.PAPER_COLOR.toString()))
+            {
+                Color newColor=(Color)event.getNewValue();
+            }
+            windowPanel.repaint();
         }
         else if(propName.equals(WindowPanel.OPEN_POPUPMENU))
         {

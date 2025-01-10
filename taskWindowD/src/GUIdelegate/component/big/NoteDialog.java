@@ -26,6 +26,8 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
     private SliderPane heightPane;
 
     public static final String CLOSE_DIALOG="close edit dialog";
+//    public static final String PAPER_COLOR="set paper color";
+    public static final String UPDATE_NOTE="update note";
     public NoteDialog(PropertyChangeListener listener,int width, int height)
     {
         this.width=width;
@@ -90,7 +92,10 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         if(e.getSource()==paperColorPane.getColorButton())
         {
             Color newColor=paperColorPane.showColorDialog();
+
         }
+        // if requires undo and redo then not a good setting here
+        notifier.firePropertyChange(UPDATE_NOTE,null,selectedNote);
     }
 
     @Override

@@ -139,6 +139,7 @@ public class Note {
     }
 
     public void setPaperColor(Color paperColor) {
+        notifier.firePropertyChange(NoteUpdateEnum.PAPER_COLOR.message,this.paperColor,paperColor);
         this.paperColor = paperColor;
     }
 
