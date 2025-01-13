@@ -64,30 +64,35 @@ public class GraphicDelegate {
             // Draws the bound
             g2d.setStroke(noteBoundWidth);
             g.setColor(note.getBoundColor());
-            g.drawRect(note.getX(),note.getY(),note.getWidth(),note.getHeight());
+            g.drawRect(note.getLeft(),note.getTop(),note.getWidth(),note.getHeight());
             // Draw note paper
             g.setColor(note.getPaperColor());
-            g.fillRect(note.getX(),note.getY(),note.getWidth(),note.getHeight());
+            g.fillRect(note.getLeft(),note.getTop(),note.getWidth(),note.getHeight());
 
             // Draws the title
             g.setColor(note.getTitleColor());
             drawWrappedText(g,note.getTitle(),g.getFont(),note.getWidth(), note.getHeight(),
-                    note.getX(),note.getY(),note.getWidth()/8,note.getHeight()/3);
+                    note.getLeft(),note.getTop(),note.getWidth()/8,note.getHeight()/3);
 //            drawWrappedText(g,"测试中文test text text String\n test",g.getFont(),note.getWidth(), note.getHeight(),
-//                    note.getX(),note.getY(),note.getWidth()/8,note.getHeight()/3);
+//                    note.getLeft(),note.getTop(),note.getWidth()/8,note.getHeight()/3);
+
+            // Draws the nail
+            g.setColor(note.getBoundColor());
+            g.fillOval(note.getCentre().x-note.getErrorAllowance(),note.getTop(),
+                    note.getErrorAllowance(),note.getErrorAllowance());
             // Draws selection box
             if(note.isSelected())
             {
                 g2d.setStroke(new BasicStroke(note.getErrorAllowance()));
                 g2d.setColor(Note.getSelectedColor());
-                g2d.drawRect(note.getX()-note.getErrorAllowance(),
-                        note.getY()-note.getErrorAllowance(),
+                g2d.drawRect(note.getLeft()-note.getErrorAllowance(),
+                        note.getTop()-note.getErrorAllowance(),
                         note.getWidth()+note.getErrorAllowance()*2,
                         note.getHeight()+note.getErrorAllowance()*2);
-//                g2d.drawRect(note.getX(),note.getY(),note.getWidth(),note.getHeight());
+//                g2d.drawRect(note.getLeft(),note.getTop(),note.getWidth(),note.getHeight());
                 g2d.setColor(Note.getSelectedFill());
-                g2d.fillRect(note.getX()-note.getErrorAllowance(),
-                        note.getY()-note.getErrorAllowance(),
+                g2d.fillRect(note.getLeft()-note.getErrorAllowance(),
+                        note.getTop()-note.getErrorAllowance(),
                         note.getWidth()+note.getErrorAllowance()*2,
                         note.getHeight()+note.getErrorAllowance()*2);
             }

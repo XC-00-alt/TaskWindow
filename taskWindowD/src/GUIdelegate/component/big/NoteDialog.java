@@ -48,8 +48,8 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         setLayout(new FlowLayout());
         paperColorPane=new ColorPane("paper color",buttonLen);
         rotationPane=new SliderPane("rotation",this.width/4,buttonLen,0,360);
-        widthPane=new SliderPane("width",this.width/5,buttonLen,25,this.width);
-        heightPane=new SliderPane("height",this.width/5,buttonLen,25,this.width);
+        widthPane=new SliderPane("width",this.width/6,buttonLen,25,this.width/4);
+        heightPane=new SliderPane("height",this.width/6,buttonLen,25,this.width/4);
 
         paperColorPane.addActionListener(this);
 
@@ -68,6 +68,8 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         if(selectedNote!=null) {
             selectedNote.setSelected(true);
             paperColorPane.setColor(selectedNote.getPaperColor());
+            widthPane.setValue(selectedNote.getWidth()/2);
+            heightPane.setValue(selectedNote.getHeight()/2);
         }
         this.selectedNote = selectedNote;
     }
@@ -106,6 +108,21 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
 
     @Override
     public void stateChanged(ChangeEvent e) {
-
+        try {
+            if(e.getSource()==widthPane.getValueSlider())
+            {
+                int newHalfWidth=widthPane.getValue();
+                selectedNote.setHalfWidth(newHalfWidth);
+                widthPane.setValue(newHalfWidth);
+            }
+//            else if(e.getSource()==rotationPane.getValueSlider())
+//            {
+//                int newRotation=rotationPane.getValue();
+//                selectedNote.setRotationDegree(newRotation);
+//            }
+        }catch (Exception exception)
+        {
+            System.out.print(exception.getMessage());
+        }
     }
 }

@@ -10,6 +10,7 @@ public class Note {
     private Point centre;
     private Color boundColor;
     private Color paperColor;
+//    private int rotationDegree;
     private DefaultMutableTreeNode node;
     
     private String title="默认标题";
@@ -142,6 +143,14 @@ public class Note {
         notifier.firePropertyChange(NoteUpdateEnum.PAPER_COLOR.message,this.paperColor,paperColor);
         this.paperColor = paperColor;
     }
+//
+//    public int getRotationDegree() {
+//        return rotationDegree;
+//    }
+//
+//    public void setRotationDegree(int rotationDegree) {
+//        this.rotationDegree = rotationDegree;
+//    }
 
     public Color getTitleColor() {
         return titleColor;
@@ -166,14 +175,15 @@ public class Note {
      */
     public boolean isInRange(Point point)
     {
-        return point.getX()>= this.getX()-errorAllowance&&point.getX()<=centre.getX()+halfHeight+errorAllowance
-        &&point.getY()>= this.getY()-errorAllowance&&point.getY()<=centre.getY()+halfHeight+errorAllowance;
+        // needs changes if rotation is added
+        return point.getX()>= this.getLeft()-errorAllowance&&point.getX()<=centre.x+halfHeight+errorAllowance
+        &&point.getY()>= this.getTop()-errorAllowance&&point.getY()<=centre.y+halfHeight+errorAllowance;
     }
 
     /**
      * @return the left bound of the note
      */
-    public int getX()
+    public int getLeft()
     {
         return centre.x-halfWidth;
     }
@@ -181,7 +191,7 @@ public class Note {
     /**
      * @return the top bound of the note
      */
-    public int getY()
+    public int getTop()
     {
         return centre.y-halfHeight;
     }
@@ -199,7 +209,9 @@ public class Note {
     }
 
     public void setHalfWidth(int halfWidth) {
+        int oldVal=this.halfWidth;
         this.halfWidth = halfWidth;
+        notifier.firePropertyChange(NoteUpdateEnum.NOTE_WIDTH.message,oldVal,halfWidth);
     }
 
     public void setCentre(Point centre) {
