@@ -63,6 +63,8 @@ public class GraphicDelegate {
         {
             // Draws the bound
             g2d.setStroke(noteBoundWidth);
+            g2d.rotate(Math.toRadians(note.getRotationDegree()),
+                    note.getCentre().x,note.getCentre().y);
             g.setColor(note.getBoundColor());
             g.drawRect(note.getLeft(),note.getTop(),note.getWidth(),note.getHeight());
             // Draw note paper
@@ -96,6 +98,9 @@ public class GraphicDelegate {
                         note.getWidth()+note.getErrorAllowance()*2,
                         note.getHeight()+note.getErrorAllowance()*2);
             }
+            // rotate back
+            g2d.rotate(-Math.toRadians(note.getRotationDegree()),
+                    note.getCentre().x,note.getCentre().y);
         }
     }
 }

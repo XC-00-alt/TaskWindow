@@ -1,5 +1,7 @@
 package model;
 
+import util.CalculationWithBound;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
@@ -10,7 +12,7 @@ public class Note {
     private Point centre;
     private Color boundColor;
     private Color paperColor;
-//    private int rotationDegree;
+    private int rotationDegree;
     private DefaultMutableTreeNode node;
     
     private String title="默认标题";
@@ -143,14 +145,16 @@ public class Note {
         notifier.firePropertyChange(NoteUpdateEnum.PAPER_COLOR.message,this.paperColor,paperColor);
         this.paperColor = paperColor;
     }
-//
-//    public int getRotationDegree() {
-//        return rotationDegree;
-//    }
-//
-//    public void setRotationDegree(int rotationDegree) {
-//        this.rotationDegree = rotationDegree;
-//    }
+
+    public int getRotationDegree() {
+        return rotationDegree;
+    }
+
+    public void setRotationDegree(int rotationDegree) {
+        int oldVal=this.rotationDegree;
+        this.rotationDegree = rotationDegree;
+        notifier.firePropertyChange(NoteUpdateEnum.ROTATION.message,oldVal,rotationDegree);
+    }
 
     public Color getTitleColor() {
         return titleColor;
@@ -175,6 +179,8 @@ public class Note {
      */
     public boolean isInRange(Point point)
     {
+        double rotationRadians=Math.toRadians(rotationDegree);
+        point=CalculationWithBound.rotateAround(point,centre,-rotationRadians);
         // needs changes if rotation is added
         return point.getX()>= this.getLeft()-errorAllowance&&point.getX()<=centre.x+halfWidth+errorAllowance
         &&point.getY()>= this.getTop()-errorAllowance&&point.getY()<=centre.y+halfHeight+errorAllowance;

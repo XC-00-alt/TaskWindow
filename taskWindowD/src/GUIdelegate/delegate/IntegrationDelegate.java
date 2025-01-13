@@ -164,6 +164,10 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             {
                 Color newColor=(Color)event.getNewValue();
             }
+            else if(propName.equals(NoteUpdateEnum.ROTATION.toString()))
+            {
+                int newRotation=(int) event.getNewValue();
+            }
             else if(propName.equals(NoteUpdateEnum.NOTE_WIDTH.toString()))
             {
                 int newHalfWidth=(int)event.getNewValue();

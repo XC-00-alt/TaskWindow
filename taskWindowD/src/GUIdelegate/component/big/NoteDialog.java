@@ -68,6 +68,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         if(selectedNote!=null) {
             selectedNote.setSelected(true);
             paperColorPane.setColor(selectedNote.getPaperColor());
+            rotationPane.setValue(selectedNote.getRotationDegree());
             widthPane.setValue(selectedNote.getWidth()/2);
             heightPane.setValue(selectedNote.getHeight()/2);
         }
@@ -121,11 +122,12 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                 selectedNote.setHalfHeight(newHalfHeight);
                 heightPane.setValue(newHalfHeight);
             }
-//            else if(e.getSource()==rotationPane.getValueSlider())
-//            {
-//                int newRotation=rotationPane.getValue();
-//                selectedNote.setRotationDegree(newRotation);
-//            }
+            else if(e.getSource()==rotationPane.getValueSlider())
+            {
+                int newRotation=rotationPane.getValue();
+                selectedNote.setRotationDegree(newRotation);
+                rotationPane.setValue(newRotation);
+            }
         }catch (Exception exception)
         {
             System.out.print(exception.getMessage());
