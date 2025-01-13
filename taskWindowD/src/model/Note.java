@@ -201,7 +201,9 @@ public class Note {
     }
 
     public void setHalfHeight(int halfHeight) {
+        int oldVal=this.halfHeight;
         this.halfHeight = halfHeight;
+        notifier.firePropertyChange(NoteUpdateEnum.NOTE_HEIGHT.message,oldVal,halfHeight);
     }
 
     public int getWidth() {

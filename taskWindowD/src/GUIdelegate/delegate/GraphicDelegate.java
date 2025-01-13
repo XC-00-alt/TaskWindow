@@ -76,10 +76,10 @@ public class GraphicDelegate {
 //            drawWrappedText(g,"测试中文test text text String\n test",g.getFont(),note.getWidth(), note.getHeight(),
 //                    note.getLeft(),note.getTop(),note.getWidth()/8,note.getHeight()/3);
 
-            // Draws the nail
-            g.setColor(note.getBoundColor());
-            g.fillOval(note.getCentre().x-note.getErrorAllowance(),note.getTop(),
-                    note.getErrorAllowance(),note.getErrorAllowance());
+//            // Draws the nail
+//            g.setColor(note.getBoundColor());
+//            g.fillOval(note.getCentre().x-note.getErrorAllowance(),note.getTop(),
+//                    note.getErrorAllowance(),note.getErrorAllowance());
             // Draws selection box
             if(note.isSelected())
             {

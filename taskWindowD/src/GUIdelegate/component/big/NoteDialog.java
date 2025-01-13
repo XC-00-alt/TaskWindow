@@ -115,6 +115,12 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                 selectedNote.setHalfWidth(newHalfWidth);
                 widthPane.setValue(newHalfWidth);
             }
+            else if(e.getSource()==heightPane.getValueSlider())
+            {
+                int newHalfHeight=heightPane.getValue();
+                selectedNote.setHalfHeight(newHalfHeight);
+                heightPane.setValue(newHalfHeight);
+            }
 //            else if(e.getSource()==rotationPane.getValueSlider())
 //            {
 //                int newRotation=rotationPane.getValue();

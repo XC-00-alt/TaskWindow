@@ -168,6 +168,10 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             {
                 int newHalfWidth=(int)event.getNewValue();
             }
+            else if(propName.equals(NoteUpdateEnum.NOTE_HEIGHT.toString()))
+            {
+                int newHalfHeight=(int) event.getNewValue();
+            }
         }
         else if(propName.equals(WindowPanel.OPEN_POPUPMENU))
         {
