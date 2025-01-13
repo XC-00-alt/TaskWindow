@@ -51,6 +51,6 @@ public class NoteMenu extends JPopupMenu implements ActionListener {
             // potential bug here
 //            selectedNote.setSelected(true);
         }
-        selectedNote=null;
+//        selectedNote=null;
     }
 }

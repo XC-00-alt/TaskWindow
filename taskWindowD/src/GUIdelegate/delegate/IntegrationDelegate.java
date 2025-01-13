@@ -153,6 +153,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     Note note2bEdit=(Note)eventSrc;
                     noteDialog.setSelectedNote(note2bEdit);
                     noteDialog.setVisible(true);
+                    noteMenu.reset();
                 }
             });
         }
