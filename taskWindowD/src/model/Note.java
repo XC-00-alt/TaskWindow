@@ -176,7 +176,7 @@ public class Note {
     public boolean isInRange(Point point)
     {
         // needs changes if rotation is added
-        return point.getX()>= this.getLeft()-errorAllowance&&point.getX()<=centre.x+halfHeight+errorAllowance
+        return point.getX()>= this.getLeft()-errorAllowance&&point.getX()<=centre.x+halfWidth+errorAllowance
         &&point.getY()>= this.getTop()-errorAllowance&&point.getY()<=centre.y+halfHeight+errorAllowance;
     }
 
