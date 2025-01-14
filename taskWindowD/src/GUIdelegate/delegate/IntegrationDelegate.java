@@ -4,7 +4,6 @@ import GUIdelegate.component.big.*;
 import GUIdelegate.component.small.NoteMenu;
 import model.Note;
 import model.NoteUpdateEnum;
-import model.QuadrantEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -154,6 +153,10 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     noteDialog.setSelectedNote(note2bEdit);
                     noteDialog.setVisible(true);
                     noteMenu.reset();
+
+                    windowPanel.setMenuPopUp(false);
+                    // flags that there is an opened dialog
+                    windowPanel.setDialogInAction(true);
                 }
             });
         }
@@ -262,7 +265,9 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
                     windowPanel.setSelectedNote(null);
                     windowPanel.setListRequested(false);
-                    windowPanel.setPopUp(false);
+                    windowPanel.setMenuPopUp(false);
+                    windowPanel.setDialogInAction(false);
+
                     listPanel.clearSelectedRow();
 
                     windowPanel.repaint();

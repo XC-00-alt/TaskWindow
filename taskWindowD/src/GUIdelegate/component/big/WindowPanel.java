@@ -109,16 +109,23 @@ public class WindowPanel extends JPanel {
     }
 
     // flags whether noteMenu is requested by the listPanel
-    public boolean listRequested =false;
+    private boolean listRequested =false;
 
     // flags whether noteMenu is requested by this windowPanel
-    private boolean popUp=false;
+    private boolean menuPopUp =false;
+
+    private boolean dialogInAction=false;
+
     public void setListRequested(boolean listRequested) {
         this.listRequested = listRequested;
     }
 
-    public void setPopUp(boolean popUp) {
-        this.popUp = popUp;
+    public void setMenuPopUp(boolean menuPopUp) {
+        this.menuPopUp = menuPopUp;
+    }
+
+    public void setDialogInAction(boolean dialogInAction) {
+        this.dialogInAction = dialogInAction;
     }
 
     /**
@@ -133,13 +140,17 @@ public class WindowPanel extends JPanel {
         public void mousePressed(MouseEvent e) {
             // if it's handled at the release that it's a right click
             // then the noteMenu that is shown on the screen should be reset when a new press is coming
-            if(popUp|| listRequested)
+            if(menuPopUp || listRequested)
             {
                 notifier.firePropertyChange(CLOSE_POPUPMENU,true,false);
-                if(popUp)
+                if(menuPopUp)
                 {
-                    popUp=false;
+                    menuPopUp =false;
                 }
+            }
+            else if(dialogInAction)
+            {
+                notifier.firePropertyChange(NoteDialog.CLOSE_DIALOG,getSelectedNote(),null);
             }
 
             for (int i = taskQuadrant.getNoteList().size() - 1; i > -1; i--) {
@@ -185,7 +196,7 @@ public class WindowPanel extends JPanel {
                 if(e.isPopupTrigger())
                 {
                     // set popUp flag true
-                    popUp=true;
+                    menuPopUp =true;
 
                     // show the popUp menu
                     notifier.firePropertyChange(OPEN_POPUPMENU,null,e);

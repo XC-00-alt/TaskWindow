@@ -110,7 +110,7 @@ public class ListPanel extends JScrollPane{
         clearSelectedRow();
         if(selectedNote!=null&&selectedNote.isSelected())
         {
-            System.out.println("listPane call");
+//            System.out.println("listPane call");
             DefaultMutableTreeNode node =selectedNote.getNode();
             TreePath path=new TreePath(node.getPath());
             jTree.setSelectionPath(path);

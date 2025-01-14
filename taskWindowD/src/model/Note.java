@@ -181,7 +181,7 @@ public class Note {
     {
         double rotationRadians=Math.toRadians(rotationDegree);
         point=CalculationWithBound.rotateAround(point,centre,-rotationRadians);
-        // needs changes if rotation is added
+
         return point.getX()>= this.getLeft()-errorAllowance&&point.getX()<=centre.x+halfWidth+errorAllowance
         &&point.getY()>= this.getTop()-errorAllowance&&point.getY()<=centre.y+halfHeight+errorAllowance;
     }

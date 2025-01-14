@@ -110,23 +110,28 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
     @Override
     public void stateChanged(ChangeEvent e) {
         try {
-            if(e.getSource()==widthPane.getValueSlider())
+            // when open a new edit after finishing last edit with the sliders
+            // the dialog will pass the changed value to null object before the new selected note comes in
+            if(selectedNote!=null)
             {
-                int newHalfWidth=widthPane.getValue();
-                selectedNote.setHalfWidth(newHalfWidth);
-                widthPane.setValue(newHalfWidth);
-            }
-            else if(e.getSource()==heightPane.getValueSlider())
-            {
-                int newHalfHeight=heightPane.getValue();
-                selectedNote.setHalfHeight(newHalfHeight);
-                heightPane.setValue(newHalfHeight);
-            }
-            else if(e.getSource()==rotationPane.getValueSlider())
-            {
-                int newRotation=rotationPane.getValue();
-                selectedNote.setRotationDegree(newRotation);
-                rotationPane.setValue(newRotation);
+                if(e.getSource()==widthPane.getValueSlider())
+                {
+                    int newHalfWidth=widthPane.getValue();
+                    selectedNote.setHalfWidth(newHalfWidth);
+                    widthPane.setValue(newHalfWidth);
+                }
+                else if(e.getSource()==heightPane.getValueSlider())
+                {
+                    int newHalfHeight=heightPane.getValue();
+                    selectedNote.setHalfHeight(newHalfHeight);
+                    heightPane.setValue(newHalfHeight);
+                }
+                else if(e.getSource()==rotationPane.getValueSlider())
+                {
+                    int newRotation=rotationPane.getValue();
+                    selectedNote.setRotationDegree(newRotation);
+                    rotationPane.setValue(newRotation);
+                }
             }
         }catch (Exception exception)
         {
