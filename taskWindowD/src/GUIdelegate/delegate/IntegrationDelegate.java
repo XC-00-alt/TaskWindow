@@ -139,6 +139,9 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     listPanel.deleteNote(noteDel);
                     windowPanel.removeNote(noteDel);
 
+                    windowPanel.setMenuPopUp(false);
+                    windowPanel.setListRequested(false);
+
                     // refresh the view
                     listPanel.repaint();
                     windowPanel.repaint();
@@ -154,7 +157,9 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     noteDialog.setVisible(true);
                     noteMenu.reset();
 
+                    // indicates the noteMenu is closed
                     windowPanel.setMenuPopUp(false);
+//                    windowPanel.setListRequested(false);
                     // flags that there is an opened dialog
                     windowPanel.setDialogInAction(true);
                 }
@@ -241,6 +246,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     windowPanel.setSelectedNote(selectedNote);
                     if(selectedNote!=null)
                     {
+                        noteDialog.reset();
                         // if it should trigger the noteMenu
                         if(e.isPopupTrigger()) {
                             // show the noteMenu at the place where it should be

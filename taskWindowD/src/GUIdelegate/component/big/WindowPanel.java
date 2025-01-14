@@ -142,11 +142,12 @@ public class WindowPanel extends JPanel {
             // then the noteMenu that is shown on the screen should be reset when a new press is coming
             if(menuPopUp || listRequested)
             {
+                // these 2 boolean flags are related to the state of noteMenu
                 notifier.firePropertyChange(CLOSE_POPUPMENU,true,false);
-                if(menuPopUp)
-                {
-                    menuPopUp =false;
-                }
+//                if(menuPopUp)
+//                {
+//                    menuPopUp =false;
+//                }
             }
             else if(dialogInAction)
             {
