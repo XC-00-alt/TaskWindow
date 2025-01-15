@@ -126,6 +126,49 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                 }
             });
         }
+        else if(propName.equals(WindowPanel.SELECT_NOTE))
+        {
+            // if the note is selected from the windowPanel
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    Note newSelectedNote=(Note)event.getNewValue();
+
+                    // update the selection in jTree
+                    listPanel.showSelectedNote(newSelectedNote);
+//                    listPanel.repaint();
+                }
+            });
+        }
+        else if (propName.equals(ListPanel.SELECT_NOTE))
+        {
+            // if the note is selected from the listPanel
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    MouseEvent e = (MouseEvent) event.getNewValue();
+
+                    // get the selected note from the jTree
+                    Note selectedNote=listPanel.getSelectedNote(e);
+                    // set the selectedNote in the windowPanel
+                    windowPanel.setSelectedNote(selectedNote);
+                    if(selectedNote!=null)
+                    {
+                        noteDialog.reset();
+                        // if it should trigger the noteMenu
+                        if(e.isPopupTrigger()) {
+                            // show the noteMenu at the place where it should be
+                            noteMenu.show(e.getComponent(), e.getX(), e.getY());
+                            // set the menu target on the selected note
+                            noteMenu.setSelectedNote(selectedNote);
+                            // tell the windowPanel that noteMenu is requested by the listPanel
+                            windowPanel.setListRequested(true);
+                        }
+                        // update the selection in jTree
+                        listPanel.showSelectedNote(selectedNote);
+                    }
+                    windowPanel.repaint();
+                }
+            });
+        }
         else if(propName.equals(Note.NOTE_DELETE))
         {
             // when the note is set to be deleted
@@ -167,24 +210,28 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         }
         else if(NoteUpdateEnum.isUpdateProp(propName))
         {
-            Note noteUpdate=(Note)eventSrc;
-            windowPanel.repaint();
-            if(propName.equals(NoteUpdateEnum.PAPER_COLOR.toString()))
-            {
-                Color newColor=(Color)event.getNewValue();
-            }
-            else if(propName.equals(NoteUpdateEnum.ROTATION.toString()))
-            {
-                int newRotation=(int) event.getNewValue();
-            }
-            else if(propName.equals(NoteUpdateEnum.NOTE_WIDTH.toString()))
-            {
-                int newHalfWidth=(int)event.getNewValue();
-            }
-            else if(propName.equals(NoteUpdateEnum.NOTE_HEIGHT.toString()))
-            {
-                int newHalfHeight=(int) event.getNewValue();
-            }
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    Note noteUpdate=(Note)eventSrc;
+                    windowPanel.repaint();
+                    if(propName.equals(NoteUpdateEnum.PAPER_COLOR.toString()))
+                    {
+                        Color newColor=(Color)event.getNewValue();
+                    }
+                    else if(propName.equals(NoteUpdateEnum.ROTATION.toString()))
+                    {
+                        int newRotation=(int) event.getNewValue();
+                    }
+                    else if(propName.equals(NoteUpdateEnum.NOTE_WIDTH.toString()))
+                    {
+                        int newHalfWidth=(int)event.getNewValue();
+                    }
+                    else if(propName.equals(NoteUpdateEnum.NOTE_HEIGHT.toString()))
+                    {
+                        int newHalfHeight=(int) event.getNewValue();
+                    }
+                }
+            });
         }
         else if(propName.equals(WindowPanel.OPEN_POPUPMENU))
         {
@@ -217,49 +264,6 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
                     windowPanel.repaint();
                     listPanel.repaint();
-                }
-            });
-        }
-        else if(propName.equals(WindowPanel.SELECT_NOTE))
-        {
-            // if the note is selected from the windowPanel
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    Note newSelectedNote=(Note)event.getNewValue();
-
-                    // update the selection in jTree
-                    listPanel.showSelectedNote(newSelectedNote);
-//                    listPanel.repaint();
-                }
-            });
-        }
-        else if (propName.equals(ListPanel.SELECT_NOTE))
-        {
-            // if the note is selected from the listPanel
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    MouseEvent e = (MouseEvent) event.getNewValue();
-
-                    // get the selected note from the jTree
-                    Note selectedNote=listPanel.getSelectedNote(e);
-                    // set the selectedNote in the windowPanel
-                    windowPanel.setSelectedNote(selectedNote);
-                    if(selectedNote!=null)
-                    {
-                        noteDialog.reset();
-                        // if it should trigger the noteMenu
-                        if(e.isPopupTrigger()) {
-                            // show the noteMenu at the place where it should be
-                            noteMenu.show(e.getComponent(), e.getX(), e.getY());
-                            // set the menu target on the selected note
-                            noteMenu.setSelectedNote(selectedNote);
-                            // tell the windowPanel that noteMenu is requested by the listPanel
-                            windowPanel.setListRequested(true);
-                        }
-                        // update the selection in jTree
-                        listPanel.showSelectedNote(selectedNote);
-                    }
-                    windowPanel.repaint();
                 }
             });
         }
