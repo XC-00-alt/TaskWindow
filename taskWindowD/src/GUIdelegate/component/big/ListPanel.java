@@ -39,13 +39,7 @@ public class ListPanel extends JScrollPane{
             root.add(node);
         }
         jTree =new JTree(root);
-//        jTree.addTreeSelectionListener(this);
         jTree.setBackground(Color.MAGENTA);
-//        https://docs.oracle.com/javase/tutorial/uiswing/components/tree.html#display
-//        jTree.setEditable(true);
-//        jTree.getSelectionModel().setSelectionMode
-//                (TreeSelectionModel.SINGLE_TREE_SELECTION);
-//        jTree.setShowsRootHandles(true);
 
         jTree.addMouseListener(treeMouseAdapter);
 
@@ -66,7 +60,6 @@ public class ListPanel extends JScrollPane{
     }
     public void deleteNote(Note note)
     {
-//        quadrantNodes[oldVal-1].remove(note.getNode());
         note.getNode().removeFromParent();
     }
     public void changeNote(Note note,Integer oldVal,Integer newVal)
@@ -97,20 +90,11 @@ public class ListPanel extends JScrollPane{
         renderer.setOpenIcon(null);
     }
 
-//    /**  implements TreeSelectionListener */
-//    @Override
-//    public void valueChanged(TreeSelectionEvent e) {
-//        //ref:https://blog.csdn.net/dd_Mr/article/details/122262024
-//        DefaultMutableTreeNode node=(DefaultMutableTreeNode)jTree.getLastSelectedPathComponent();
-//        System.out.println(node.getUserObject().getClass());
-//        System.out.println(node.getUserObject().toString());
-//    }
     public void showSelectedNote(Note selectedNote)
     {
         clearSelectedRow();
         if(selectedNote!=null&&selectedNote.isSelected())
         {
-//            System.out.println("listPane call");
             DefaultMutableTreeNode node =selectedNote.getNode();
             TreePath path=new TreePath(node.getPath());
             jTree.setSelectionPath(path);

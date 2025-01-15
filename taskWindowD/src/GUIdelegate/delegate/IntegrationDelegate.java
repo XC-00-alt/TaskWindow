@@ -116,6 +116,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         if(propName.equals(Note.NOTE_QUADRANT_CHANGE))
         {
             // when the note fires the change in quadrant
+            // which happens when the note is dragged and dropped in windowPanel
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     // change the position of the note in the jTree of the listPanel
@@ -123,6 +124,9 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     // when the note is dragged (selected), the list should be updated
                     listPanel.showSelectedNote(windowPanel.getSelectedNote());
                     listPanel.repaint();
+
+                    // windowPanel operations are not needed here
+                    // since they have already happened before here
                 }
             });
         }
@@ -135,7 +139,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
                     // update the selection in jTree
                     listPanel.showSelectedNote(newSelectedNote);
-//                    listPanel.repaint();
+
+                    // again, windowPanel operations are not needed here
                 }
             });
         }
@@ -152,16 +157,21 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     windowPanel.setSelectedNote(selectedNote);
                     if(selectedNote!=null)
                     {
+                        // prevents new object being set with attributes of the old object
                         noteDialog.reset();
+
                         // if it should trigger the noteMenu
                         if(e.isPopupTrigger()) {
                             // show the noteMenu at the place where it should be
                             noteMenu.show(e.getComponent(), e.getX(), e.getY());
+
                             // set the menu target on the selected note
                             noteMenu.setSelectedNote(selectedNote);
+
                             // tell the windowPanel that noteMenu is requested by the listPanel
                             windowPanel.setListRequested(true);
                         }
+
                         // update the selection in jTree
                         listPanel.showSelectedNote(selectedNote);
                     }
@@ -202,7 +212,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
                     // indicates the noteMenu is closed
                     windowPanel.setMenuPopUp(false);
-//                    windowPanel.setListRequested(false);
+                    windowPanel.setListRequested(false);
+
                     // flags that there is an opened dialog
                     windowPanel.setDialogInAction(true);
                 }
@@ -248,13 +259,16 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         }
         else if (propName.equals(WindowPanel.CLOSE_POPUPMENU)) {
             // when the noteMenu is closed from windowPanel
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
+            // don't invoke later but dealt right away is better
+//            SwingUtilities.invokeLater(new Runnable() {
+//                public void run() {
                     // close the noteMenu and set its target to be null
                     noteMenu.reset();
 
-                    // either way the noteMenu is no longer requested by the listPanel
+                    // set the 2 flags to indicate the windowPanel that
+                    // the noteMenu is closed
                     windowPanel.setListRequested(false);
+                    windowPanel.setMenuPopUp(false);
 
                     // clear the selection
                     windowPanel.setSelectedNote(null);
@@ -264,26 +278,26 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
                     windowPanel.repaint();
                     listPanel.repaint();
-                }
-            });
+//                }
+//            });
         }
         else if(propName.equals(NoteDialog.CLOSE_DIALOG))
         {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
+//            SwingUtilities.invokeLater(new Runnable() {
+//                public void run() {
                     noteDialog.reset();
 
                     windowPanel.setSelectedNote(null);
-                    windowPanel.setListRequested(false);
-                    windowPanel.setMenuPopUp(false);
+//                    windowPanel.setListRequested(false);
+//                    windowPanel.setMenuPopUp(false);
                     windowPanel.setDialogInAction(false);
 
                     listPanel.clearSelectedRow();
 
                     windowPanel.repaint();
                     listPanel.repaint();
-                }
-            });
+//                }
+//            });
         }
     }
 }

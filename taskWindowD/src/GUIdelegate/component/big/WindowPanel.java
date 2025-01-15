@@ -148,10 +148,6 @@ public class WindowPanel extends JPanel {
             {
                 // these 2 boolean flags are related to the state of noteMenu
                 notifier.firePropertyChange(CLOSE_POPUPMENU,true,false);
-//                if(menuPopUp)
-//                {
-//                    menuPopUp =false;
-//                }
             }
             else if(dialogInAction)
             {
@@ -213,7 +209,6 @@ public class WindowPanel extends JPanel {
                 else
                 {
                     // reset the selection
-//                    taskQuadrant.setSelectedNote(null);
                     setSelectedNotePrivate(null);
                     repaint();
                 }
