@@ -19,10 +19,14 @@ public class WindowPanel extends JPanel {
     // since painting selection doesn't require it
 //    private Note selectedNote;
     private TaskQuadrant taskQuadrant;
-    private Color IMPORTANT_URGENT=new Color(0xFFE562);
-    private Color IMPORTANT_NON_URGENT=new Color(0xA6EE9D);
-    private Color UNIMPORTANT_URGENT=new Color(0xFFB662);
-    private Color UNIMPORTANT_NON_URGENT=new Color(0xEE9D9D);
+//    private Color IMPORTANT_URGENT=new Color(0xD8FFE0);
+//    private Color IMPORTANT_NON_URGENT=new Color(0xFFF3C3);
+//    private Color UNIMPORTANT_URGENT=new Color(0xD1E7FF);
+//    private Color UNIMPORTANT_NON_URGENT=new Color(0xFFD5D5);
+    private Color IMPORTANT_URGENT=new Color(0xFFF3C3);
+    private Color IMPORTANT_NON_URGENT=new Color(0xD8FFE0);
+    private Color UNIMPORTANT_URGENT=new Color(0xFFE4C5);
+    private Color UNIMPORTANT_NON_URGENT=new Color(0xFFD5D5);
 
 //    private NoteMenu noteMenu=new NoteMenu();
     private PropertyChangeSupport notifier;
