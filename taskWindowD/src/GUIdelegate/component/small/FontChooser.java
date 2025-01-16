@@ -18,6 +18,7 @@ public class FontChooser extends JPanel {
         comboBox=new JComboBox<>(fonts);
         this.add(comboBox);
         setPreferredSize(new Dimension(width,height));
+        comboBox.setPreferredSize(new Dimension(width,height));
     }
 
     public JComboBox<String> getComboBox() {
