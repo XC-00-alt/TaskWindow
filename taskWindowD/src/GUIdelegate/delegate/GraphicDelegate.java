@@ -65,8 +65,9 @@ public class GraphicDelegate {
         {
             if(note.getTitleFont()==null)
             {
+//                System.out.println("set font: "+defaultFont.getName());
                 note.setTitleFont(defaultFont);
-                note.setTitleFontName(note.getTitleFont().getFontName());
+                note.setTitleFontName(note.getTitleFont().getName());
             }
             // Draws the bound
             g2d.setStroke(noteBoundWidth);

@@ -78,6 +78,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
             widthPane.setValue(selectedNote.getWidth()/2);
             heightPane.setValue(selectedNote.getHeight()/2);
             titlePane.setSelectedFont(selectedNote.getTitleFontName());
+            System.out.println(selectedNote.getTitleFontName());
         }
         this.selectedNote = selectedNote;
     }
