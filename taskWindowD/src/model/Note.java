@@ -8,32 +8,49 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class Note {
-//    private MyVector centre;
+    /**
+     * ============Basic Attribute============
+     */
     private Point centre;
     private Color boundColor;
     private Color paperColor;
     private int rotationDegree;
-    private DefaultMutableTreeNode node;
-    
-    private String title="默认标题";
-    private String titleFontName;
-    private Color titleColor=Color.black;
-    
-    private String description;
-    
     // half of the width of this note
     private int halfWidth=25;
     // half of the height of this note
     private int halfHeight=25;
-
     private double marginXRatio=0.125;
     private double marginYRatio=0.333;
 
     //the flag indicating whether this note is selected or not
     private boolean isSelected=false;
-    
-//    private Integer quadrant;
     private QuadrantEnum quadrantCode;
+    /**
+     * ============Helpers============
+     */
+    private PropertyChangeSupport notifier;
+    private DefaultMutableTreeNode node;
+
+    /**
+     * ============Title Attribute============
+     */
+    private String title="默认标题";
+    private Font titleFont=null;
+
+    private boolean titleBold=false;
+    private String titleFontName;
+    private Color titleColor=Color.black;
+
+    /**
+     * ============Description Attributes============
+     */
+    private String description;
+    
+
+
+    /**
+     * ============Attributes That Is Usually Unchanged============
+     */
     // used in the isInRange method, allows the note to be selected with this acceptable tolerance
     private int errorAllowance=5;
     
@@ -45,7 +62,7 @@ public class Note {
     public static final String NOTE_DELETE ="delete note";
 
     public static final String NOTE_TO_BE_EDIT ="summon edit note";
-    private PropertyChangeSupport notifier;
+
     
     public Note(int x, int y,QuadrantEnum quadrantEnum)
     {
@@ -163,6 +180,54 @@ public class Note {
 
     public void setTitleColor(Color titleColor) {
         this.titleColor = titleColor;
+    }
+
+    public void setTitleFont(Font titleFont) {
+        Font oldFont=this.titleFont;
+        this.titleFont = titleFont;
+        if(oldFont!=null) {
+            notifier.firePropertyChange(NoteUpdateEnum.TITLE_FONT.message,oldFont,titleFont);
+        }
+    }
+
+    public String getTitleFontName() {
+        return titleFontName;
+    }
+
+    public void setTitleFontName(String titleFontName) {
+        if(!titleFontName.equals(this.titleFontName))
+        {
+            this.titleFontName = titleFontName;
+            try {
+                setTitleFont(new Font(titleFontName,titleFont.getStyle(),titleFont.getSize()));
+            }catch (Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void setTitleBold(boolean titleBold) {
+        if(this.titleBold!=titleBold)
+        {
+            this.titleBold = titleBold;
+            try {
+                setTitleFont(new Font(titleFontName,getBold(),titleFont.getSize()));
+            }catch (Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public int getBold()
+    {
+        if(titleBold) return Font.BOLD;
+        else return Font.PLAIN;
+    }
+
+    public Font getTitleFont() {
+        return titleFont;
     }
 
     public String getTitle() {

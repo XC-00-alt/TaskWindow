@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.List;
 
 public class GraphicDelegate {
+    private static Font defaultFont=null;
     private static final BasicStroke noteBoundWidth=new BasicStroke(1);
     //ref:https://www.cnblogs.com/LiuFqiang/p/16949220.html
 
@@ -59,8 +60,14 @@ public class GraphicDelegate {
     public static void drawNotes(Graphics g, List<Note> noteList)
     {
         Graphics2D g2d = (Graphics2D) g;
+        if(defaultFont==null) defaultFont=g.getFont();
         for(Note note:noteList)
         {
+            if(note.getTitleFont()==null)
+            {
+                note.setTitleFont(defaultFont);
+                note.setTitleFontName(note.getTitleFont().getFontName());
+            }
             // Draws the bound
             g2d.setStroke(noteBoundWidth);
             g2d.rotate(Math.toRadians(note.getRotationDegree()),
@@ -73,6 +80,7 @@ public class GraphicDelegate {
 
             // Draws the title
             g.setColor(note.getTitleColor());
+            g.setFont(note.getTitleFont());
             drawWrappedText(g,note.getTitle(),g.getFont(),note.getWidth(), note.getHeight(),
                     note.getLeft(),note.getTop(),note.getWidth()/8,note.getHeight()/3);
 //            drawWrappedText(g,"测试中文test text text String\n test",g.getFont(),note.getWidth(), note.getHeight(),

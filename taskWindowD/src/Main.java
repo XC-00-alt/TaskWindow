@@ -4,7 +4,7 @@ import util.FrameDemo;
 
 public class Main {
     public static void main(String[] args) {
-//        IntegrationDelegate integrationDelegate=new IntegrationDelegate();
-        FrameDemo frameDemo=new FrameDemo();
+        IntegrationDelegate integrationDelegate=new IntegrationDelegate();
+//        FrameDemo frameDemo=new FrameDemo();
     }
 }

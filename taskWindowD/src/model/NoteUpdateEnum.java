@@ -6,7 +6,8 @@ public enum NoteUpdateEnum {
     NOTE_HEIGHT("note height"),
     ROTATION("rotation"),
     TITLE_COLOR("title color"),
-    TITLE("title"),
+    TITLE_FONT("title font"),
+    TITLE_CONTENT("title content"),
     DESCRIPTION("description"),
     ;
     final String message;
@@ -24,7 +25,7 @@ public enum NoteUpdateEnum {
     {
         return prop.equals(PAPER_COLOR.message)||prop.equals(ROTATION.message)||
                 prop.equals(NOTE_WIDTH.message)||prop.equals(NOTE_HEIGHT.message)||
-                prop.equals(TITLE_COLOR.message)||prop.equals(TITLE.message)||
+                prop.equals(TITLE_COLOR.message)||prop.equals(TITLE_FONT.message)||prop.equals(TITLE_CONTENT.message)||
                 prop.equals(DESCRIPTION.message);
     }
 }

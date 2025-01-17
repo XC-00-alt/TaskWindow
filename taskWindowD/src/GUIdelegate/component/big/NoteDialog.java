@@ -77,6 +77,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
             rotationPane.setValue(selectedNote.getRotationDegree());
             widthPane.setValue(selectedNote.getWidth()/2);
             heightPane.setValue(selectedNote.getHeight()/2);
+            titlePane.setSelectedFont(selectedNote.getTitleFontName());
         }
         this.selectedNote = selectedNote;
     }
@@ -108,7 +109,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
             else if(titlePane.isFontChooser(e.getSource()))
             {
                 String fontStr=titlePane.getItem();
-//                selectedNote.set
+                selectedNote.setTitleFontName(fontStr);
             }
         }catch (Exception exception)
         {

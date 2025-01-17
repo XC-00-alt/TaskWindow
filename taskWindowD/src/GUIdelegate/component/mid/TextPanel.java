@@ -52,6 +52,10 @@ public class TextPanel extends JPanel {
         if(item!=null) return item.toString();
         else return DEFAULT_FONT;
     }
+    public void setSelectedFont(String fontFamilyName)
+    {
+        fontChooser.getComboBox().setSelectedItem(fontFamilyName);
+    }
 
     public BoldButton getBoldButton() {
         return boldButton;
