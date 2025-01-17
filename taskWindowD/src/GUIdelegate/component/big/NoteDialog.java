@@ -101,16 +101,19 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            if(e.getSource()==paperColorPane.getColorButton())
+            if(selectedNote!=null)
             {
-                Color newColor=paperColorPane.showColorDialog();
-                selectedNote.setPaperColor(newColor);
-            }
+                if(e.getSource()==paperColorPane.getColorButton())
+                {
+                    Color newColor=paperColorPane.showColorDialog();
+                    selectedNote.setPaperColor(newColor);
+                }
 //            else if(e.getSource()==titlePane.getFontChooser())
-            else if(titlePane.isFontChooser(e.getSource()))
-            {
-                String fontStr=titlePane.getItem();
-                selectedNote.setTitleFontName(fontStr);
+                else if(titlePane.isFontChooser(e.getSource()))
+                {
+                    String fontStr=titlePane.getItem();
+                    selectedNote.setTitleFontName(fontStr);
+                }
             }
         }catch (Exception exception)
         {

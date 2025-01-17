@@ -93,6 +93,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             // clear selected note
             windowPanel.setSelectedNote(null);
             listPanel.clearSelectedRow();
+            // close noteDialog
+            noteDialog.reset();
 
             // randomly generates the position of the new note
             int x=randomN.nextInt(0, windowPanel.getWidth());
@@ -213,6 +215,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     // indicates the noteMenu is closed
                     windowPanel.setMenuPopUp(false);
                     windowPanel.setListRequested(false);
+
+                    windowPanel.setSelectedNote(note2bEdit);
 
                     // flags that there is an opened dialog
                     windowPanel.setDialogInAction(true);
