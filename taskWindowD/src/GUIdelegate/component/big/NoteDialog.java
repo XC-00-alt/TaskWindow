@@ -2,6 +2,7 @@ package GUIdelegate.component.big;
 
 import GUIdelegate.component.mid.ColorPane;
 import GUIdelegate.component.mid.SliderPane;
+import GUIdelegate.component.mid.TextPanel;
 import model.Note;
 
 import javax.swing.*;
@@ -24,6 +25,8 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
     private SliderPane rotationPane;
     private SliderPane widthPane;
     private SliderPane heightPane;
+
+    private TextPanel titlePane;
 
     public static final String CLOSE_DIALOG="close edit dialog";
 //    public static final String PAPER_COLOR="set paper color";
@@ -50,8 +53,10 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         rotationPane=new SliderPane("rotation",this.width/4,buttonLen,0,360);
         widthPane=new SliderPane("width",this.width/6,buttonLen,25,this.width/4);
         heightPane=new SliderPane("height",this.width/6,buttonLen,25,this.width/4);
+        titlePane=new TextPanel("title",this.width,this.height/4,buttonLen);
 
         paperColorPane.addActionListener(this);
+        titlePane.addActionListener(this);
 
         rotationPane.addChangeListener(this);
         widthPane.addChangeListener(this);
@@ -61,6 +66,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         add(rotationPane);
         add(widthPane);
         add(heightPane);
+        add(titlePane);
     }
 
     public void setSelectedNote(Note selectedNote) {
@@ -98,8 +104,12 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                 Color newColor=paperColorPane.showColorDialog();
                 selectedNote.setPaperColor(newColor);
             }
-            // if requires undo and redo then not a good setting here
-//        notifier.firePropertyChange(UPDATE_NOTE,null,selectedNote);
+//            else if(e.getSource()==titlePane.getFontChooser())
+            else if(titlePane.isFontChooser(e.getSource()))
+            {
+                String fontStr=titlePane.getItem();
+//                selectedNote.set
+            }
         }catch (Exception exception)
         {
             System.out.print(exception.getMessage());

@@ -16,6 +16,7 @@ public class Note {
     private DefaultMutableTreeNode node;
     
     private String title="默认标题";
+    private String titleFontName;
     private Color titleColor=Color.black;
     
     private String description;

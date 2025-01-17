@@ -46,5 +46,9 @@ public class FrameDemo implements ActionListener {
 //        {
 //            System.out.println(fontChooser.getComboBox().getSelectedItem());
 //        }
+        if(textPanel.isFontChooser(e.getSource()))
+        {
+            System.out.println(textPanel.getItem());
+        }
     }
 }
