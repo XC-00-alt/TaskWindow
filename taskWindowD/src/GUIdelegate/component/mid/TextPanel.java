@@ -3,6 +3,7 @@ package GUIdelegate.component.mid;
 import GUIdelegate.component.small.BoldButton;
 import GUIdelegate.component.small.ColorButton;
 import GUIdelegate.component.small.FontChooser;
+import model.Note;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,9 +43,9 @@ public class TextPanel extends JPanel {
     {
         return object.equals(fontChooser.getComboBox());
     }
-    public FontChooser getFontChooser() {
-        return fontChooser;
-    }
+//    public FontChooser getFontChooser() {
+//        return fontChooser;
+//    }
 
     public String getItem()
     {
@@ -52,13 +53,27 @@ public class TextPanel extends JPanel {
         if(item!=null) return item.toString();
         else return DEFAULT_FONT;
     }
+    public void setValue(String fontName,Color color)
+    {
+        setSelectedFont(fontName);
+        colorButton.setColor(color);
+    }
+    public Color showColorDialog()
+    {
+        return colorButton.showColorDialog();
+    }
+
     public void setSelectedFont(String fontFamilyName)
     {
         fontChooser.getComboBox().setSelectedItem(fontFamilyName);
     }
-
-    public BoldButton getBoldButton() {
-        return boldButton;
+    public boolean isBoldButton(Object object)
+    {
+        return object.equals(boldButton);
+    }
+    public boolean isColorButton(Object object)
+    {
+        return object.equals(colorButton);
     }
     @Override
     public void paintComponent(Graphics g) {

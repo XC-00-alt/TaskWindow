@@ -21,4 +21,14 @@ public class ColorButton extends JButton {
         return color;
     }
 
+    public Color showColorDialog()
+    {
+        Color newColor=JColorChooser.showDialog(this,"Choose color",
+                getBackground(),true);
+        if(newColor!=null) {
+            setColor(newColor);
+        }
+        return getColor();
+    }
+
 }

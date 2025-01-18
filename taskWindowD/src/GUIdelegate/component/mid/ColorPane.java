@@ -40,12 +40,7 @@ public class ColorPane extends JPanel {
     }
     public Color showColorDialog()
     {
-        Color newColor=JColorChooser.showDialog(this,"Choose color",
-                colorButton.getBackground(),true);
-        if(newColor!=null) {
-            colorButton.setColor(newColor);
-        }
-        return colorButton.getColor();
+        return colorButton.showColorDialog();
     }
     @Override
     public void paintComponent(Graphics g) {

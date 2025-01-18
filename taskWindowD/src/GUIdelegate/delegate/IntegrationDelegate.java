@@ -245,9 +245,13 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     {
                         int newHalfHeight=(int) event.getNewValue();
                     }
-                    else if ((propName.equals(NoteUpdateEnum.TITLE_FONT.toString())))
+                    else if (propName.equals(NoteUpdateEnum.TITLE_FONT.toString()))
                     {
                         Font newFont=(Font) event.getNewValue();
+                    }
+                    else if (propName.equals(NoteUpdateEnum.TITLE_COLOR.toString()))
+                    {
+                        Color newColor=(Color)event.getNewValue();
                     }
                 }
             });

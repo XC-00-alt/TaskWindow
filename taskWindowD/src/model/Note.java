@@ -179,7 +179,9 @@ public class Note {
     }
 
     public void setTitleColor(Color titleColor) {
+        Color oldVal=this.titleColor;
         this.titleColor = titleColor;
+        notifier.firePropertyChange(NoteUpdateEnum.TITLE_COLOR.message,oldVal,titleColor);
     }
 
     public void setTitleFont(Font titleFont) {
