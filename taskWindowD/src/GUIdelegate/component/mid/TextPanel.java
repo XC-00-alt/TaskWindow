@@ -53,9 +53,10 @@ public class TextPanel extends JPanel {
         if(item!=null) return item.toString();
         else return DEFAULT_FONT;
     }
-    public void setValue(String fontName,Color color)
+    public void setValue(String fontName,boolean boldBool,Color color)
     {
         setSelectedFont(fontName);
+        boldButton.setBold(boldBool);
         colorButton.setColor(color);
     }
     public Color showColorDialog()
@@ -70,6 +71,17 @@ public class TextPanel extends JPanel {
     public boolean isBoldButton(Object object)
     {
         return object.equals(boldButton);
+    }
+
+    public boolean isBold() {
+        return boldButton.isBold();
+    }
+    public void setBold(boolean bold) {
+        boldButton.setBold(bold);
+    }
+    public void reverseBold()
+    {
+        boldButton.setBold(!boldButton.isBold());
     }
     public boolean isColorButton(Object object)
     {

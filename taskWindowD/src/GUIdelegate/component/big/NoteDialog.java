@@ -50,7 +50,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
     {
         setLayout(new FlowLayout());
         paperColorPane=new ColorPane("paper color",buttonLen);
-        rotationPane=new SliderPane("rotation",this.width/4,buttonLen,0,360);
+        rotationPane=new SliderPane("rotation",this.width/4,buttonLen,-180,180);
         widthPane=new SliderPane("width",this.width/6,buttonLen,25,this.width/4);
         heightPane=new SliderPane("height",this.width/6,buttonLen,25,this.width/4);
         titlePane=new TextPanel("title",this.width,this.height/4,buttonLen);
@@ -78,6 +78,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
             widthPane.setValue(selectedNote.getWidth()/2);
             heightPane.setValue(selectedNote.getHeight()/2);
             titlePane.setValue(selectedNote.getTitleFontName(),
+                    selectedNote.isTitleBold(),
                     selectedNote.getTitleColor());
 //            titlePane.setSelectedFont(selectedNote.getTitleFontName());
 //            System.out.println(selectedNote.getTitleFontName());
@@ -120,6 +121,12 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                 {
                     Color newColor=titlePane.showColorDialog();
                     selectedNote.setTitleColor(newColor);
+                }
+                else if(titlePane.isBoldButton(e.getSource()))
+                {
+                    titlePane.reverseBold();
+                    boolean newBold=titlePane.isBold();
+                    selectedNote.setTitleBold(newBold);
                 }
             }
         }catch (Exception exception)

@@ -214,7 +214,7 @@ public class Note {
         {
             this.titleBold = titleBold;
             try {
-                setTitleFont(new Font(titleFontName,getBold(),titleFont.getSize()));
+                setTitleFont(new Font(titleFontName, getBoldCode(),titleFont.getSize()));
             }catch (Exception e)
             {
                 System.out.println(e.getMessage());
@@ -222,7 +222,11 @@ public class Note {
         }
     }
 
-    public int getBold()
+    public boolean isTitleBold() {
+        return titleBold;
+    }
+
+    public int getBoldCode()
     {
         if(titleBold) return Font.BOLD;
         else return Font.PLAIN;
