@@ -16,4 +16,8 @@ public class TextScrollArea extends JScrollPane {
         setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         setViewportView(textArea);
     }
+    public void setText(String t)
+    {
+        textArea.setText(t);
+    }
 }

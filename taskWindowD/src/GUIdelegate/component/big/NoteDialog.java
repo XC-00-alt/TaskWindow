@@ -2,7 +2,7 @@ package GUIdelegate.component.big;
 
 import GUIdelegate.component.mid.ColorPane;
 import GUIdelegate.component.mid.SliderPane;
-import GUIdelegate.component.mid.TextPanel;
+import GUIdelegate.component.mid.TextAttributePanel;
 import model.Note;
 
 import javax.swing.*;
@@ -26,7 +26,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
     private SliderPane widthPane;
     private SliderPane heightPane;
 
-    private TextPanel titlePane;
+    private TextAttributePanel titlePane;
 
     public static final String CLOSE_DIALOG="close edit dialog";
 //    public static final String PAPER_COLOR="set paper color";
@@ -53,7 +53,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         rotationPane=new SliderPane("rotation",this.width/4,buttonLen,-180,180);
         widthPane=new SliderPane("width",this.width/6,buttonLen,25,this.width/4);
         heightPane=new SliderPane("height",this.width/6,buttonLen,25,this.width/4);
-        titlePane=new TextPanel("title",this.width,this.height/4,buttonLen);
+        titlePane=new TextAttributePanel("title",this.width,this.height/4,buttonLen);
 
         paperColorPane.addActionListener(this);
         titlePane.addActionListener(this);
@@ -77,7 +77,8 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
             rotationPane.setValue(selectedNote.getRotationDegree());
             widthPane.setValue(selectedNote.getWidth()/2);
             heightPane.setValue(selectedNote.getHeight()/2);
-            titlePane.setValue(selectedNote.getTitleFontName(),
+            titlePane.setValue(selectedNote.getTitle(),
+                    selectedNote.getTitleFontName(),
                     selectedNote.isTitleBold(),
                     selectedNote.getTitleColor());
 //            titlePane.setSelectedFont(selectedNote.getTitleFontName());

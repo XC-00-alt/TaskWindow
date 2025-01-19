@@ -1,6 +1,6 @@
 package util;
 
-import GUIdelegate.component.mid.TextPanel;
+import GUIdelegate.component.mid.TextAttributePanel;
 import GUIdelegate.component.small.FontChooser;
 
 import javax.swing.*;
@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class FrameDemo implements ActionListener {
     private JFrame frame;
     private FontChooser fontChooser;
-    private TextPanel textPanel;
+    private TextAttributePanel textPanel;
     public FrameDemo()
     {
         frame=new JFrame("test frame");
@@ -28,7 +28,7 @@ public class FrameDemo implements ActionListener {
 
     public void setUpTextPanel()
     {
-        textPanel=new TextPanel("title",300,150,15);
+        textPanel=new TextAttributePanel("title",300,150,15);
         textPanel.addActionListener(this);
         frame.add(textPanel);
     }

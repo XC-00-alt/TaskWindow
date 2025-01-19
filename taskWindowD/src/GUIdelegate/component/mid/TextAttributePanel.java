@@ -8,14 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class TextPanel extends JPanel {
+public class TextAttributePanel extends JPanel {
     private JLabel label;
     private FontChooser fontChooser;
     private BoldButton boldButton;
     private ColorButton colorButton;
     private TextEditPane textEditField;
     public String DEFAULT_FONT="default";
-    public TextPanel(String title,int panelWidth,int panelHeight,int buttonLen)
+    public TextAttributePanel(String title, int panelWidth, int panelHeight, int buttonLen)
     {
         this.setPreferredSize(new Dimension(panelWidth,panelHeight));
 
@@ -25,7 +25,8 @@ public class TextPanel extends JPanel {
         fontChooser=new FontChooser(panelWidth/2,buttonLen);
         boldButton=new BoldButton(buttonLen);
         colorButton=new ColorButton(buttonLen);
-        textEditField=new TextEditPane(panelWidth,panelHeight-buttonLen);
+        textEditField=new TextEditPane(panelWidth,panelHeight-buttonLen,
+                (panelHeight-buttonLen)/3);
 
         add(label);
         add(fontChooser);
@@ -55,8 +56,9 @@ public class TextPanel extends JPanel {
         if(item!=null) return item.toString();
         else return DEFAULT_FONT;
     }
-    public void setValue(String fontName,boolean boldBool,Color color)
+    public void setValue(String contentText,String fontName,boolean boldBool,Color color)
     {
+        textEditField.setText(contentText);
         setSelectedFont(fontName);
         boldButton.setBold(boldBool);
         colorButton.setColor(color);

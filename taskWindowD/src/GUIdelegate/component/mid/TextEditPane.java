@@ -13,19 +13,26 @@ public class TextEditPane extends JPanel implements DocumentListener {
     private TextScrollArea textScrollArea;
     private JButton confirmButton=new JButton("confirm");
     private JButton cancelButton=new JButton("cancel");
-    public TextEditPane(int width, int height)
+    public TextEditPane(int width, int height,int scrollAreaHeight)
     {
         setPreferredSize(new Dimension(width,height));
-        textScrollArea =new TextScrollArea(width*4/5, height*2/3);
+        textScrollArea =new TextScrollArea(width*4/5, scrollAreaHeight);
+        confirmButton.setSize(new Dimension(width/4,height-scrollAreaHeight));
+        cancelButton.setSize(new Dimension(width/4,height-scrollAreaHeight));
         add(textScrollArea);
         add(confirmButton);
         add(cancelButton);
-        showButtons(false);
+//        showButtons(false);
     }
     public void addActionListener(ActionListener al)
     {
         confirmButton.addActionListener(al);
         cancelButton.addActionListener(al);
+    }
+
+    public void setText(String t)
+    {
+        textScrollArea.setText(t);
     }
 
     public void showButtons(boolean flag)
