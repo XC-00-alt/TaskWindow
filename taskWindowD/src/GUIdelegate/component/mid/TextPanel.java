@@ -3,8 +3,6 @@ package GUIdelegate.component.mid;
 import GUIdelegate.component.small.BoldButton;
 import GUIdelegate.component.small.ColorButton;
 import GUIdelegate.component.small.FontChooser;
-import GUIdelegate.component.small.TextEditField;
-import model.Note;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +13,7 @@ public class TextPanel extends JPanel {
     private FontChooser fontChooser;
     private BoldButton boldButton;
     private ColorButton colorButton;
-    private TextEditField textEditField;
+    private TextEditPane textEditField;
     public String DEFAULT_FONT="default";
     public TextPanel(String title,int panelWidth,int panelHeight,int buttonLen)
     {
@@ -27,7 +25,7 @@ public class TextPanel extends JPanel {
         fontChooser=new FontChooser(panelWidth/2,buttonLen);
         boldButton=new BoldButton(buttonLen);
         colorButton=new ColorButton(buttonLen);
-        textEditField=new TextEditField(panelWidth,panelHeight-buttonLen);
+        textEditField=new TextEditPane(panelWidth,panelHeight-buttonLen);
 
         add(label);
         add(fontChooser);
