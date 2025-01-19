@@ -28,6 +28,8 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
 
     private TextAttributePanel titlePane;
 
+    private TextAttributePanel descriptionPane;
+
     public static final String CLOSE_DIALOG="close edit dialog";
 //    public static final String PAPER_COLOR="set paper color";
 //    public static final String UPDATE_NOTE="update note";
@@ -54,6 +56,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         widthPane=new SliderPane("width",this.width/6,buttonLen,25,this.width/4);
         heightPane=new SliderPane("height",this.width/6,buttonLen,25,this.width/4);
         titlePane=new TextAttributePanel("title",this.width,this.height/4,buttonLen);
+        descriptionPane=new TextAttributePanel("description",this.width,this.height*3/4,buttonLen);
 
         paperColorPane.addActionListener(this);
         titlePane.addActionListener(this);
@@ -67,6 +70,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         add(widthPane);
         add(heightPane);
         add(titlePane);
+        add(descriptionPane);
     }
 
     public void setSelectedNote(Note selectedNote) {

@@ -33,6 +33,7 @@ public class TextAttributePanel extends JPanel {
         add(boldButton);
         add(colorButton);
         add(textEditField);
+//        add(new JSeparator());
     }
     public void addActionListener(ActionListener al)
     {
