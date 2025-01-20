@@ -56,6 +56,7 @@ public class WindowPanel extends JPanel {
     {
         descriptionDialog=new DescriptionDialog(height/2,width/2);
         descriptionDialog.setVisible(false);
+        descriptionDialog.setLocation(width*16/15,height/2);
     }
     public boolean addNote(Note note) {
         return taskQuadrant.add(note);
@@ -147,33 +148,33 @@ public class WindowPanel extends JPanel {
         private Point endPoint;
 
 
-//        @Override
-//        public void mouseMoved(MouseEvent e) {
-//            if(!menuPopUp&&!listRequested&&!dialogInAction)
-//            {
-//                int i=taskQuadrant.getNoteList().size() - 1;
-//                for (; i > -1; i--) {
-//                    Note currNote = taskQuadrant.getNoteList().get(i);
-//                    if (currNote.isInRange(e.getPoint())) {
-//
-//                        setSelectedNote(currNote);
-//                        descriptionDialog.setVisible(true);
-//                        break;
-//                    }
-//                }
-//                if(i>-1)
-//                {
-//                    descriptionDialog.setVisible(true);
-//                }
-//                else {
-//                    setSelectedNote(null);
-//                }
-//                repaint();
-//            }
-//        }
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            if(!menuPopUp&&!listRequested&&!dialogInAction)
+            {
+                int i=taskQuadrant.getNoteList().size() - 1;
+                for (; i > -1; i--) {
+                    Note currNote = taskQuadrant.getNoteList().get(i);
+                    if (currNote.isInRange(e.getPoint())) {
+                        setSelectedNote(currNote);
+                        descriptionDialog.setVisible(true);
+                        descriptionDialog.setValue(currNote.getDescription(),
+                                currNote.getDescriptionColor(),currNote.getPaperColor(),
+                        currNote.getDescriptionFont());
+                        break;
+                    }
+                }
+                if(i<=-1) {
+                    if(getSelectedNote()!=null) setSelectedNote(null);
+                    descriptionDialog.setVisible(false);
+                }
+                repaint();
+            }
+        }
 
         @Override
         public void mousePressed(MouseEvent e) {
+            descriptionDialog.setVisible(false);
             // if it's handled at the release that it's a right click
             // then the noteMenu that is shown on the screen should be reset when a new press is coming
             if(menuPopUp || listRequested)

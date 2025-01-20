@@ -45,7 +45,7 @@ public class Note {
     /**
      * ============Description Attributes============
      */
-    private String description;
+    private String description="默认介绍";
     private Font descriptionFont=null;
 
     private boolean descriptionBold=false;
@@ -251,6 +251,45 @@ public class Note {
             this.title=title;
             notifier.firePropertyChange(NoteUpdateEnum.TITLE_CONTENT.message, oldVal,title);
         }
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Color getDescriptionColor() {
+        return descriptionColor;
+    }
+
+    public void setDescriptionFont(Font descriptionFont) {
+//        Font oldFont=this.titleFont;
+//        this.titleFont = titleFont;
+//        if(oldFont!=null) {
+//            notifier.firePropertyChange(NoteUpdateEnum.TITLE_FONT.message,oldFont,titleFont);
+//        }
+        this.descriptionFont = descriptionFont;
+    }
+
+    public Font getDescriptionFont() {
+        return descriptionFont;
+    }
+
+    public void setDescriptionFontName(String descriptionFontName) {
+//        if(!titleFontName.equals(this.titleFontName))
+//        {
+//            this.titleFontName = titleFontName;
+//            try {
+//                setTitleFont(new Font(titleFontName,titleFont.getStyle(),titleFont.getSize()));
+//            }catch (Exception e)
+//            {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+        this.descriptionFontName = descriptionFontName;
     }
 
     /**

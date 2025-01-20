@@ -18,6 +18,12 @@ public class TextScrollArea extends JScrollPane {
         textArea.setEditable(true);
         setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         setViewportView(textArea);
+        setEditable(true);
+    }
+
+    public void setEditable(boolean flag)
+    {
+        textArea.setEditable(flag);
     }
 
     public void addDocumentListener(DocumentListener dl)
@@ -30,9 +36,9 @@ public class TextScrollArea extends JScrollPane {
     }
     public void setTextAttributes(Color fg,Color bg,Font font)
     {
-        setFont(font);
-        setForeground(fg);
-        setBackground(bg);
+        textArea.setFont(font);
+        textArea.setForeground(fg);
+        textArea.setBackground(bg);
     }
 
     public String getText()
