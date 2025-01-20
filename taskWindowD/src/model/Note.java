@@ -264,6 +264,11 @@ public class Note {
     public Color getDescriptionColor() {
         return descriptionColor;
     }
+    public void setDescriptionColor(Color descriptionColor) {
+        Color oldVal=this.descriptionColor;
+        this.descriptionColor = descriptionColor;
+        notifier.firePropertyChange(NoteUpdateEnum.DESCRIPTION_COLOR.message,oldVal,descriptionColor);
+    }
 
     public void setDescriptionFont(Font descriptionFont) {
 //        Font oldFont=this.titleFont;
@@ -279,17 +284,37 @@ public class Note {
     }
 
     public void setDescriptionFontName(String descriptionFontName) {
-//        if(!titleFontName.equals(this.titleFontName))
-//        {
-//            this.titleFontName = titleFontName;
-//            try {
-//                setTitleFont(new Font(titleFontName,titleFont.getStyle(),titleFont.getSize()));
-//            }catch (Exception e)
-//            {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-        this.descriptionFontName = descriptionFontName;
+        if(!descriptionFontName.equals(this.descriptionFontName))
+        {
+            this.descriptionFontName = descriptionFontName;
+            try {
+                setDescriptionFont(new Font(descriptionFontName,descriptionFont.getStyle(),descriptionFont.getSize()));
+            }catch (Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public String getDescriptionFontName() {
+        return descriptionFontName;
+    }
+
+    public boolean isDescriptionBold() {
+        return descriptionBold;
+    }
+
+    public void setDescriptionBold(boolean descriptionBold) {
+        if(this.descriptionBold!=descriptionBold)
+        {
+            this.descriptionBold = descriptionBold;
+            try {
+                setDescriptionFont(new Font(descriptionFontName, getBoldCode(),descriptionFont.getSize()));
+            }catch (Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     /**

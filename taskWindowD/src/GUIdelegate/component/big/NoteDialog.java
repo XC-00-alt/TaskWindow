@@ -59,6 +59,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
 
         paperColorPane.addActionListener(this);
         titlePane.addActionListener(this);
+        descriptionPane.addActionListener(this);
 
         rotationPane.addChangeListener(this);
         widthPane.addChangeListener(this);
@@ -85,6 +86,10 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                     selectedNote.getTitleFontName(),
                     selectedNote.isTitleBold(),
                     selectedNote.getTitleColor());
+            descriptionPane.setValue(selectedNote.getDescription(),
+                    selectedNote.getDescriptionFontName(),
+                    selectedNote.isDescriptionBold(),
+                    selectedNote.getDescriptionColor());
         }
         this.selectedNote = selectedNote;
     }
@@ -102,6 +107,36 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
             notifier.firePropertyChange(CLOSE_DIALOG,selectedNote,null);
         }
         super.processWindowEvent(e);
+    }
+
+    public void textAttributePanelOp(TextAttributePanel textAttributePanel,ActionEvent e)
+    {
+        if(textAttributePanel.isFontChooser(e.getSource()))
+        {
+            String fontStr=textAttributePanel.getItem();
+            selectedNote.setTitleFontName(fontStr);
+        }
+        else if(textAttributePanel.isColorButton(e.getSource()))
+        {
+            Color newColor=textAttributePanel.showColorDialog();
+            selectedNote.setTitleColor(newColor);
+        }
+        else if(textAttributePanel.isBoldButton(e.getSource()))
+        {
+            textAttributePanel.reverseBold();
+            boolean newBold=textAttributePanel.isBold();
+            selectedNote.setTitleBold(newBold);
+        }
+        else if(textAttributePanel.isConfirmButton(e.getSource())
+                ||textAttributePanel.isCancelButton(e.getSource()))
+        {
+            if(textAttributePanel.isConfirmButton(e.getSource()))
+            {
+                selectedNote.setTitle(textAttributePanel.getText());
+            }
+            textAttributePanel.setText(selectedNote.getTitle());
+            textAttributePanel.showEditButtons(false);
+        }
     }
 
     @Override
@@ -142,6 +177,35 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                     }
                     titlePane.setText(selectedNote.getTitle());
                     titlePane.showEditButtons(false);
+                }
+                /**
+                 * ========= descriptionPane ActionEvent =========
+                 */
+                else if(descriptionPane.isFontChooser(e.getSource()))
+                {
+                    String fontStr=descriptionPane.getItem();
+                    selectedNote.setDescriptionFontName(fontStr);
+                }
+                else if(descriptionPane.isColorButton(e.getSource()))
+                {
+                    Color newColor=descriptionPane.showColorDialog();
+                    selectedNote.setDescriptionColor(newColor);
+                }
+                else if(descriptionPane.isBoldButton(e.getSource()))
+                {
+                    descriptionPane.reverseBold();
+                    boolean newBold=descriptionPane.isBold();
+                    selectedNote.setDescriptionBold(newBold);
+                }
+                else if(descriptionPane.isConfirmButton(e.getSource())
+                        ||descriptionPane.isCancelButton(e.getSource()))
+                {
+                    if(descriptionPane.isConfirmButton(e.getSource()))
+                    {
+                        selectedNote.setDescription(descriptionPane.getText());
+                    }
+                    descriptionPane.setText(selectedNote.getDescription());
+                    descriptionPane.showEditButtons(false);
                 }
             }
         }catch (Exception exception)
