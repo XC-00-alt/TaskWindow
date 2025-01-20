@@ -6,6 +6,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Objects;
 
 public class Note {
     /**
@@ -45,8 +46,11 @@ public class Note {
      * ============Description Attributes============
      */
     private String description;
-    
+    private Font descriptionFont=null;
 
+    private boolean descriptionBold=false;
+    private String descriptionFontName;
+    private Color descriptionColor=Color.black;
 
     /**
      * ============Attributes That Is Usually Unchanged============
@@ -89,7 +93,7 @@ public class Note {
     public void setQuadrantCode(QuadrantEnum quadrantCode) {
         QuadrantEnum old=this.quadrantCode;
         this.quadrantCode = quadrantCode;
-        setTitle(getQuadrantCode().getCode()+getQuadrantCode().getDescription());
+//        setTitle(getQuadrantCode().getCode()+getQuadrantCode().getDescription());
         if(!old.equals(quadrantCode))
         {
             notifier.firePropertyChange(NOTE_QUADRANT_CHANGE,old.getCode(), quadrantCode.getCode());
@@ -241,7 +245,12 @@ public class Note {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        if(!Objects.equals(this.title, title))
+        {
+            String oldVal=this.title;
+            this.title=title;
+            notifier.firePropertyChange(NoteUpdateEnum.TITLE_CONTENT.message, oldVal,title);
+        }
     }
 
     /**

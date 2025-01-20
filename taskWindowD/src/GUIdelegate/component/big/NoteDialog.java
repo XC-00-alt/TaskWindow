@@ -31,8 +31,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
     private TextAttributePanel descriptionPane;
 
     public static final String CLOSE_DIALOG="close edit dialog";
-//    public static final String PAPER_COLOR="set paper color";
-//    public static final String UPDATE_NOTE="update note";
+
     public NoteDialog(PropertyChangeListener listener,int width, int height)
     {
         this.width=width;
@@ -70,6 +69,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         add(widthPane);
         add(heightPane);
         add(titlePane);
+//        add(new JSeparator());
         add(descriptionPane);
     }
 
@@ -85,8 +85,6 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                     selectedNote.getTitleFontName(),
                     selectedNote.isTitleBold(),
                     selectedNote.getTitleColor());
-//            titlePane.setSelectedFont(selectedNote.getTitleFontName());
-//            System.out.println(selectedNote.getTitleFontName());
         }
         this.selectedNote = selectedNote;
     }
@@ -116,7 +114,9 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                     Color newColor=paperColorPane.showColorDialog();
                     selectedNote.setPaperColor(newColor);
                 }
-//            else if(e.getSource()==titlePane.getFontChooser())
+                /**
+                 * ========= titlePane ActionEvent =========
+                 */
                 else if(titlePane.isFontChooser(e.getSource()))
                 {
                     String fontStr=titlePane.getItem();
@@ -132,6 +132,16 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                     titlePane.reverseBold();
                     boolean newBold=titlePane.isBold();
                     selectedNote.setTitleBold(newBold);
+                }
+                else if(titlePane.isConfirmButton(e.getSource())
+                        ||titlePane.isCancelButton(e.getSource()))
+                {
+                    if(titlePane.isConfirmButton(e.getSource()))
+                    {
+                        selectedNote.setTitle(titlePane.getText());
+                    }
+                    titlePane.setText(selectedNote.getTitle());
+                    titlePane.showEditButtons(false);
                 }
             }
         }catch (Exception exception)

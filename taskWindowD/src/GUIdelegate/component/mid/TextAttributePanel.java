@@ -8,12 +8,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * The panel that includes all attributes of a sequence of text
+ */
 public class TextAttributePanel extends JPanel {
     private JLabel label;
     private FontChooser fontChooser;
     private BoldButton boldButton;
     private ColorButton colorButton;
-    private TextEditPane textEditField;
+    // the panel that includes a scrollable textArea and two buttons for operation
+    private TextEditPane textEditPane;
     public String DEFAULT_FONT="default";
     public TextAttributePanel(String title, int panelWidth, int panelHeight, int buttonLen)
     {
@@ -25,14 +29,14 @@ public class TextAttributePanel extends JPanel {
         fontChooser=new FontChooser(panelWidth/2,buttonLen);
         boldButton=new BoldButton(buttonLen);
         colorButton=new ColorButton(buttonLen);
-        textEditField=new TextEditPane(panelWidth,panelHeight-buttonLen,
+        textEditPane =new TextEditPane(panelWidth,panelHeight-buttonLen,
                 (panelHeight-buttonLen)/3);
 
         add(label);
         add(fontChooser);
         add(boldButton);
         add(colorButton);
-        add(textEditField);
+        add(textEditPane);
 //        add(new JSeparator());
     }
     public void addActionListener(ActionListener al)
@@ -40,7 +44,7 @@ public class TextAttributePanel extends JPanel {
         fontChooser.addActionListener(al);
         boldButton.addActionListener(al);
         colorButton.addActionListener(al);
-        textEditField.addActionListener(al);
+        textEditPane.addActionListener(al);
     }
 
     public boolean isFontChooser(Object object)
@@ -59,10 +63,15 @@ public class TextAttributePanel extends JPanel {
     }
     public void setValue(String contentText,String fontName,boolean boldBool,Color color)
     {
-        textEditField.setText(contentText);
+        textEditPane.setText(contentText);
+        textEditPane.showButtons(false);
         setSelectedFont(fontName);
         boldButton.setBold(boldBool);
         colorButton.setColor(color);
+    }
+    public void showEditButtons(boolean flag)
+    {
+        textEditPane.showButtons(flag);
     }
     public Color showColorDialog()
     {
@@ -91,6 +100,23 @@ public class TextAttributePanel extends JPanel {
     public boolean isColorButton(Object object)
     {
         return object.equals(colorButton);
+    }
+    public boolean isConfirmButton(Object o)
+    {
+        return textEditPane.isConfirmButton(o);
+    }
+    public boolean isCancelButton(Object o)
+    {
+        return textEditPane.isCancelButton(o);
+    }
+    public String getText()
+    {
+        return textEditPane.getText();
+    }
+
+    public void setText(String t)
+    {
+        textEditPane.setText(t);
     }
     @Override
     public void paintComponent(Graphics g) {

@@ -1,8 +1,12 @@
 package GUIdelegate.component.small;
 
 import javax.swing.*;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 
+/**
+ * A JScrollPane that uses JTextArea as its view
+ */
 public class TextScrollArea extends JScrollPane {
     private JTextArea textArea =new JTextArea();
     public TextScrollArea(int width,int height)
@@ -15,8 +19,18 @@ public class TextScrollArea extends JScrollPane {
         setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         setViewportView(textArea);
     }
+
+    public void addDocumentListener(DocumentListener dl)
+    {
+        textArea.getDocument().addDocumentListener(dl);
+    }
     public void setText(String t)
     {
         textArea.setText(t);
+    }
+
+    public String getText()
+    {
+        return textArea.getText();
     }
 }

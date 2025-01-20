@@ -253,6 +253,11 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     {
                         Color newColor=(Color)event.getNewValue();
                     }
+                    else if(propName.equals(NoteUpdateEnum.TITLE_CONTENT.toString()))
+                    {
+                        String newTitle=(String) event.getNewValue();
+                        listPanel.repaint();
+                    }
                 }
             });
         }
