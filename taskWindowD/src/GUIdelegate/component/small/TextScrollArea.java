@@ -28,6 +28,12 @@ public class TextScrollArea extends JScrollPane {
     {
         textArea.setText(t);
     }
+    public void setTextAttributes(Color fg,Color bg,Font font)
+    {
+        setFont(font);
+        setForeground(fg);
+        setBackground(bg);
+    }
 
     public String getText()
     {

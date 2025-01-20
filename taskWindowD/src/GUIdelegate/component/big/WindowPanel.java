@@ -1,5 +1,6 @@
 package GUIdelegate.component.big;
 
+import GUIdelegate.component.mid.DescriptionDialog;
 import GUIdelegate.delegate.GraphicDelegate;
 import model.Note;
 import model.QuadrantEnum;
@@ -28,7 +29,7 @@ public class WindowPanel extends JPanel {
     private Color UNIMPORTANT_URGENT=new Color(0xFFE4C5);
     private Color UNIMPORTANT_NON_URGENT=new Color(0xFFD5D5);
 
-//    private NoteMenu noteMenu=new NoteMenu();
+    private DescriptionDialog descriptionDialog;
     private PropertyChangeSupport notifier;
     public static final String OPEN_POPUPMENU="open win-noteMenu";
     public static final String CLOSE_POPUPMENU="close win-noteMenu";
@@ -49,6 +50,12 @@ public class WindowPanel extends JPanel {
         setMouseAdapter();
         notifier=new PropertyChangeSupport(this);
         notifier.addPropertyChangeListener(propertyChangeListener);
+        setupDescriptionDialog(width,height);
+    }
+    public void setupDescriptionDialog(int width,int height)
+    {
+        descriptionDialog=new DescriptionDialog(height/2,width/2);
+        descriptionDialog.setVisible(false);
     }
     public boolean addNote(Note note) {
         return taskQuadrant.add(note);
@@ -139,6 +146,31 @@ public class WindowPanel extends JPanel {
         private Point startPoint;
         private Point endPoint;
 
+
+//        @Override
+//        public void mouseMoved(MouseEvent e) {
+//            if(!menuPopUp&&!listRequested&&!dialogInAction)
+//            {
+//                int i=taskQuadrant.getNoteList().size() - 1;
+//                for (; i > -1; i--) {
+//                    Note currNote = taskQuadrant.getNoteList().get(i);
+//                    if (currNote.isInRange(e.getPoint())) {
+//
+//                        setSelectedNote(currNote);
+//                        descriptionDialog.setVisible(true);
+//                        break;
+//                    }
+//                }
+//                if(i>-1)
+//                {
+//                    descriptionDialog.setVisible(true);
+//                }
+//                else {
+//                    setSelectedNote(null);
+//                }
+//                repaint();
+//            }
+//        }
 
         @Override
         public void mousePressed(MouseEvent e) {
