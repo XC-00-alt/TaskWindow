@@ -35,13 +35,6 @@ public class Note {
     /**
      * ============Title Attribute============
      */
-//    private String title="默认标题";
-//    private Font titleFont=null;
-//
-//    private boolean titleBold=false;
-//    private String titleFontName;
-//    private Color titleColor=Color.black;
-
     private TextAttributes titleAttributes=new TextAttributes("默认标题");
 
     /**
@@ -88,7 +81,6 @@ public class Note {
     public void setQuadrantCode(QuadrantEnum quadrantCode) {
         QuadrantEnum old=this.quadrantCode;
         this.quadrantCode = quadrantCode;
-//        setTitle(getQuadrantCode().getCode()+getQuadrantCode().getDescription());
         if(!old.equals(quadrantCode))
         {
             notifier.firePropertyChange(NOTE_QUADRANT_CHANGE,old.getCode(), quadrantCode.getCode());
@@ -173,82 +165,6 @@ public class Note {
         notifier.firePropertyChange(NoteUpdateEnum.ROTATION.message,oldVal,rotationDegree);
     }
 
-//    public Color getTitleColor() {
-//        return titleColor;
-//    }
-//
-//    public void setTitleColor(Color titleColor) {
-//        Color oldVal=this.titleColor;
-//        this.titleColor = titleColor;
-//        notifier.firePropertyChange(NoteUpdateEnum.TITLE_COLOR.message,oldVal,titleColor);
-//    }
-//
-//    public void setTitleFont(Font titleFont) {
-//        Font oldFont=this.titleFont;
-//        this.titleFont = titleFont;
-//        if(oldFont!=null) {
-//            notifier.firePropertyChange(NoteUpdateEnum.TITLE_FONT.message,oldFont,titleFont);
-//        }
-//    }
-//
-//    public String getTitleFontName() {
-//        return titleFontName;
-//    }
-//
-//    public void setTitleFontName(String titleFontName) {
-//        if(!titleFontName.equals(this.titleFontName))
-//        {
-//            this.titleFontName = titleFontName;
-//            try {
-//                setTitleFont(new Font(titleFontName,titleFont.getStyle(),titleFont.getSize()));
-//            }catch (Exception e)
-//            {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-//    }
-//
-//    public void setTitleBold(boolean titleBold) {
-//        if(this.titleBold!=titleBold)
-//        {
-//            this.titleBold = titleBold;
-//            try {
-//                setTitleFont(new Font(titleFontName, getBoldCode(),titleFont.getSize()));
-//            }catch (Exception e)
-//            {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-//    }
-//
-//    public boolean isTitleBold() {
-//        return titleBold;
-//    }
-//
-//    public int getBoldCode()
-//    {
-//        if(titleBold) return Font.BOLD;
-//        else return Font.PLAIN;
-//    }
-//
-//    public Font getTitleFont() {
-//        return titleFont;
-//    }
-//
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public void setTitle(String title) {
-//        if(!Objects.equals(this.title, title))
-//        {
-//            String oldVal=this.title;
-//            this.title=title;
-//            notifier.firePropertyChange(NoteUpdateEnum.TITLE_CONTENT.message, oldVal,title);
-//        }
-//    }
-
-
     public TextAttributes getTitleAttributes() {
         return titleAttributes;
     }
@@ -260,70 +176,6 @@ public class Note {
     {
         notifier.firePropertyChange(msg, oldVal, newVal);
     }
-
-    //    public void setDescription(String description) {
-//        this.description = description;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public Color getDescriptionColor() {
-//        return descriptionColor;
-//    }
-//    public void setDescriptionColor(Color descriptionColor) {
-//        Color oldVal=this.descriptionColor;
-//        this.descriptionColor = descriptionColor;
-//        notifier.firePropertyChange(NoteUpdateEnum.DESCRIPTION_COLOR.message,oldVal,descriptionColor);
-//    }
-//
-//    public void setDescriptionFont(Font descriptionFont) {
-////        Font oldFont=this.titleFont;
-////        this.titleFont = titleFont;
-////        if(oldFont!=null) {
-////            notifier.firePropertyChange(NoteUpdateEnum.TITLE_FONT.message,oldFont,titleFont);
-////        }
-//        this.descriptionFont = descriptionFont;
-//    }
-//
-//    public Font getDescriptionFont() {
-//        return descriptionFont;
-//    }
-//
-//    public void setDescriptionFontName(String descriptionFontName) {
-//        if(!descriptionFontName.equals(this.descriptionFontName))
-//        {
-//            this.descriptionFontName = descriptionFontName;
-//            try {
-//                setDescriptionFont(new Font(descriptionFontName,descriptionFont.getStyle(),descriptionFont.getSize()));
-//            }catch (Exception e)
-//            {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-//    }
-//
-//    public String getDescriptionFontName() {
-//        return descriptionFontName;
-//    }
-//
-//    public boolean isDescriptionBold() {
-//        return descriptionBold;
-//    }
-//
-//    public void setDescriptionBold(boolean descriptionBold) {
-//        if(this.descriptionBold!=descriptionBold)
-//        {
-//            this.descriptionBold = descriptionBold;
-//            try {
-//                setDescriptionFont(new Font(descriptionFontName, getBoldCode(),descriptionFont.getSize()));
-//            }catch (Exception e)
-//            {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-//    }
 
     /**
      * Checks if the point is in the range of this note

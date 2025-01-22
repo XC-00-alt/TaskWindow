@@ -92,9 +92,11 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             noteMenu.reset();
             // clear selected note
             windowPanel.setSelectedNote(null);
+
             listPanel.clearSelectedRow();
             // close noteDialog
             noteDialog.reset();
+            windowPanel.setDialogInAction(false);
 
             // randomly generates the position of the new note
             int x=randomN.nextInt(0, windowPanel.getWidth());

@@ -85,15 +85,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
             widthPane.setValue(selectedNote.getWidth()/2);
             heightPane.setValue(selectedNote.getHeight()/2);
             titlePane.setValue(selectedNote.getTitleAttributes());
-//            titlePane.setValue(selectedNote.getTitle(),
-//                    selectedNote.getTitleFontName(),
-//                    selectedNote.isTitleBold(),
-//                    selectedNote.getTitleColor());
             descriptionPane.setValue(selectedNote.getDescriptionAttributes());
-//            descriptionPane.setValue(selectedNote.getDescriptionAttributes(),
-//                    selectedNote.getDescriptionFontName(),
-//                    selectedNote.isDescriptionBold(),
-//                    selectedNote.getDescriptionColor());
         }
         this.selectedNote = selectedNote;
     }
@@ -199,32 +191,6 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                      */
                     textAttributePanelOp(selectedNote.getTitleAttributes(),
                             titlePane, e);
-//                else if(titlePane.isFontChooser(e.getSource()))
-//                {
-//                    String fontStr=titlePane.getItem();
-//                    selectedNote.setTitleFontName(fontStr);
-//                }
-//                else if(titlePane.isColorButton(e.getSource()))
-//                {
-//                    Color newColor=titlePane.showColorDialog();
-//                    selectedNote.setTitleColor(newColor);
-//                }
-//                else if(titlePane.isBoldButton(e.getSource()))
-//                {
-//                    titlePane.reverseBold();
-//                    boolean newBold=titlePane.isBold();
-//                    selectedNote.setTitleBold(newBold);
-//                }
-//                else if(titlePane.isConfirmButton(e.getSource())
-//                        ||titlePane.isCancelButton(e.getSource()))
-//                {
-//                    if(titlePane.isConfirmButton(e.getSource()))
-//                    {
-//                        selectedNote.setTitle(titlePane.getText());
-//                    }
-//                    titlePane.setText(selectedNote.getTitle());
-//                    titlePane.showEditButtons(false);
-//                }
                     /**
                      * ========= descriptionPane ActionEvent =========
                      */
