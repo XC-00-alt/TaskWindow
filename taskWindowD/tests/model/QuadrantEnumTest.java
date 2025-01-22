@@ -12,6 +12,11 @@ class QuadrantEnumTest {
         assertFalse(QuadrantEnum.IMPORTANT_NON_URGENT.equals(QuadrantEnum.IMPORTANT_URGENT));
     }
     @Test
+    void testName()
+    {
+        System.out.println(QuadrantEnum.IMPORTANT_NON_URGENT.name());
+    }
+    @Test
     void testSwitch()
     {
         QuadrantEnum quadrantEnum=QuadrantEnum.IMPORTANT_NON_URGENT;

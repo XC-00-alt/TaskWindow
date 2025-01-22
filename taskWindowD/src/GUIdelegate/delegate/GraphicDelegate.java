@@ -69,11 +69,16 @@ public class GraphicDelegate {
                 note.setTitleFont(defaultFont);
                 note.setTitleFontName(note.getTitleFont().getName());
             }
-            if(note.getDescriptionFont()==null)
+            if(note.getDescriptionAttributes().getFont()==null)
             {
-                note.setDescriptionFont(defaultFont);
-                note.setDescriptionFontName(note.getDescriptionFont().getName());
+                note.getDescriptionAttributes().setFont(defaultFont);
+                note.getDescriptionAttributes().setFontName(defaultFont.getName());
             }
+//            if(note.getDescriptionFont()==null)
+//            {
+//                note.setDescriptionFont(defaultFont);
+//                note.setDescriptionFontName(note.getDescriptionFont().getName());
+//            }
             // Draws the bound
             g2d.setStroke(noteBoundWidth);
             g2d.rotate(Math.toRadians(note.getRotationDegree()),

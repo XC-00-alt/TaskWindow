@@ -5,6 +5,7 @@ public enum NoteUpdateEnum {
     NOTE_WIDTH("note width"),
     NOTE_HEIGHT("note height"),
     ROTATION("rotation"),
+
     TITLE_COLOR("title color"),
     TITLE_FONT("title font"),
     TITLE_CONTENT("title content"),

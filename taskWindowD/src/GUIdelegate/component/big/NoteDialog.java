@@ -4,6 +4,8 @@ import GUIdelegate.component.mid.ColorPane;
 import GUIdelegate.component.mid.SliderPane;
 import GUIdelegate.component.mid.TextAttributePanel;
 import model.Note;
+import model.NoteUpdateEnum;
+import model.TextAttributes;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -86,10 +88,11 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                     selectedNote.getTitleFontName(),
                     selectedNote.isTitleBold(),
                     selectedNote.getTitleColor());
-            descriptionPane.setValue(selectedNote.getDescription(),
-                    selectedNote.getDescriptionFontName(),
-                    selectedNote.isDescriptionBold(),
-                    selectedNote.getDescriptionColor());
+            descriptionPane.setValue(selectedNote.getDescriptionAttributes());
+//            descriptionPane.setValue(selectedNote.getDescriptionAttributes(),
+//                    selectedNote.getDescriptionFontName(),
+//                    selectedNote.isDescriptionBold(),
+//                    selectedNote.getDescriptionColor());
         }
         this.selectedNote = selectedNote;
     }
@@ -108,33 +111,73 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         }
         super.processWindowEvent(e);
     }
+    private String contentMsg;
+    private String fontMsg;
+    private String fontColorMsg;
 
-    public void textAttributePanelOp(TextAttributePanel textAttributePanel,ActionEvent e)
+    public void textAttributePanelOp(TextAttributes textAttributes,
+                                     TextAttributePanel textAttributePanel, ActionEvent e)
     {
+        boolean isDes=selectedNote.getDescriptionAttributes().equals(textAttributes);
+        if(selectedNote==null||!isDes
+//                ||!selectedNote.getTitleAttributes().equals(textAttributes)
+                )
+        {
+            return;
+        }
+        else if(isDes)
+        {
+            contentMsg=NoteUpdateEnum.DESCRIPTION_CONTENT.toString();
+            fontMsg=NoteUpdateEnum.DESCRIPTION_FONT.toString();
+            fontColorMsg=NoteUpdateEnum.DESCRIPTION_COLOR.toString();
+        }
+        else
+        {
+            contentMsg=NoteUpdateEnum.TITLE_CONTENT.toString();
+            fontMsg=NoteUpdateEnum.TITLE_FONT.toString();
+            fontColorMsg=NoteUpdateEnum.TITLE_COLOR.toString();
+        }
         if(textAttributePanel.isFontChooser(e.getSource()))
         {
             String fontStr=textAttributePanel.getItem();
-            selectedNote.setTitleFontName(fontStr);
+            if(!fontStr.equals(textAttributes.getFontName())) {
+                Font oldFont = textAttributes.getFont();
+                textAttributes.setFontName(fontStr);
+                selectedNote.callNotifier(fontMsg, oldFont, textAttributes.getFont());
+            }
         }
         else if(textAttributePanel.isColorButton(e.getSource()))
         {
+            Color oldColor=textAttributes.getFontColor();
             Color newColor=textAttributePanel.showColorDialog();
-            selectedNote.setTitleColor(newColor);
+            if(!newColor.equals(oldColor)) {
+                textAttributes.setFontColor(newColor);
+                selectedNote.callNotifier(fontColorMsg, oldColor, textAttributes.getFontColor());
+            }
         }
         else if(textAttributePanel.isBoldButton(e.getSource()))
         {
             textAttributePanel.reverseBold();
             boolean newBold=textAttributePanel.isBold();
-            selectedNote.setTitleBold(newBold);
+            if(newBold!=textAttributes.isFontBold()) {
+                Font oldFont = textAttributes.getFont();
+                textAttributes.setFontBold(newBold);
+                selectedNote.callNotifier(fontMsg, oldFont, textAttributes.getFont());
+            }
         }
         else if(textAttributePanel.isConfirmButton(e.getSource())
                 ||textAttributePanel.isCancelButton(e.getSource()))
         {
             if(textAttributePanel.isConfirmButton(e.getSource()))
             {
-                selectedNote.setTitle(textAttributePanel.getText());
+                String oldContent=textAttributes.getTextContent();
+                String newContent=textAttributePanel.getText();
+                if(!oldContent.equals(newContent)) {
+                    textAttributes.setTextContent(textAttributePanel.getText());
+                    selectedNote.callNotifier(contentMsg, oldContent, textAttributes.getTextContent());
+                }
             }
-            textAttributePanel.setText(selectedNote.getTitle());
+            textAttributePanel.setText(textAttributes.getTextContent());
             textAttributePanel.showEditButtons(false);
         }
     }
@@ -181,32 +224,8 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                 /**
                  * ========= descriptionPane ActionEvent =========
                  */
-                else if(descriptionPane.isFontChooser(e.getSource()))
-                {
-                    String fontStr=descriptionPane.getItem();
-                    selectedNote.setDescriptionFontName(fontStr);
-                }
-                else if(descriptionPane.isColorButton(e.getSource()))
-                {
-                    Color newColor=descriptionPane.showColorDialog();
-                    selectedNote.setDescriptionColor(newColor);
-                }
-                else if(descriptionPane.isBoldButton(e.getSource()))
-                {
-                    descriptionPane.reverseBold();
-                    boolean newBold=descriptionPane.isBold();
-                    selectedNote.setDescriptionBold(newBold);
-                }
-                else if(descriptionPane.isConfirmButton(e.getSource())
-                        ||descriptionPane.isCancelButton(e.getSource()))
-                {
-                    if(descriptionPane.isConfirmButton(e.getSource()))
-                    {
-                        selectedNote.setDescription(descriptionPane.getText());
-                    }
-                    descriptionPane.setText(selectedNote.getDescription());
-                    descriptionPane.showEditButtons(false);
-                }
+                textAttributePanelOp(selectedNote.getDescriptionAttributes(),
+                        descriptionPane,e);
             }
         }catch (Exception exception)
         {

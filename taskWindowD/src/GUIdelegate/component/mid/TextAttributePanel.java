@@ -3,6 +3,7 @@ package GUIdelegate.component.mid;
 import GUIdelegate.component.small.BoldButton;
 import GUIdelegate.component.small.ColorButton;
 import GUIdelegate.component.small.FontChooser;
+import model.TextAttributes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,6 +69,14 @@ public class TextAttributePanel extends JPanel {
         setSelectedFont(fontName);
         boldButton.setBold(boldBool);
         colorButton.setColor(color);
+    }
+    public void setValue(TextAttributes textAttributes)
+    {
+        textEditPane.setText(textAttributes.getTextContent());
+        textEditPane.showButtons(false);
+        setSelectedFont(textAttributes.getFontName());
+        boldButton.setBold(textAttributes.isFontBold());
+        colorButton.setColor(textAttributes.getFontColor());
     }
     public void showEditButtons(boolean flag)
     {

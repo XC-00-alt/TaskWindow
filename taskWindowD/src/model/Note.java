@@ -45,13 +45,13 @@ public class Note {
     /**
      * ============Description Attributes============
      */
-    private String description="默认介绍";
-    private Font descriptionFont=null;
-
-    private boolean descriptionBold=false;
-    private String descriptionFontName;
-    private Color descriptionColor=Color.black;
-
+//    private String description="默认介绍";
+//    private Font descriptionFont=null;
+//
+//    private boolean descriptionBold=false;
+//    private String descriptionFontName;
+//    private Color descriptionColor=Color.black;
+    private TextAttributes descriptionAttributes =new TextAttributes("默认介绍");
     /**
      * ============Attributes That Is Usually Unchanged============
      */
@@ -253,69 +253,77 @@ public class Note {
         }
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public TextAttributes getDescriptionAttributes() {
+        return descriptionAttributes;
+    }
+    public void callNotifier(String msg,Object oldVal,Object newVal)
+    {
+        notifier.firePropertyChange(msg, oldVal, newVal);
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public Color getDescriptionColor() {
-        return descriptionColor;
-    }
-    public void setDescriptionColor(Color descriptionColor) {
-        Color oldVal=this.descriptionColor;
-        this.descriptionColor = descriptionColor;
-        notifier.firePropertyChange(NoteUpdateEnum.DESCRIPTION_COLOR.message,oldVal,descriptionColor);
-    }
-
-    public void setDescriptionFont(Font descriptionFont) {
-//        Font oldFont=this.titleFont;
-//        this.titleFont = titleFont;
-//        if(oldFont!=null) {
-//            notifier.firePropertyChange(NoteUpdateEnum.TITLE_FONT.message,oldFont,titleFont);
+    //    public void setDescription(String description) {
+//        this.description = description;
+//    }
+//
+//    public String getDescription() {
+//        return description;
+//    }
+//
+//    public Color getDescriptionColor() {
+//        return descriptionColor;
+//    }
+//    public void setDescriptionColor(Color descriptionColor) {
+//        Color oldVal=this.descriptionColor;
+//        this.descriptionColor = descriptionColor;
+//        notifier.firePropertyChange(NoteUpdateEnum.DESCRIPTION_COLOR.message,oldVal,descriptionColor);
+//    }
+//
+//    public void setDescriptionFont(Font descriptionFont) {
+////        Font oldFont=this.titleFont;
+////        this.titleFont = titleFont;
+////        if(oldFont!=null) {
+////            notifier.firePropertyChange(NoteUpdateEnum.TITLE_FONT.message,oldFont,titleFont);
+////        }
+//        this.descriptionFont = descriptionFont;
+//    }
+//
+//    public Font getDescriptionFont() {
+//        return descriptionFont;
+//    }
+//
+//    public void setDescriptionFontName(String descriptionFontName) {
+//        if(!descriptionFontName.equals(this.descriptionFontName))
+//        {
+//            this.descriptionFontName = descriptionFontName;
+//            try {
+//                setDescriptionFont(new Font(descriptionFontName,descriptionFont.getStyle(),descriptionFont.getSize()));
+//            }catch (Exception e)
+//            {
+//                System.out.println(e.getMessage());
+//            }
 //        }
-        this.descriptionFont = descriptionFont;
-    }
-
-    public Font getDescriptionFont() {
-        return descriptionFont;
-    }
-
-    public void setDescriptionFontName(String descriptionFontName) {
-        if(!descriptionFontName.equals(this.descriptionFontName))
-        {
-            this.descriptionFontName = descriptionFontName;
-            try {
-                setDescriptionFont(new Font(descriptionFontName,descriptionFont.getStyle(),descriptionFont.getSize()));
-            }catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    public String getDescriptionFontName() {
-        return descriptionFontName;
-    }
-
-    public boolean isDescriptionBold() {
-        return descriptionBold;
-    }
-
-    public void setDescriptionBold(boolean descriptionBold) {
-        if(this.descriptionBold!=descriptionBold)
-        {
-            this.descriptionBold = descriptionBold;
-            try {
-                setDescriptionFont(new Font(descriptionFontName, getBoldCode(),descriptionFont.getSize()));
-            }catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
+//    }
+//
+//    public String getDescriptionFontName() {
+//        return descriptionFontName;
+//    }
+//
+//    public boolean isDescriptionBold() {
+//        return descriptionBold;
+//    }
+//
+//    public void setDescriptionBold(boolean descriptionBold) {
+//        if(this.descriptionBold!=descriptionBold)
+//        {
+//            this.descriptionBold = descriptionBold;
+//            try {
+//                setDescriptionFont(new Font(descriptionFontName, getBoldCode(),descriptionFont.getSize()));
+//            }catch (Exception e)
+//            {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+//    }
 
     /**
      * Checks if the point is in the range of this note

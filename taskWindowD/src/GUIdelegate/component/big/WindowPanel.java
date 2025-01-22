@@ -158,9 +158,13 @@ public class WindowPanel extends JPanel {
                     if (currNote.isInRange(e.getPoint())) {
                         setSelectedNote(currNote);
                         descriptionDialog.setVisible(true);
-                        descriptionDialog.setValue(currNote.getDescription(),
-                                currNote.getDescriptionColor(),currNote.getPaperColor(),
-                        currNote.getDescriptionFont());
+                        descriptionDialog.setValue(currNote.getDescriptionAttributes().getTextContent(),
+                                currNote.getDescriptionAttributes().getFontColor(),
+                                currNote.getPaperColor(),
+                                currNote.getDescriptionAttributes().getFont());
+//                        descriptionDialog.setValue(currNote.getDescriptionAttributes(),
+//                                currNote.getDescriptionColor(),currNote.getPaperColor(),
+//                        currNote.getDescriptionFont());
                         break;
                     }
                 }
