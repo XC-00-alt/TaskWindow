@@ -13,6 +13,11 @@ public class TextAttributes {
     {
         this.textContent=textContent;
     }
+    public void setDefaultFont(Font font)
+    {
+        setFont(font);
+        setFontName(font.getName());
+    }
 
     public void setTextContent(String textContent) {
         this.textContent = textContent;

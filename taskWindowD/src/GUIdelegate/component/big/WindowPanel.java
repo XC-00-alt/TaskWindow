@@ -78,6 +78,7 @@ public class WindowPanel extends JPanel {
     {
         Note oldNote=taskQuadrant.getSelectedNote();
         taskQuadrant.setSelectedNote(note);
+        descriptionDialog.setVisible(note != null);
         return oldNote;
     }
 
@@ -150,27 +151,26 @@ public class WindowPanel extends JPanel {
 
         @Override
         public void mouseMoved(MouseEvent e) {
-            if(!menuPopUp&&!listRequested&&!dialogInAction)
+            if(!menuPopUp&&!listRequested
+//                    &&!dialogInAction
+            )
             {
                 int i=taskQuadrant.getNoteList().size() - 1;
                 for (; i > -1; i--) {
                     Note currNote = taskQuadrant.getNoteList().get(i);
                     if (currNote.isInRange(e.getPoint())) {
                         setSelectedNote(currNote);
-                        descriptionDialog.setVisible(true);
+//                        descriptionDialog.setVisible(true);
                         descriptionDialog.setValue(currNote.getDescriptionAttributes().getTextContent(),
                                 currNote.getDescriptionAttributes().getFontColor(),
                                 currNote.getPaperColor(),
                                 currNote.getDescriptionAttributes().getFont());
-//                        descriptionDialog.setValue(currNote.getDescriptionAttributes(),
-//                                currNote.getDescriptionColor(),currNote.getPaperColor(),
-//                        currNote.getDescriptionFont());
                         break;
                     }
                 }
                 if(i<=-1) {
                     if(getSelectedNote()!=null) setSelectedNote(null);
-                    descriptionDialog.setVisible(false);
+//                    descriptionDialog.setVisible(false);
                 }
                 repaint();
             }

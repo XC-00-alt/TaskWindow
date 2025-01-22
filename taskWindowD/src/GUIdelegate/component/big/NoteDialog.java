@@ -84,10 +84,11 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
             rotationPane.setValue(selectedNote.getRotationDegree());
             widthPane.setValue(selectedNote.getWidth()/2);
             heightPane.setValue(selectedNote.getHeight()/2);
-            titlePane.setValue(selectedNote.getTitle(),
-                    selectedNote.getTitleFontName(),
-                    selectedNote.isTitleBold(),
-                    selectedNote.getTitleColor());
+            titlePane.setValue(selectedNote.getTitleAttributes());
+//            titlePane.setValue(selectedNote.getTitle(),
+//                    selectedNote.getTitleFontName(),
+//                    selectedNote.isTitleBold(),
+//                    selectedNote.getTitleColor());
             descriptionPane.setValue(selectedNote.getDescriptionAttributes());
 //            descriptionPane.setValue(selectedNote.getDescriptionAttributes(),
 //                    selectedNote.getDescriptionFontName(),
@@ -119,9 +120,8 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                                      TextAttributePanel textAttributePanel, ActionEvent e)
     {
         boolean isDes=selectedNote.getDescriptionAttributes().equals(textAttributes);
-        if(selectedNote==null||!isDes
-//                ||!selectedNote.getTitleAttributes().equals(textAttributes)
-                )
+        if(selectedNote==null||
+                !(isDes||selectedNote.getTitleAttributes().equals(textAttributes)))
         {
             return;
         }
@@ -192,40 +192,45 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                     Color newColor=paperColorPane.showColorDialog();
                     selectedNote.setPaperColor(newColor);
                 }
-                /**
-                 * ========= titlePane ActionEvent =========
-                 */
-                else if(titlePane.isFontChooser(e.getSource()))
+                else
                 {
-                    String fontStr=titlePane.getItem();
-                    selectedNote.setTitleFontName(fontStr);
+                    /**
+                     * ========= titlePane ActionEvent =========
+                     */
+                    textAttributePanelOp(selectedNote.getTitleAttributes(),
+                            titlePane, e);
+//                else if(titlePane.isFontChooser(e.getSource()))
+//                {
+//                    String fontStr=titlePane.getItem();
+//                    selectedNote.setTitleFontName(fontStr);
+//                }
+//                else if(titlePane.isColorButton(e.getSource()))
+//                {
+//                    Color newColor=titlePane.showColorDialog();
+//                    selectedNote.setTitleColor(newColor);
+//                }
+//                else if(titlePane.isBoldButton(e.getSource()))
+//                {
+//                    titlePane.reverseBold();
+//                    boolean newBold=titlePane.isBold();
+//                    selectedNote.setTitleBold(newBold);
+//                }
+//                else if(titlePane.isConfirmButton(e.getSource())
+//                        ||titlePane.isCancelButton(e.getSource()))
+//                {
+//                    if(titlePane.isConfirmButton(e.getSource()))
+//                    {
+//                        selectedNote.setTitle(titlePane.getText());
+//                    }
+//                    titlePane.setText(selectedNote.getTitle());
+//                    titlePane.showEditButtons(false);
+//                }
+                    /**
+                     * ========= descriptionPane ActionEvent =========
+                     */
+                    textAttributePanelOp(selectedNote.getDescriptionAttributes(),
+                            descriptionPane, e);
                 }
-                else if(titlePane.isColorButton(e.getSource()))
-                {
-                    Color newColor=titlePane.showColorDialog();
-                    selectedNote.setTitleColor(newColor);
-                }
-                else if(titlePane.isBoldButton(e.getSource()))
-                {
-                    titlePane.reverseBold();
-                    boolean newBold=titlePane.isBold();
-                    selectedNote.setTitleBold(newBold);
-                }
-                else if(titlePane.isConfirmButton(e.getSource())
-                        ||titlePane.isCancelButton(e.getSource()))
-                {
-                    if(titlePane.isConfirmButton(e.getSource()))
-                    {
-                        selectedNote.setTitle(titlePane.getText());
-                    }
-                    titlePane.setText(selectedNote.getTitle());
-                    titlePane.showEditButtons(false);
-                }
-                /**
-                 * ========= descriptionPane ActionEvent =========
-                 */
-                textAttributePanelOp(selectedNote.getDescriptionAttributes(),
-                        descriptionPane,e);
             }
         }catch (Exception exception)
         {

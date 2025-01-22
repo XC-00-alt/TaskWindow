@@ -1,6 +1,7 @@
 package GUIdelegate.delegate;
 
 import model.Note;
+import model.TextAttributes;
 
 import java.awt.*;
 import java.util.List;
@@ -57,50 +58,45 @@ public class GraphicDelegate {
         }
         else g.drawString(text,x+marginX,y+marginY);
     }
+    private static void setDefaultFont(TextAttributes textAttributes,Font font)
+    {
+        if(textAttributes.getFont()==null)
+        {
+            textAttributes.setDefaultFont(font);
+        }
+    }
     public static void drawNotes(Graphics g, List<Note> noteList)
     {
         Graphics2D g2d = (Graphics2D) g;
         if(defaultFont==null) defaultFont=g.getFont();
         for(Note note:noteList)
         {
-            if(note.getTitleFont()==null)
-            {
-//                System.out.println("set font: "+defaultFont.getName());
-                note.setTitleFont(defaultFont);
-                note.setTitleFontName(note.getTitleFont().getName());
-            }
-            if(note.getDescriptionAttributes().getFont()==null)
-            {
-                note.getDescriptionAttributes().setFont(defaultFont);
-                note.getDescriptionAttributes().setFontName(defaultFont.getName());
-            }
-//            if(note.getDescriptionFont()==null)
-//            {
-//                note.setDescriptionFont(defaultFont);
-//                note.setDescriptionFontName(note.getDescriptionFont().getName());
-//            }
+            TextAttributes titleAttributes=note.getTitleAttributes();
+            setDefaultFont(titleAttributes,defaultFont);
+            setDefaultFont(note.getDescriptionAttributes(),defaultFont);
+
             // Draws the bound
             g2d.setStroke(noteBoundWidth);
             g2d.rotate(Math.toRadians(note.getRotationDegree()),
                     note.getCentre().x,note.getCentre().y);
             g.setColor(note.getBoundColor());
             g.drawRect(note.getLeft(),note.getTop(),note.getWidth(),note.getHeight());
+
             // Draw note paper
             g.setColor(note.getPaperColor());
             g.fillRect(note.getLeft(),note.getTop(),note.getWidth(),note.getHeight());
 
             // Draws the title
-            g.setColor(note.getTitleColor());
-            g.setFont(note.getTitleFont());
-            drawWrappedText(g,note.getTitle(),g.getFont(),note.getWidth(), note.getHeight(),
+            g.setColor(titleAttributes.getFontColor());
+            g.setFont(titleAttributes.getFont());
+            drawWrappedText(g,titleAttributes.getTextContent(),g.getFont(),note.getWidth(), note.getHeight(),
                     note.getLeft(),note.getTop(),note.getWidth()/8,note.getHeight()/3);
-//            drawWrappedText(g,"测试中文test text text String\n test",g.getFont(),note.getWidth(), note.getHeight(),
-//                    note.getLeft(),note.getTop(),note.getWidth()/8,note.getHeight()/3);
 
 //            // Draws the nail
 //            g.setColor(note.getBoundColor());
 //            g.fillOval(note.getCentre().x-note.getErrorAllowance(),note.getTop(),
 //                    note.getErrorAllowance(),note.getErrorAllowance());
+
             // Draws selection box
             if(note.isSelected())
             {
