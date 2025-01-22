@@ -258,6 +258,10 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                         String newTitle=(String) event.getNewValue();
                         listPanel.repaint();
                     }
+                    else
+                    {
+                        windowPanel.repaintDescriptionDialog();
+                    }
                 }
             });
         }

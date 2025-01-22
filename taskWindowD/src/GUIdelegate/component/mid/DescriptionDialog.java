@@ -1,6 +1,7 @@
 package GUIdelegate.component.mid;
 
 import GUIdelegate.component.small.TextScrollArea;
+import model.Note;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,5 +20,6 @@ public class DescriptionDialog extends JDialog {
         scrollArea.setText(text);
         scrollArea.setTextAttributes(fg,bg,font);
     }
+
 
 }

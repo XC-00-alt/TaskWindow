@@ -104,6 +104,17 @@ public class WindowPanel extends JPanel {
 
         // draws notes
         GraphicDelegate.drawNotes(g,taskQuadrant.getNoteList());
+
+//        if(descriptionDialog.isVisible()) descriptionDialog.repaint();
+    }
+    public void repaintDescriptionDialog()
+    {
+        descriptionDialog.setValue(
+        getSelectedNote().getDescriptionAttributes().getTextContent(),
+                getSelectedNote().getDescriptionAttributes().getFontColor(),
+                getSelectedNote().getPaperColor(),
+                getSelectedNote().getDescriptionAttributes().getFont());
+        descriptionDialog.repaint();
     }
     public QuadrantEnum getQuadrantCode(int x, int y)
     {
@@ -152,7 +163,7 @@ public class WindowPanel extends JPanel {
         @Override
         public void mouseMoved(MouseEvent e) {
             if(!menuPopUp&&!listRequested
-//                    &&!dialogInAction
+                    &&!dialogInAction
             )
             {
                 int i=taskQuadrant.getNoteList().size() - 1;
