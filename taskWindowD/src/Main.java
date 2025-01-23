@@ -1,4 +1,4 @@
-import GUIdelegate.delegate.IntegrationDelegate;
+import GUIdelegate.delegate.*;
 import model.QuadrantEnum;
 import util.FrameDemo;
 

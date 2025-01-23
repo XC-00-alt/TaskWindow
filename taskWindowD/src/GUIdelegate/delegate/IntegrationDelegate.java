@@ -60,7 +60,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         bottomPanel=new BottomPanel(FRAME_WIDTH,topPanelHeight);
         listPanel=new ListPanel(this,new Dimension(listPanelWidth,FRAME_HEIGHT));
 
-        noteDialog=new NoteDialog(this,windowPanelWidth/2,windowPanelHeight/2);
+        noteDialog=new NoteDialog(this,windowPanelWidth/2,windowPanelHeight*5/8);
     }
 
     public void setupFrame()

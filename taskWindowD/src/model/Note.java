@@ -12,7 +12,7 @@ public class Note {
     private int id;
 //    private Date startDate;
 //    private Date endDate;
-//    private boolean state=false;
+    private boolean complete=false;
     /**
      * ============Basic Attribute============
      */
@@ -72,6 +72,14 @@ public class Note {
 
     public int getId() {
         return id;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
+    }
+
+    public boolean isComplete() {
+        return complete;
     }
 
     @Override
