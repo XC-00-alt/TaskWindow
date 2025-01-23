@@ -132,6 +132,11 @@ public class WindowPanel extends JPanel {
         }
     }
 
+    public int getNewNoteId()
+    {
+        return taskQuadrant.getNewId();
+    }
+
     // flags whether noteMenu is requested by the listPanel
     private boolean listRequested =false;
 

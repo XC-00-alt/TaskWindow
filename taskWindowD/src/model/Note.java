@@ -9,6 +9,10 @@ import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 
 public class Note {
+    private int id;
+//    private Date startDate;
+//    private Date endDate;
+//    private boolean state=false;
     /**
      * ============Basic Attribute============
      */
@@ -56,14 +60,20 @@ public class Note {
 
     public static final String NOTE_TO_BE_EDIT ="summon edit note";
 
-    public Note(int x, int y,QuadrantEnum quadrantEnum)
+    public Note(int id,int x, int y,QuadrantEnum quadrantEnum)
     {
+        this.id=id;
         centre=new Point(x,y);
         boundColor=Color.black;
         paperColor =new Color(0xFFE562);
         this.quadrantCode = quadrantEnum;
         notifier = new PropertyChangeSupport(this);
     }
+
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString()
     {
@@ -235,4 +245,19 @@ public class Note {
         return centre;
     }
 
+    //ref: https://www.baeldung.com/java-override-hashcode-equals-records
+    @Override
+    public boolean equals(Object other) {
+        if(this == other) {
+            return true;
+        }
+        if(null == other) {
+            return false;
+        }
+        if (!(other instanceof Note otherNote)) return false;
+        else
+        {
+            return otherNote.id==this.id;
+        }
+    }
 }

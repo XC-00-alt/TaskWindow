@@ -1,16 +1,21 @@
 package model;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskQuadrant {
+    private int count=0;
     private Note selectedNote;
     private List<Note> noteList;
     public TaskQuadrant()
     {
         noteList=new ArrayList<>();
     }
+
+    public int getNewId() {
+        return count++;
+    }
+
     public boolean add(Note note)
     {
         return noteList.add(note);

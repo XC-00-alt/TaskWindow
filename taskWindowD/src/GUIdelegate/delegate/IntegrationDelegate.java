@@ -101,7 +101,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             // randomly generates the position of the new note
             int x=randomN.nextInt(0, windowPanel.getWidth());
             int y=randomN.nextInt(0, windowPanel.getHeight());
-            Note newNote=new Note(x, y,windowPanel.getQuadrantCode(x,y));
+            Note newNote=new Note(windowPanel.getNewNoteId(),x, y,windowPanel.getQuadrantCode(x,y));
+            System.out.println("new id:"+newNote.getId());
             newNote.addObserver(this);
 
             // add the note

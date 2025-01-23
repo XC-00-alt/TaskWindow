@@ -18,6 +18,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class NoteDialog extends JDialog implements ActionListener, ChangeListener {
+
+//    private EditStatePanel statePanel;
+//    private EditInfoPanel infoPanel;
     private Note selectedNote=null;
     private PropertyChangeSupport notifier;
     private int width;
@@ -95,6 +98,10 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         setVisible(false);
     }
 
+    /**
+     * KEEP THIS!
+     * @param e the window event
+     */
     // ref:https://blog.csdn.net/l1o3v1e4ding/article/details/134852648
     @Override
     protected void processWindowEvent(WindowEvent e) {
