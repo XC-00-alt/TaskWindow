@@ -234,6 +234,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     if(propName.equals(NoteUpdateEnum.PAPER_COLOR.toString()))
                     {
                         Color newColor=(Color)event.getNewValue();
+                        windowPanel.repaintDescriptionDialog();
                     }
                     else if(propName.equals(NoteUpdateEnum.ROTATION.toString()))
                     {
