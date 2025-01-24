@@ -43,7 +43,12 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         // ref: https://docs.oracle.com/javase/tutorial/uiswing/examples/components/TabbedPaneDemoProject/src/components/TabbedPaneDemo.java
         tabbedPane=new JTabbedPane();
 
-        infoPanel=new EditInfoPanel(width,height);
+        int tabHeight=height*4/5;
+        statePanel=new EditStatePanel(width,tabHeight);
+        statePanel.addActionListener(this);
+        tabbedPane.addTab("State",statePanel);
+
+        infoPanel=new EditInfoPanel(width,tabHeight);
         infoPanel.addActionListener(this);
         infoPanel.addChangeListener(this);
         tabbedPane.addTab("Info",infoPanel);
@@ -56,64 +61,11 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         if(selectedNote!=null) {
             selectedNote.setSelected(true);
 
+            statePanel.setValue(selectedNote.isComplete());
             infoPanel.setValue(selectedNote);
         }
         this.selectedNote = selectedNote;
     }
-//
-//    private ColorPane paperColorPane;
-//    private SliderPane rotationPane;
-//    private SliderPane widthPane;
-//    private SliderPane heightPane;
-//
-//    private TextAttributePanel titlePane;
-//
-//    private TextAttributePanel descriptionPane;
-//
-
-//
-//    public NoteDialog(PropertyChangeListener listener,int width, int height)
-//    {
-//        this.width=width;
-//        this.height=height;
-////        setPreferredSize(new Dimension(width,height));
-//        setSize(width,this.height);
-//        setResizable(false);
-//        setLocation(width/2,height/2);
-//        setTitle("Edit Note");
-//        notifier=new PropertyChangeSupport(this);
-//        notifier.addPropertyChangeListener(listener);
-//
-//        int buttonLen=height/12;
-//        setComponents(buttonLen);
-//    }
-//    public void setComponents(int buttonLen)
-//    {
-//        setLayout(new FlowLayout());
-//        paperColorPane=new ColorPane("paper color",buttonLen);
-//        rotationPane=new SliderPane("rotation",this.width/4,buttonLen,-180,180);
-//        widthPane=new SliderPane("width",this.width/6,buttonLen,25,this.width/4);
-//        heightPane=new SliderPane("height",this.width/6,buttonLen,25,this.width/4);
-//        titlePane=new TextAttributePanel("title",this.width,this.height/4,buttonLen);
-//        descriptionPane=new TextAttributePanel("description",this.width,this.height*3/4,buttonLen);
-//
-//        paperColorPane.addActionListener(this);
-//        titlePane.addActionListener(this);
-//        descriptionPane.addActionListener(this);
-//
-//        rotationPane.addChangeListener(this);
-//        widthPane.addChangeListener(this);
-//        heightPane.addChangeListener(this);
-//
-//        add(paperColorPane);
-//        add(rotationPane);
-//        add(widthPane);
-//        add(heightPane);
-//        add(titlePane);
-////        add(new JSeparator());
-//        add(descriptionPane);
-//    }
-//
 
     public void reset()
     {
@@ -134,76 +86,6 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         }
         super.processWindowEvent(e);
     }
-//    private String contentMsg;
-//    private String fontMsg;
-//    private String fontColorMsg;
-//
-//    public void textAttributePanelOp(TextAttributes textAttributes,
-//                                     TextAttributePanel textAttributePanel, ActionEvent e)
-//    {
-//        boolean isDes=selectedNote.getDescriptionAttributes().equals(textAttributes);
-//        if(selectedNote==null||
-//                !(isDes||selectedNote.getTitleAttributes().equals(textAttributes)))
-//        {
-//            return;
-//        }
-//        else if(isDes)
-//        {
-//            contentMsg=NoteUpdateEnum.DESCRIPTION_CONTENT.toString();
-//            fontMsg=NoteUpdateEnum.DESCRIPTION_FONT.toString();
-//            fontColorMsg=NoteUpdateEnum.DESCRIPTION_COLOR.toString();
-//        }
-//        else
-//        {
-//            contentMsg=NoteUpdateEnum.TITLE_CONTENT.toString();
-//            fontMsg=NoteUpdateEnum.TITLE_FONT.toString();
-//            fontColorMsg=NoteUpdateEnum.TITLE_COLOR.toString();
-//        }
-//        if(textAttributePanel.isFontChooser(e.getSource()))
-//        {
-//            String fontStr=textAttributePanel.getItem();
-//            if(!fontStr.equals(textAttributes.getFontName())) {
-//                Font oldFont = textAttributes.getFont();
-//                textAttributes.setFontName(fontStr);
-//                selectedNote.callNotifier(fontMsg, oldFont, textAttributes.getFont());
-//            }
-//        }
-//        else if(textAttributePanel.isColorButton(e.getSource()))
-//        {
-//            Color oldColor=textAttributes.getFontColor();
-//            Color newColor=textAttributePanel.showColorDialog();
-//            if(!newColor.equals(oldColor)) {
-//                textAttributes.setFontColor(newColor);
-//                selectedNote.callNotifier(fontColorMsg, oldColor, textAttributes.getFontColor());
-//            }
-//        }
-//        else if(textAttributePanel.isBoldButton(e.getSource()))
-//        {
-//            textAttributePanel.reverseBold();
-//            boolean newBold=textAttributePanel.isBold();
-//            if(newBold!=textAttributes.isFontBold()) {
-//                Font oldFont = textAttributes.getFont();
-//                textAttributes.setFontBold(newBold);
-//                selectedNote.callNotifier(fontMsg, oldFont, textAttributes.getFont());
-//            }
-//        }
-//        else if(textAttributePanel.isConfirmButton(e.getSource())
-//                ||textAttributePanel.isCancelButton(e.getSource()))
-//        {
-//            if(textAttributePanel.isConfirmButton(e.getSource()))
-//            {
-//                String oldContent=textAttributes.getTextContent();
-//                String newContent=textAttributePanel.getText();
-//                if(!oldContent.equals(newContent)) {
-//                    textAttributes.setTextContent(textAttributePanel.getText());
-//                    selectedNote.callNotifier(contentMsg, oldContent, textAttributes.getTextContent());
-//                }
-//            }
-//            textAttributePanel.setText(textAttributes.getTextContent());
-//            textAttributePanel.showEditButtons(false);
-//        }
-//    }
-//
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -213,6 +95,12 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                 {
                     Color newColor=infoPanel.showColorDialog();
                     selectedNote.setPaperColor(newColor);
+                }
+                else if(statePanel.isCheckBox(e.getSource()))
+                {
+                    boolean newComplete=statePanel.isComplete();
+                    selectedNote.setComplete(newComplete);
+                    statePanel.setComplete(newComplete);
                 }
                 else
                 {

@@ -60,7 +60,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         bottomPanel=new BottomPanel(FRAME_WIDTH,topPanelHeight);
         listPanel=new ListPanel(this,new Dimension(listPanelWidth,FRAME_HEIGHT));
 
-        noteDialog=new NoteDialog(this,windowPanelWidth/2,windowPanelHeight*5/8);
+        noteDialog=new NoteDialog(this,windowPanelWidth/2,windowPanelHeight*3/4);
     }
 
     public void setupFrame()
@@ -261,6 +261,10 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     {
                         String newTitle=(String) event.getNewValue();
                         listPanel.repaint();
+                    }
+                    else if(propName.equals(NoteUpdateEnum.COMPLETE_STATE.toString()))
+                    {
+                        boolean newComplete=(boolean) event.getNewValue();
                     }
                     else
                     {

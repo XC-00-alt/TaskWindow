@@ -13,6 +13,8 @@ public enum NoteUpdateEnum {
     DESCRIPTION_COLOR("description color"),
     DESCRIPTION_FONT("description font"),
     DESCRIPTION_CONTENT("description content"),
+
+    COMPLETE_STATE("complete state"),
     ;
     final String message;
     NoteUpdateEnum(String str)
@@ -31,6 +33,6 @@ public enum NoteUpdateEnum {
                 prop.equals(NOTE_WIDTH.message)||prop.equals(NOTE_HEIGHT.message)||
                 prop.equals(TITLE_COLOR.message)||prop.equals(TITLE_FONT.message)||prop.equals(TITLE_CONTENT.message)||
                 prop.equals(DESCRIPTION_COLOR.message)||prop.equals(DESCRIPTION_FONT.message)
-                ||prop.equals(DESCRIPTION_CONTENT.message);
+                ||prop.equals(DESCRIPTION_CONTENT.message)||prop.equals(COMPLETE_STATE.message);
     }
 }
