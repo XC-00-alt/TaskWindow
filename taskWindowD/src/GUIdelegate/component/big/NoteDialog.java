@@ -18,9 +18,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class NoteDialog extends JDialog implements ActionListener, ChangeListener{
-
     private JTabbedPane tabbedPane;
     private EditStatePanel statePanel;
+    private static final String optionDialogText="Are you sure to reopen the note?" +
+            "\nThe end date will be set to null until the next check.";
     private EditInfoPanel infoPanel;
     private Note selectedNote=null;
     private PropertyChangeSupport notifier;
@@ -61,7 +62,8 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         if(selectedNote!=null) {
             selectedNote.setSelected(true);
 
-            statePanel.setValue(selectedNote.isComplete());
+            statePanel.setValue(selectedNote.isComplete(),
+                    selectedNote.getStartDate(),selectedNote.getEndDate());
             infoPanel.setValue(selectedNote);
         }
         this.selectedNote = selectedNote;
@@ -98,9 +100,22 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                 }
                 else if(statePanel.isCheckBox(e.getSource()))
                 {
+                    boolean oldComplete=selectedNote.isComplete();
                     boolean newComplete=statePanel.isComplete();
+                    // if set to incomplete when the note was completed
+                    if(oldComplete&&!newComplete)
+                    {
+                        // ref:https://blog.csdn.net/weixin_62668932/article/details/120634568
+                        int option=JOptionPane.showConfirmDialog(this,
+                                optionDialogText,null,JOptionPane.YES_NO_OPTION);
+                        if(option==JOptionPane.NO_OPTION) {
+                            //necessary, to prevent the check disappear
+                            statePanel.setComplete(true);
+                            return;}
+                    }
                     selectedNote.setComplete(newComplete);
                     statePanel.setComplete(newComplete);
+                    statePanel.setEndDate(selectedNote.getEndDate());
                 }
                 else
                 {

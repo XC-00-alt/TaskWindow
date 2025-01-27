@@ -79,11 +79,20 @@ public class Note {
 
     public void setComplete(boolean complete) {
         this.complete = complete;
-        this.endDate=new Date();
+        if(complete) this.endDate=new Date();
+        else this.endDate=null;
     }
 
     public boolean isComplete() {
         return complete;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
     }
 
     @Override

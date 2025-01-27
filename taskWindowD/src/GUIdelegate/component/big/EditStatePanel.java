@@ -1,6 +1,7 @@
 package GUIdelegate.component.big;
 
 import GUIdelegate.component.small.TextFieldWithLabel;
+import util.DateRelated;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +12,8 @@ public class EditStatePanel extends JPanel {
     private static final String INCOMPLETE="incomplete";
     private static final String COMPLETE="complete";
     private JCheckBox completeState=new JCheckBox(INCOMPLETE);
-    private TextFieldWithLabel startDate=new TextFieldWithLabel("start date");
-    private TextFieldWithLabel endDate=new TextFieldWithLabel("end date");
+    private TextFieldWithLabel startDatePane=new TextFieldWithLabel("start date");
+    private TextFieldWithLabel endDatePane=new TextFieldWithLabel("end date");
     public EditStatePanel(int width, int height)
     {
         setSize(width,height);
@@ -23,10 +24,10 @@ public class EditStatePanel extends JPanel {
     public void addComponents(int width, int height)
     {
         add(completeState);
-        startDate.adjustSize(width, height/12);
-        endDate.adjustSize(width,height/12);
-        add(startDate);
-        add(endDate);
+        startDatePane.adjustSize(width, height/12);
+        endDatePane.adjustSize(width,height/12);
+        add(startDatePane);
+        add(endDatePane);
     }
     public void addActionListener(ActionListener al)
     {
@@ -40,10 +41,15 @@ public class EditStatePanel extends JPanel {
     {
         return completeState.isSelected();
     }
-    public void setValue(boolean complete/**, Date startDate, Date endDate*/)
+    public void setValue(boolean complete, Date startDate, Date endDate)
     {
         setComplete(complete);
-
+        startDatePane.setText(DateRelated.getDateString(startDate));
+        setEndDate(endDate);
+    }
+    public void setEndDate(Date endDate)
+    {
+        endDatePane.setText(DateRelated.getDateString(endDate));
     }
     public void setComplete(boolean complete)
     {
