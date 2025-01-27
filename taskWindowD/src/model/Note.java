@@ -6,12 +6,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Date;
 import java.util.Objects;
 
 public class Note {
     private int id;
-//    private Date startDate;
-//    private Date endDate;
+    private Date startDate;
+    private Date endDate=null;
     private boolean complete=false;
     /**
      * ============Basic Attribute============
@@ -63,6 +64,8 @@ public class Note {
     public Note(int id,int x, int y,QuadrantEnum quadrantEnum)
     {
         this.id=id;
+        this.startDate=new Date();
+
         centre=new Point(x,y);
         boundColor=Color.black;
         paperColor =new Color(0xFFE562);
@@ -76,6 +79,7 @@ public class Note {
 
     public void setComplete(boolean complete) {
         this.complete = complete;
+        this.endDate=new Date();
     }
 
     public boolean isComplete() {
