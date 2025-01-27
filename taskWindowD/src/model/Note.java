@@ -56,6 +56,9 @@ public class Note {
     private final static Color SELECTED_COLOR =new Color(0xFF00FFF7, true);
     // the color to fill the selection box
     private final static Color SELECTED_FILL =new Color(0x3200FFF7, true);
+
+    public static final Color COMPLETE_COLOR=new Color(0xD3D3D3);
+    public static final Color COMPLETE_FILL=new Color(0x80AFAFAF, true);
     public static final String NOTE_QUADRANT_CHANGE ="noteQuadrantChange";
     public static final String NOTE_DELETE ="delete note";
 

@@ -65,6 +65,21 @@ public class GraphicDelegate {
             textAttributes.setDefaultFont(font);
         }
     }
+    public static void drawBox(Note note,Graphics2D g2d,Color boundColor,Color fillColor)
+    {
+        g2d.setStroke(new BasicStroke(note.getErrorAllowance()));
+        g2d.setColor(boundColor);
+        g2d.drawRect(note.getLeft()-note.getErrorAllowance(),
+                note.getTop()-note.getErrorAllowance(),
+                note.getWidth()+note.getErrorAllowance()*2,
+                note.getHeight()+note.getErrorAllowance()*2);
+//                g2d.drawRect(note.getLeft(),note.getTop(),note.getWidth(),note.getHeight());
+        g2d.setColor(fillColor);
+        g2d.fillRect(note.getLeft()-note.getErrorAllowance(),
+                note.getTop()-note.getErrorAllowance(),
+                note.getWidth()+note.getErrorAllowance()*2,
+                note.getHeight()+note.getErrorAllowance()*2);
+    }
     public static void drawNotes(Graphics g, List<Note> noteList)
     {
         Graphics2D g2d = (Graphics2D) g;
@@ -100,18 +115,11 @@ public class GraphicDelegate {
             // Draws selection box
             if(note.isSelected())
             {
-                g2d.setStroke(new BasicStroke(note.getErrorAllowance()));
-                g2d.setColor(Note.getSelectedColor());
-                g2d.drawRect(note.getLeft()-note.getErrorAllowance(),
-                        note.getTop()-note.getErrorAllowance(),
-                        note.getWidth()+note.getErrorAllowance()*2,
-                        note.getHeight()+note.getErrorAllowance()*2);
-//                g2d.drawRect(note.getLeft(),note.getTop(),note.getWidth(),note.getHeight());
-                g2d.setColor(Note.getSelectedFill());
-                g2d.fillRect(note.getLeft()-note.getErrorAllowance(),
-                        note.getTop()-note.getErrorAllowance(),
-                        note.getWidth()+note.getErrorAllowance()*2,
-                        note.getHeight()+note.getErrorAllowance()*2);
+                drawBox(note,g2d,Note.getSelectedColor(),Note.getSelectedFill());
+            }
+            else if(note.isComplete())
+            {
+                drawBox(note,g2d,Note.COMPLETE_COLOR,Note.COMPLETE_FILL);
             }
             // rotate back
             g2d.rotate(-Math.toRadians(note.getRotationDegree()),
