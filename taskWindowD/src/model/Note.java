@@ -2,6 +2,9 @@ package model;
 
 import util.CalculationWithBound;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
@@ -10,6 +13,17 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Note {
+//    public JsonObject toJsonObject()
+//    {
+//        JsonObjectBuilder info= Json.createObjectBuilder();
+//        info.add("id",id)
+//                .add("startDate",startDate.getTime())
+//                .add("endDate",endDate.getTime())
+//                // require testing on whether RGB includes alpha
+//                .add("fontColorRGB",fontColor.getRGB())
+//                .add("fontColorAlpha",fontColor.getAlpha());
+//        return info.build();
+//    }
     private int id;
     private Date startDate;
     private Date endDate=null;
@@ -33,6 +47,7 @@ public class Note {
     private QuadrantEnum quadrantCode;
     /**
      * ============Helpers============
+     * don't need to be stored as json
      */
     private PropertyChangeSupport notifier;
     private DefaultMutableTreeNode node;

@@ -1,5 +1,5 @@
 package model;
-
+import javax.json.*;
 import java.awt.*;
 import java.util.Objects;
 
@@ -9,6 +9,26 @@ public class TextAttributes {
     private String fontName;
     private boolean fontBold;
     private Color fontColor=Color.BLACK;
+
+//    public String toJsonString()
+//    {
+//        String jsonStr="";
+//
+//        return jsonStr;
+//    }
+
+    public JsonObject toJsonObject()
+    {
+        JsonObjectBuilder info=Json.createObjectBuilder();
+        info.add("textContent",textContent)
+//                .add("font",font)
+                .add("fontName",fontName)
+                .add("fontBold",fontBold)
+                // require testing on whether RGB includes alpha
+                .add("fontColorRGB",fontColor.getRGB())
+                .add("fontColorAlpha",fontColor.getAlpha());
+        return info.build();
+    }
     public TextAttributes(String textContent)
     {
         this.textContent=textContent;

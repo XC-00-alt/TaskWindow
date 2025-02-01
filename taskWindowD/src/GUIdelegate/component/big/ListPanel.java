@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class ListPanel extends JScrollPane{
     // again, only for the sake of referencing
@@ -76,6 +77,18 @@ public class ListPanel extends JScrollPane{
         if(code>0&&code<5) qId2=code-1;
         quadrantNodes[qId2].add(newNode);
         note.setNode(newNode);
+    }
+
+    /**
+     * for loading files later
+     * @param noteList
+     */
+    public void addNotes(ArrayList<Note> noteList)
+    {
+        for(Note note:noteList)
+        {
+            addNote(note);
+        }
     }
 
     @Override

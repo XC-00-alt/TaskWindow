@@ -12,4 +12,9 @@ public class DateRelated {
         if(date==null) return null;
         else return simpleDateFormat.format(date);
     }
+    public long getTimeEvenWhenNull(Date date)
+    {
+        if(date==null) return Long.MAX_VALUE;
+        else return date.getTime();
+    }
 }
