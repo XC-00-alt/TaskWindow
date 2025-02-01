@@ -7,6 +7,7 @@ import model.QuadrantEnum;
 import model.TaskQuadrant;
 import util.CalculationWithBound;
 
+import javax.json.JsonObject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -52,7 +53,12 @@ public class WindowPanel extends JPanel {
         notifier.addPropertyChangeListener(propertyChangeListener);
         setupDescriptionDialog(width,height);
     }
-    public void setupDescriptionDialog(int width,int height)
+
+    public JsonObject getTaskQuadrantJson() {
+        return taskQuadrant.toJsonObject();
+    }
+
+    public void setupDescriptionDialog(int width, int height)
     {
         descriptionDialog=new DescriptionDialog(height/2,width/2);
         descriptionDialog.setVisible(false);

@@ -24,4 +24,8 @@ public class TopMenuBar extends JMenuBar{
     public JButton getNoteAdder() {
         return noteAdder;
     }
+    public boolean isSaveDirectory(Object o)
+    {
+        return saveDirectory.equals(o);
+    }
 }

@@ -5,6 +5,9 @@ import GUIdelegate.component.small.NoteMenu;
 import model.Note;
 import model.NoteUpdateEnum;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonWriter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,9 +15,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Random;
 
 public class IntegrationDelegate implements ActionListener, PropertyChangeListener {
+    private static final String savePath="ArchiveDirectories/";
     private int FRAME_WIDTH;
     private int FRAME_HEIGHT;
     // the Random instance that generates random numbers
@@ -32,8 +39,19 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
     private NoteDialog noteDialog;
 
+    private boolean createFolder()
+    {
+        File file=new File(savePath);
+        if(!file.exists())
+        {
+            return file.mkdir();
+        }
+        return true;
+    }
     public IntegrationDelegate()
     {
+        System.out.println(createFolder());
+
         topMenuBar=new TopMenuBar(this);
         //Gets the resolution of the scree
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -111,6 +129,19 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             // repaint to refresh the view
             windowPanel.repaint();
             listPanel.repaint();
+        }
+        else if(topMenuBar.isSaveDirectory(e.getSource()))
+        {
+            // ref: https://www.tutorialspoint.com/How-to-create-and-write-JSON-array-to-a-file-in-java
+            System.out.println("save");
+            JsonObject taskJson=windowPanel.getTaskQuadrantJson();
+            try {
+                JsonWriter writer= Json.createWriter(new FileOutputStream(savePath+"test"));
+                writer.writeObject(taskJson);
+                writer.close();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
     @Override
