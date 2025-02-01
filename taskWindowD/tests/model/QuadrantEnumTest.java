@@ -29,5 +29,11 @@ class QuadrantEnumTest {
             default: System.out.println("not");
         }
     }
+    @Test
+    void getEnum()
+    {
+        QuadrantEnum quadrantEnum=QuadrantEnum.valueOf(QuadrantEnum.IMPORTANT_NON_URGENT.name());
+        assertEquals(QuadrantEnum.IMPORTANT_NON_URGENT,quadrantEnum);
+    }
 
 }

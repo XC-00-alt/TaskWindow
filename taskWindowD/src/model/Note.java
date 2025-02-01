@@ -1,6 +1,8 @@
 package model;
 
 import util.CalculationWithBound;
+import util.DateRelated;
+import util.JsonRelated;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -13,17 +15,28 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Note {
-//    public JsonObject toJsonObject()
-//    {
-//        JsonObjectBuilder info= Json.createObjectBuilder();
-//        info.add("id",id)
-//                .add("startDate",startDate.getTime())
-//                .add("endDate",endDate.getTime())
-//                // require testing on whether RGB includes alpha
-//                .add("fontColorRGB",fontColor.getRGB())
-//                .add("fontColorAlpha",fontColor.getAlpha());
-//        return info.build();
-//    }
+    public JsonObject toJsonObject()
+    {
+        JsonObjectBuilder info= Json.createObjectBuilder();
+        info.add("id",id)
+                .add("startDate",DateRelated.getTimeEvenWhenNull(startDate))
+                .add("endDate", DateRelated.getTimeEvenWhenNull(endDate))
+                // require testing on whether RGB includes alpha
+                .add("complete",complete)
+                .add("centreX",centre.x)
+                .add("centreY",centre.y)
+                .add("rotationDegree",rotationDegree)
+                .add("halfWidth",halfWidth)
+                .add("halfHeight",halfHeight)
+                // isSelected doesn't need to be saved
+                .add("quadrantCode",quadrantCode.name())
+                .add("titleAttributes",titleAttributes.toJsonObject())
+                .add("descriptionAttributes",descriptionAttributes.toJsonObject())
+        ;
+//        JsonRelated.addColor(info,"boundColor",boundColor);
+        JsonRelated.addColor(info,"paperColor",paperColor);
+        return info.build();
+    }
     private int id;
     private Date startDate;
     private Date endDate=null;
@@ -32,25 +45,17 @@ public class Note {
      * ============Basic Attribute============
      */
     private Point centre;
-    private Color boundColor;
+    private Color boundColor=Color.black;
     private Color paperColor;
     private int rotationDegree;
     // half of the width of this note
     private int halfWidth=25;
     // half of the height of this note
     private int halfHeight=25;
-    private double marginXRatio=0.125;
-    private double marginYRatio=0.333;
 
     //the flag indicating whether this note is selected or not
     private boolean isSelected=false;
     private QuadrantEnum quadrantCode;
-    /**
-     * ============Helpers============
-     * don't need to be stored as json
-     */
-    private PropertyChangeSupport notifier;
-    private DefaultMutableTreeNode node;
 
     /**
      * ============Title Attribute============
@@ -61,9 +66,20 @@ public class Note {
      * ============Description Attributes============
      */
     private TextAttributes descriptionAttributes =new TextAttributes("默认介绍");
+
+    /**
+     * ============Helpers============
+     * don't need to be stored as json
+     */
+    private PropertyChangeSupport notifier;
+    private DefaultMutableTreeNode node;
+
     /**
      * ============Attributes That Is Usually Unchanged============
      */
+    // for drawing the title on the note
+    private double marginXRatio=0.125;
+    private double marginYRatio=0.333;
     // used in the isInRange method, allows the note to be selected with this acceptable tolerance
     private int errorAllowance=5;
     
@@ -85,7 +101,6 @@ public class Note {
         this.startDate=new Date();
 
         centre=new Point(x,y);
-        boundColor=Color.black;
         paperColor =new Color(0xFFE562);
         this.quadrantCode = quadrantEnum;
         notifier = new PropertyChangeSupport(this);

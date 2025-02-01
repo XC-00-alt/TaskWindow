@@ -1,5 +1,9 @@
 package model;
 
+import util.DateRelated;
+import util.JsonRelated;
+
+import javax.json.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +11,28 @@ public class TaskQuadrant {
     private int count=0;
     private Note selectedNote;
     private List<Note> noteList;
+
+    public JsonObject toJsonObject()
+    {
+        JsonObjectBuilder info= Json.createObjectBuilder();
+        info.add("count",count)
+                .add("noteList",noteListToJsonArray());
+        return info.build();
+    }
+    private JsonArray noteListToJsonArray()
+    {
+        JsonObject noteInfo;
+        JsonArray notesArray;
+        JsonArrayBuilder notesArrayBuilder= Json.createArrayBuilder();
+        for(Note note:noteList)
+        {
+            noteInfo=note.toJsonObject();
+            notesArrayBuilder.add(noteInfo);
+        }
+        notesArray=notesArrayBuilder.build();
+        return notesArray;
+    }
+
     public TaskQuadrant()
     {
         noteList=new ArrayList<>();
