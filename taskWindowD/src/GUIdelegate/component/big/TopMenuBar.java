@@ -28,4 +28,8 @@ public class TopMenuBar extends JMenuBar{
     {
         return saveDirectory.equals(o);
     }
+    public boolean isqLoadDirectory(Object o)
+    {
+        return loadDirectory.equals(o);
+    }
 }

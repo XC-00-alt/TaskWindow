@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TaskQuadrant {
     private int count=0;
-    private Note selectedNote;
+    private Note selectedNote=null;
     private List<Note> noteList;
 
     public JsonObject toJsonObject()
@@ -35,6 +35,19 @@ public class TaskQuadrant {
 
     public TaskQuadrant()
     {
+        noteList=new ArrayList<>();
+    }
+
+    public TaskQuadrant(JsonObject jsonObject)
+    {
+        count=Integer.parseInt(jsonObject.get("count").toString());
+        System.out.println(count);
+        // noteList parsing
+        JsonArray jsonArray=jsonObject.getJsonArray("noteList");
+//        for(JsonValue jv:jsonArray)
+//        {
+//            jv.getValueType();
+//        }
         noteList=new ArrayList<>();
     }
 

@@ -54,6 +54,10 @@ public class WindowPanel extends JPanel {
         setupDescriptionDialog(width,height);
     }
 
+    public void setTaskQuadrant(TaskQuadrant taskQuadrant) {
+        this.taskQuadrant = taskQuadrant;
+    }
+
     public JsonObject getTaskQuadrantJson() {
         return taskQuadrant.toJsonObject();
     }

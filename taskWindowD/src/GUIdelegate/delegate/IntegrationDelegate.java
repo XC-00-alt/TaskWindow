@@ -4,9 +4,11 @@ import GUIdelegate.component.big.*;
 import GUIdelegate.component.small.NoteMenu;
 import model.Note;
 import model.NoteUpdateEnum;
+import model.TaskQuadrant;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.json.JsonWriter;
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Random;
@@ -41,6 +44,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
     private boolean createFolder()
     {
+        // ref: https://blog.csdn.net/duhui0_0/article/details/95195686
         File file=new File(savePath);
         if(!file.exists())
         {
@@ -141,6 +145,22 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                 writer.close();
             } catch (FileNotFoundException ex) {
                 throw new RuntimeException(ex);
+            }
+        }
+        else if(topMenuBar.isqLoadDirectory(e.getSource()))
+        {
+            System.out.println("load");
+            try {
+                JsonReader reader=Json.createReader(new FileInputStream(savePath+"test"));
+                JsonObject jsonObject= reader.readObject();
+                reader.close();
+                windowPanel.setTaskQuadrant(new TaskQuadrant(jsonObject));
+                windowPanel.repaint();
+                // set values for listPanel
+                listPanel.repaint();
+            }catch (Exception ex)
+            {
+                System.out.println(ex.getMessage());
             }
         }
     }
