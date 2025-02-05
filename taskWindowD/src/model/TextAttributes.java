@@ -1,4 +1,6 @@
 package model;
+import util.JsonRelated;
+
 import javax.json.*;
 import java.awt.*;
 import java.util.Objects;
@@ -24,10 +26,22 @@ public class TextAttributes {
 //                .add("font",font)
                 .add("fontName",fontName)
                 .add("fontBold",fontBold)
-                // require testing on whether RGB includes alpha
-                .add("fontColorRGB",fontColor.getRGB())
-                .add("fontColorAlpha",fontColor.getAlpha());
+                .add("fontSize",font.getSize());
+        JsonRelated.addColor(info,"fontColor",fontColor);
         return info.build();
+    }
+    public TextAttributes(JsonObject jsonObject)
+    {
+        textContent=jsonObject.getString("textContent");
+        fontName=jsonObject.getString("fontName");
+        fontBold=jsonObject.getBoolean("fontBold");
+        int fontSize=jsonObject.getInt("fontSize");
+        font=new Font(fontName,getBoldCode(),fontSize);
+        int r=jsonObject.getInt("fontColorR");
+        int g=jsonObject.getInt("fontColorG");
+        int b=jsonObject.getInt("fontColorB");
+        int a=jsonObject.getInt("fontColorA");
+        fontColor=new Color(r,g,b,a);
     }
     public TextAttributes(String textContent)
     {

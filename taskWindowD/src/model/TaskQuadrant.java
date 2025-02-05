@@ -43,12 +43,14 @@ public class TaskQuadrant {
         count=Integer.parseInt(jsonObject.get("count").toString());
         System.out.println(count);
         // noteList parsing
-        JsonArray jsonArray=jsonObject.getJsonArray("noteList");
-//        for(JsonValue jv:jsonArray)
-//        {
-//            jv.getValueType();
-//        }
         noteList=new ArrayList<>();
+        JsonArray jsonArray=jsonObject.getJsonArray("noteList");
+        for(int i=0;i< jsonArray.size();i++)
+        {
+            JsonObject noteJson=jsonArray.getJsonObject(i);
+            Note note=new Note(noteJson);
+            noteList.add(note);
+        }
     }
 
     public int getNewId() {

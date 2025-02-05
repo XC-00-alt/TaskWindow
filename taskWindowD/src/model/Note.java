@@ -37,6 +37,26 @@ public class Note {
         JsonRelated.addColor(info,"paperColor",paperColor);
         return info.build();
     }
+    public Note(JsonObject jsonObject)
+    {
+        // ref: https://docs.oracle.com/javaee/7/api/javax/json/JsonObject.html
+        id=jsonObject.getInt("id");
+        startDate=new Date(Long.parseLong(jsonObject.getString("startDate")));
+        long endDateTime=Long.parseLong(jsonObject.getString("endDate"));
+        if(endDateTime<Long.MAX_VALUE) endDate=new Date(endDateTime);
+
+        complete=jsonObject.getBoolean("complete");
+        int x=jsonObject.getInt("centreX");
+        int y=jsonObject.getInt("centreY");
+        centre=new Point(x,y);
+        rotationDegree=jsonObject.getInt("rotationDegree");
+        halfWidth=jsonObject.getInt("halfWidth");
+        halfHeight= jsonObject.getInt("halfHeight");
+
+        quadrantCode=QuadrantEnum.valueOf(jsonObject.getString("quadrantCode"));
+        titleAttributes=new TextAttributes(jsonObject.getJsonObject("titleAttributes"));
+        descriptionAttributes=new TextAttributes(jsonObject.getJsonObject("descriptionAttributes"));
+    }
     private int id;
     private Date startDate;
     private Date endDate=null;
