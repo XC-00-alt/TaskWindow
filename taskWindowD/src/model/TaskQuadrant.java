@@ -40,8 +40,9 @@ public class TaskQuadrant {
 
     public TaskQuadrant(JsonObject jsonObject)
     {
-        count=Integer.parseInt(jsonObject.get("count").toString());
-        System.out.println(count);
+//        count=Integer.parseInt(jsonObject.get("count").toString());
+        count=jsonObject.getInt("count");
+//        System.out.println(count);
         // noteList parsing
         noteList=new ArrayList<>();
         JsonArray jsonArray=jsonObject.getJsonArray("noteList");

@@ -32,16 +32,12 @@ public class TextAttributes {
     }
     public TextAttributes(JsonObject jsonObject)
     {
-        textContent=jsonObject.getString("textContent");
-        fontName=jsonObject.getString("fontName");
+        textContent=jsonObject.get("textContent").toString();
+        fontName=jsonObject.get("fontName").toString();
         fontBold=jsonObject.getBoolean("fontBold");
         int fontSize=jsonObject.getInt("fontSize");
         font=new Font(fontName,getBoldCode(),fontSize);
-        int r=jsonObject.getInt("fontColorR");
-        int g=jsonObject.getInt("fontColorG");
-        int b=jsonObject.getInt("fontColorB");
-        int a=jsonObject.getInt("fontColorA");
-        fontColor=new Color(r,g,b,a);
+        fontColor=JsonRelated.getColor(jsonObject,"fontColor");
     }
     public TextAttributes(String textContent)
     {

@@ -40,9 +40,11 @@ public class Note {
     public Note(JsonObject jsonObject)
     {
         // ref: https://docs.oracle.com/javaee/7/api/javax/json/JsonObject.html
+//        System.out.println("getId");
         id=jsonObject.getInt("id");
-        startDate=new Date(Long.parseLong(jsonObject.getString("startDate")));
-        long endDateTime=Long.parseLong(jsonObject.getString("endDate"));
+//        System.out.println("getStartDate");
+        startDate=new Date(Long.parseLong(jsonObject.get("startDate").toString()));
+        long endDateTime=Long.parseLong(jsonObject.get("endDate").toString());
         if(endDateTime<Long.MAX_VALUE) endDate=new Date(endDateTime);
 
         complete=jsonObject.getBoolean("complete");
@@ -53,9 +55,13 @@ public class Note {
         halfWidth=jsonObject.getInt("halfWidth");
         halfHeight= jsonObject.getInt("halfHeight");
 
-        quadrantCode=QuadrantEnum.valueOf(jsonObject.getString("quadrantCode"));
+        quadrantCode=QuadrantEnum.valueOf(jsonObject.get("quadrantCode").toString());
         titleAttributes=new TextAttributes(jsonObject.getJsonObject("titleAttributes"));
         descriptionAttributes=new TextAttributes(jsonObject.getJsonObject("descriptionAttributes"));
+
+        paperColor=JsonRelated.getColor(jsonObject,"paperColor");
+
+        notifier = new PropertyChangeSupport(this);
     }
     private int id;
     private Date startDate;
