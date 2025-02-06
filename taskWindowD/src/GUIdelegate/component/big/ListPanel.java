@@ -63,6 +63,13 @@ public class ListPanel extends JScrollPane{
     {
         note.getNode().removeFromParent();
     }
+    public void clearNotes()
+    {
+        quadrantNodes[0].removeAllChildren();
+        quadrantNodes[1].removeAllChildren();
+        quadrantNodes[2].removeAllChildren();
+        quadrantNodes[3].removeAllChildren();
+    }
     public void changeNote(Note note,Integer oldVal,Integer newVal)
     {
         deleteNote(note);

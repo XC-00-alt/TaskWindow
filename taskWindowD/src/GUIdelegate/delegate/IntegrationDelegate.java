@@ -154,9 +154,14 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                 JsonReader reader=Json.createReader(new FileInputStream(savePath+"test"));
                 JsonObject jsonObject= reader.readObject();
                 reader.close();
-                windowPanel.setTaskQuadrant(new TaskQuadrant(jsonObject));
+
+                TaskQuadrant newTaskQuadrant=new TaskQuadrant(jsonObject,this);
+                windowPanel.setTaskQuadrant(newTaskQuadrant);
                 windowPanel.repaint();
+
                 // set values for listPanel
+                listPanel.clearNotes();
+                listPanel.addNotes(newTaskQuadrant.getNoteList());
                 listPanel.repaint();
             }catch (Exception ex)
             {
@@ -232,6 +237,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                         listPanel.showSelectedNote(selectedNote);
                     }
                     windowPanel.repaint();
+                    windowPanel.repaintDescriptionDialog();
                 }
             });
         }

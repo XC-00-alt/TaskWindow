@@ -4,13 +4,14 @@ import util.DateRelated;
 import util.JsonRelated;
 
 import javax.json.*;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskQuadrant {
     private int count=0;
     private Note selectedNote=null;
-    private List<Note> noteList;
+    private ArrayList<Note> noteList;
 
     public JsonObject toJsonObject()
     {
@@ -38,7 +39,7 @@ public class TaskQuadrant {
         noteList=new ArrayList<>();
     }
 
-    public TaskQuadrant(JsonObject jsonObject)
+    public TaskQuadrant(JsonObject jsonObject, PropertyChangeListener listener)
     {
 //        count=Integer.parseInt(jsonObject.get("count").toString());
         count=jsonObject.getInt("count");
@@ -50,6 +51,7 @@ public class TaskQuadrant {
         {
             JsonObject noteJson=jsonArray.getJsonObject(i);
             Note note=new Note(noteJson);
+            note.addObserver(listener);
             noteList.add(note);
         }
     }
@@ -63,7 +65,7 @@ public class TaskQuadrant {
         return noteList.add(note);
     }
 
-    public List<Note> getNoteList() {
+    public ArrayList<Note> getNoteList() {
         return noteList;
     }
 

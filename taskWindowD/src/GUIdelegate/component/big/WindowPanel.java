@@ -119,12 +119,16 @@ public class WindowPanel extends JPanel {
     }
     public void repaintDescriptionDialog()
     {
-        descriptionDialog.setValue(
-        getSelectedNote().getDescriptionAttributes().getTextContent(),
-                getSelectedNote().getDescriptionAttributes().getFontColor(),
-                getSelectedNote().getPaperColor(),
-                getSelectedNote().getDescriptionAttributes().getFont());
-        descriptionDialog.repaint();
+        Note selectedNote=getSelectedNote();
+        if(selectedNote!=null) {
+            descriptionDialog.setValue(
+                    selectedNote.getDescriptionAttributes().getTextContent(),
+                    selectedNote.getDescriptionAttributes().getFontColor(),
+                    selectedNote.getPaperColor(),
+                    selectedNote.getDescriptionAttributes().getFont());
+            descriptionDialog.repaint();
+        }
+        else descriptionDialog.setVisible(false);
     }
     public QuadrantEnum getQuadrantCode(int x, int y)
     {
