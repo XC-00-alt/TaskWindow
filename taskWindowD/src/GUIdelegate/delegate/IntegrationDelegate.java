@@ -42,20 +42,25 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
     private NoteDialog noteDialog;
 
+    private File savePathFolder=new File(savePath);
+
+    private JFileChooser fileChooser;
+
     private boolean createFolder()
     {
         // ref: https://blog.csdn.net/duhui0_0/article/details/95195686
-        File file=new File(savePath);
-        if(!file.exists())
+        if(!savePathFolder.exists())
         {
-            return file.mkdir();
+            return savePathFolder.mkdir();
         }
         return true;
     }
     public IntegrationDelegate()
     {
-        System.out.println(createFolder());
-
+        if(createFolder()) {
+            fileChooser = new JFileChooser(savePathFolder);
+        }
+        else System.out.println("Encountered problems with creating the folder for saving files");
         topMenuBar=new TopMenuBar(this);
         //Gets the resolution of the scree
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -151,18 +156,25 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         {
             System.out.println("load");
             try {
-                JsonReader reader=Json.createReader(new FileInputStream(savePath+"test"));
-                JsonObject jsonObject= reader.readObject();
-                reader.close();
+                //ref: https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html
+                int returnVal=fileChooser.showOpenDialog(mainframe);
+                if(returnVal==JFileChooser.APPROVE_OPTION)
+                {
+                    File file=fileChooser.getSelectedFile();
+                    JsonReader reader=Json.createReader(new FileInputStream(file));
+//                    JsonReader reader=Json.createReader(new FileInputStream(savePath+"test"));
+                    JsonObject jsonObject= reader.readObject();
+                    reader.close();
 
-                TaskQuadrant newTaskQuadrant=new TaskQuadrant(jsonObject,this);
-                windowPanel.setTaskQuadrant(newTaskQuadrant);
-                windowPanel.repaint();
+                    TaskQuadrant newTaskQuadrant=new TaskQuadrant(jsonObject,this);
+                    windowPanel.setTaskQuadrant(newTaskQuadrant);
+                    windowPanel.repaint();
 
-                // set values for listPanel
-                listPanel.clearNotes();
-                listPanel.addNotes(newTaskQuadrant.getNoteList());
-                listPanel.repaint();
+                    // set values for listPanel
+                    listPanel.clearNotes();
+                    listPanel.addNotes(newTaskQuadrant.getNoteList());
+                    listPanel.repaint();
+                }
             }catch (Exception ex)
             {
                 System.out.println(ex.getMessage());
