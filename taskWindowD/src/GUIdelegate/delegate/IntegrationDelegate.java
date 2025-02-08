@@ -142,19 +142,25 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         else if(topMenuBar.isSaveDirectory(e.getSource()))
         {
             // ref: https://www.tutorialspoint.com/How-to-create-and-write-JSON-array-to-a-file-in-java
-            System.out.println("save");
+            // https://docs.oracle.com/javase/tutorial/displayCode.html?code=https://docs.oracle.com/javase/tutorial/uiswing/examples/components/FileChooserDemoProject/src/components/FileChooserDemo.java
             JsonObject taskJson=windowPanel.getTaskQuadrantJson();
             try {
-                JsonWriter writer= Json.createWriter(new FileOutputStream(savePath+"test"));
-                writer.writeObject(taskJson);
-                writer.close();
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
+                int returnVal=fileChooser.showSaveDialog(mainframe);
+                if(returnVal==JFileChooser.APPROVE_OPTION)
+                {
+                    File file=fileChooser.getSelectedFile();
+                    String fileName=file.getName();
+                    JsonWriter writer= Json.createWriter(new FileOutputStream(savePath+fileName));
+                    writer.writeObject(taskJson);
+                    writer.close();
+                }
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
         }
         else if(topMenuBar.isqLoadDirectory(e.getSource()))
         {
-            System.out.println("load");
+//            System.out.println("load");
             try {
                 //ref: https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html
                 int returnVal=fileChooser.showOpenDialog(mainframe);
