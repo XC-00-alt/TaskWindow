@@ -59,7 +59,7 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
     {
         setLayout(new FlowLayout());
         paperColorPane=new ColorPane("paper color",buttonLen);
-        rotationPane=new SliderPane("rotation",this.width/4,buttonLen,-180,180);
+        rotationPane=new SliderPane("rotation",this.width/6,buttonLen,-180,180);
         widthPane=new SliderPane("width",this.width/6,buttonLen,25,this.width/4);
         heightPane=new SliderPane("height",this.width/6,buttonLen,25,this.width/4);
         titlePane=new TextAttributePanel("title",this.width,this.height*3/10,buttonLen);

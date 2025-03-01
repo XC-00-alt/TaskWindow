@@ -38,6 +38,7 @@ public class ColorPane extends JPanel {
     public ColorButton getColorButton() {
         return colorButton;
     }
+    // this may require refactoring to reduce code replication
     public Color showColorDialog()
     {
         return colorButton.showColorDialog();
