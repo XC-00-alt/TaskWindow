@@ -58,6 +58,10 @@ public class WindowPanel extends JPanel {
         this.taskQuadrant = taskQuadrant;
     }
 
+    public TaskQuadrant getTaskQuadrant() {
+        return taskQuadrant;
+    }
+
     public JsonObject getTaskQuadrantJson() {
         return taskQuadrant.toJsonObject();
     }

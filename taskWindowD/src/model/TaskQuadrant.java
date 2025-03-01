@@ -13,10 +13,7 @@ public class TaskQuadrant {
     private int count=0;
     private Note selectedNote=null;
     private ArrayList<Note> noteList;
-    private Color defaultLabelColor=new Color(0x8B7EE7);
-    private String defaultLabelName="personal";
 
-    private List<CategoryLabel> labelList=new ArrayList<>();
     public JsonObject toJsonObject()
     {
         JsonObjectBuilder info= Json.createObjectBuilder();
@@ -41,7 +38,6 @@ public class TaskQuadrant {
     public TaskQuadrant()
     {
         noteList=new ArrayList<>();
-        labelList.add(new CategoryLabel(defaultLabelColor,defaultLabelName));
     }
 
     public TaskQuadrant(JsonObject jsonObject, PropertyChangeListener listener)
@@ -52,8 +48,6 @@ public class TaskQuadrant {
         // noteList parsing
         noteList=new ArrayList<>();
 
-        // labelList parsing
-        // TBA
         JsonArray jsonArray=jsonObject.getJsonArray("noteList");
         for(int i=0;i< jsonArray.size();i++)
         {

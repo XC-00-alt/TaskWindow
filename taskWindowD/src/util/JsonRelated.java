@@ -10,7 +10,6 @@ public class JsonRelated {
         objectBuilder.add(name+"R",color.getRed())
                 .add(name+"G",color.getGreen())
                 .add(name+"B",color.getBlue())
-//                .add(name+"RGB",color.getRGB())
                 .add(name+"A",color.getAlpha());
     }
     public static Color getColor(JsonObject jsonObject,String name)

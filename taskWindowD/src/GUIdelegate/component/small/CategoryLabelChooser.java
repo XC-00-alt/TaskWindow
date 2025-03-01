@@ -24,4 +24,9 @@ public class CategoryLabelChooser extends JPanel {
         }
         add(comboBox);
     }
+    public void setSelectedLabel(CategoryLabel label)
+    {
+        comboBox.setSelectedItem(label);
+        comboBox.setBackground(label.getColor());
+    }
 }

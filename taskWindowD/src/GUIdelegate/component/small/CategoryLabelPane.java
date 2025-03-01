@@ -15,28 +15,34 @@ public class CategoryLabelPane extends JPanel implements ActionListener {
     private ColorButton colorButton;
     private JTextField nameField;
     private JButton confirmButton=new JButton("√");//pending to be changed to icon
+
     private JButton cancelButton=new JButton("←");
     private JButton deleteButton=new JButton("×");
 
     private CategoryLabel categoryLabel;
-    public CategoryLabelPane(int width,int height, int buttonLen)
+    public CategoryLabelPane(int width,int height, int buttonLen,boolean isManage)
     {
         this.setPreferredSize(new Dimension(width, height));
+
         colorButton=new ColorButton(buttonLen);
+        colorButton.addActionListener(this);
+        add(colorButton);
+
         nameField.setPreferredSize(new Dimension(width-buttonLen*6,buttonLen));
         add(nameField);
-        setButtons();
+
+        if(isManage) setButtons();
     }
     public void setButtons()
     {
         confirmButton.setForeground(Color.BLUE);
         cancelButton.setForeground(Color.DARK_GRAY);
         deleteButton.setForeground(Color.RED);
-        colorButton.addActionListener(this);
+
         confirmButton.addActionListener(this);
         cancelButton.addActionListener(this);
         deleteButton.addActionListener(this);
-        add(colorButton);
+
         add(confirmButton);
         add(cancelButton);
         add(deleteButton);

@@ -2,6 +2,7 @@ package GUIdelegate.delegate;
 
 import GUIdelegate.component.big.*;
 import GUIdelegate.component.small.NoteMenu;
+import model.ArchiveDirectory;
 import model.Note;
 import model.NoteUpdateEnum;
 import model.TaskQuadrant;
@@ -35,6 +36,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
     private TopPanel topPanel=new TopPanel();
     private LeftPanel leftPanel;
     private WindowPanel windowPanel;
+    private ArchiveDirectory archiveDirectory;
     private BottomPanel bottomPanel;
     private ListPanel listPanel;
 
@@ -69,6 +71,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         FRAME_HEIGHT=(int) Math.round(screenSize.height*0.8);
         setPanelSize();
         setupFrame();
+        archiveDirectory=new ArchiveDirectory(windowPanel.getTaskQuadrant());
     }
 
     public void setPanelSize()
@@ -143,7 +146,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         {
             // ref: https://www.tutorialspoint.com/How-to-create-and-write-JSON-array-to-a-file-in-java
             // https://docs.oracle.com/javase/tutorial/displayCode.html?code=https://docs.oracle.com/javase/tutorial/uiswing/examples/components/FileChooserDemoProject/src/components/FileChooserDemo.java
-            JsonObject taskJson=windowPanel.getTaskQuadrantJson();
+            JsonObject taskJson=archiveDirectory.toJsonObject();
             try {
                 int returnVal=fileChooser.showSaveDialog(mainframe);
                 if(returnVal==JFileChooser.APPROVE_OPTION)
@@ -172,13 +175,14 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     JsonObject jsonObject= reader.readObject();
                     reader.close();
 
-                    TaskQuadrant newTaskQuadrant=new TaskQuadrant(jsonObject,this);
-                    windowPanel.setTaskQuadrant(newTaskQuadrant);
+                    archiveDirectory=new ArchiveDirectory(jsonObject,this);
+//                    TaskQuadrant newTaskQuadrant=new TaskQuadrant(jsonObject,this);
+                    windowPanel.setTaskQuadrant(archiveDirectory.getTaskQuadrant());
                     windowPanel.repaint();
 
                     // set values for listPanel
                     listPanel.clearNotes();
-                    listPanel.addNotes(newTaskQuadrant.getNoteList());
+                    listPanel.addNotes(archiveDirectory.getTaskQuadrant().getNoteList());
                     listPanel.repaint();
                 }
             }catch (Exception ex)
