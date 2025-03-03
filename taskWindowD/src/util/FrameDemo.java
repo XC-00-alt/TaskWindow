@@ -57,7 +57,7 @@ public class FrameDemo implements ActionListener, PropertyChangeListener {
 //        }
         if(textPanel.isFontChooser(e.getSource()))
         {
-            System.out.println(textPanel.getItem());
+            System.out.println(textPanel.getChosenFont());
         }
     }
 

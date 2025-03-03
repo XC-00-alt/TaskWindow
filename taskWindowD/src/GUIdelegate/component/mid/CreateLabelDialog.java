@@ -60,5 +60,6 @@ public class CreateLabelDialog extends JDialog{
         setVisible(false);
         createPane.setColor(Color.BLUE);
         createPane.clearText();
+        createPane.setCategoryLabel(null);
     }
 }

@@ -34,6 +34,10 @@ public class CategoryLabelChooser extends JPanel {
     {
         comboBox.addActionListener(al);
     }
+    public CategoryLabel getSelectedItem()
+    {
+        return (CategoryLabel) comboBox.getSelectedItem();
+    }
     public void addItem(CategoryLabel label)
     {
         comboBox.addItem(label);
@@ -49,9 +53,15 @@ public class CategoryLabelChooser extends JPanel {
             comboBox.addItem(categoryLabel);
         }
     }
-    public void setSelectedLabel(CategoryLabel label)
+    public void setSelectedItem(CategoryLabel label)
     {
         comboBox.setSelectedItem(label);
+        comboBox.setBackground(label.getColor());
+    }
+    public void setBgColor()
+    {
+        CategoryLabel label= (CategoryLabel) comboBox.getSelectedItem();
+        assert label != null;
         comboBox.setBackground(label.getColor());
     }
 }

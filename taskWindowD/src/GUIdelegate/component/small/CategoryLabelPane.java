@@ -70,14 +70,13 @@ public class CategoryLabelPane extends JPanel{
     }
 
     public void setCategoryLabel(CategoryLabel categoryLabel) {
-        try {
-            this.categoryLabel=categoryLabel;
+        this.categoryLabel=categoryLabel;
+
+        if(categoryLabel!=null) {
             colorButton.setColor(categoryLabel.getColor());
             nameField.setText(categoryLabel.getName());
-        }catch (NullPointerException nullEx)
-        {
-            System.out.println(nullEx.getMessage());
         }
+
     }
     public Color showColorDialog()
     {

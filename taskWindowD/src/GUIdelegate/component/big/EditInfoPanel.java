@@ -10,14 +10,10 @@ import model.NoteUpdateEnum;
 import model.TextAttributes;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 public class EditInfoPanel extends JPanel //implements ActionListener, ChangeListener
 {
@@ -99,11 +95,18 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
         return paperColorPane.showColorDialog();
     }
 
-    public void addChooserItem(CategoryLabel label)
+    public boolean isLabelChooser(Object o){return labelChooser.equals(o);}
+    public CategoryLabel getChosenLabel()
+    {
+        // repeated calls, requires refactoring
+        labelChooser.setBgColor();
+        return labelChooser.getSelectedItem();
+    }
+    public void addLabel(CategoryLabel label)
     {
         labelChooser.addItem(label);
     }
-    public void removeChooserItem(CategoryLabel label)
+    public void removeLabel(CategoryLabel label)
     {
         labelChooser.removeItem(label);
     }
@@ -155,13 +158,13 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
     private String fontMsg;
     private String fontColorMsg;
 
-    public void checkAttributePanels(Note selectedNote,ActionEvent e)
+    public void checkAttributePanels(Note selectedNote,Object srcObject)
     {
-        textAttributePanelOp(selectedNote,selectedNote.getTitleAttributes(),titlePane,e);
-        textAttributePanelOp(selectedNote,selectedNote.getDescriptionAttributes(),descriptionPane,e);
+        textAttributePanelOp(selectedNote,selectedNote.getTitleAttributes(),titlePane,srcObject);
+        textAttributePanelOp(selectedNote,selectedNote.getDescriptionAttributes(),descriptionPane,srcObject);
     }
     public void textAttributePanelOp(Note selectedNote,TextAttributes textAttributes,
-                                     TextAttributePanel textAttributePanel, ActionEvent e)
+                                     TextAttributePanel textAttributePanel, Object srcObject)
     {
         boolean isDes=selectedNote.getDescriptionAttributes().equals(textAttributes);
         if(selectedNote==null||
@@ -181,16 +184,16 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
             fontMsg=NoteUpdateEnum.TITLE_FONT.toString();
             fontColorMsg=NoteUpdateEnum.TITLE_COLOR.toString();
         }
-        if(textAttributePanel.isFontChooser(e.getSource()))
+        if(textAttributePanel.isFontChooser(srcObject))
         {
-            String fontStr=textAttributePanel.getItem();
+            String fontStr=textAttributePanel.getChosenFont();
             if(!fontStr.equals(textAttributes.getFontName())) {
                 Font oldFont = textAttributes.getFont();
                 textAttributes.setFontName(fontStr);
                 selectedNote.callNotifier(fontMsg, oldFont, textAttributes.getFont());
             }
         }
-        else if(textAttributePanel.isColorButton(e.getSource()))
+        else if(textAttributePanel.isColorButton(srcObject))
         {
             Color oldColor=textAttributes.getFontColor();
             Color newColor=textAttributePanel.showColorDialog();
@@ -199,7 +202,7 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
                 selectedNote.callNotifier(fontColorMsg, oldColor, textAttributes.getFontColor());
             }
         }
-        else if(textAttributePanel.isBoldButton(e.getSource()))
+        else if(textAttributePanel.isBoldButton(srcObject))
         {
             textAttributePanel.reverseBold();
             boolean newBold=textAttributePanel.isBold();
@@ -209,10 +212,10 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
                 selectedNote.callNotifier(fontMsg, oldFont, textAttributes.getFont());
             }
         }
-        else if(textAttributePanel.isConfirmButton(e.getSource())
-                ||textAttributePanel.isCancelButton(e.getSource()))
+        else if(textAttributePanel.isConfirmButton(srcObject)
+                ||textAttributePanel.isCancelButton(srcObject))
         {
-            if(textAttributePanel.isConfirmButton(e.getSource()))
+            if(textAttributePanel.isConfirmButton(srcObject))
             {
                 String oldContent=textAttributes.getTextContent();
                 String newContent=textAttributePanel.getText();

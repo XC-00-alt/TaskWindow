@@ -56,7 +56,7 @@ public class TextAttributePanel extends JPanel {
 //        return fontChooser;
 //    }
 
-    public String getItem()
+    public String getChosenFont()
     {
         Object item=fontChooser.getComboBox().getSelectedItem();
         if(item!=null) return item.toString();

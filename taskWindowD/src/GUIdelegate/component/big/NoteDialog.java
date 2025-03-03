@@ -1,12 +1,7 @@
 package GUIdelegate.component.big;
 
-import GUIdelegate.component.mid.ColorPane;
-import GUIdelegate.component.mid.SliderPane;
-import GUIdelegate.component.mid.TextAttributePanel;
 import model.CategoryLabel;
 import model.Note;
-import model.NoteUpdateEnum;
-import model.TextAttributes;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -57,13 +52,13 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
 
         add(tabbedPane);
     }
-    public void addChooserItem(CategoryLabel label)
+    public void addLabel(CategoryLabel label)
     {
-        infoPanel.addChooserItem(label);
+        infoPanel.addLabel(label);
     }
-    public void removeChooserItem(CategoryLabel label)
+    public void removeLabel(CategoryLabel label)
     {
-        infoPanel.removeChooserItem(label);
+        infoPanel.removeLabel(label);
     }
 
     public void setSelectedNote(Note selectedNote) {
@@ -100,14 +95,20 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
+            Object srcObject=e.getSource();
             if(selectedNote!=null)
             {
-                if(infoPanel.isColorButton(e.getSource()))
+//                if(infoPanel.isColorButton(srcObject))
+//                {
+//                    Color newColor=infoPanel.showColorDialog();
+//                    selectedNote.setPaperColor(newColor);
+//                }
+                if(infoPanel.isLabelChooser(srcObject))
                 {
-                    Color newColor=infoPanel.showColorDialog();
-                    selectedNote.setPaperColor(newColor);
+                    CategoryLabel label=infoPanel.getChosenLabel();
+                    // note attribute update TBA
                 }
-                else if(statePanel.isCheckBox(e.getSource()))
+                else if(statePanel.isCheckBox(srcObject))
                 {
                     boolean oldComplete=selectedNote.isComplete();
                     boolean newComplete=statePanel.isComplete();
@@ -128,7 +129,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                 }
                 else
                 {
-                    infoPanel.checkAttributePanels(selectedNote,e);
+                    infoPanel.checkAttributePanels(selectedNote,srcObject);
                 }
             }
         }catch (Exception exception)
