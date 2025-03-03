@@ -1,11 +1,11 @@
 package GUIdelegate.delegate;
 
 import GUIdelegate.component.big.*;
+import GUIdelegate.component.mid.CreateLabelDialog;
 import GUIdelegate.component.small.NoteMenu;
 import model.ArchiveDirectory;
 import model.Note;
 import model.NoteUpdateEnum;
-import model.TaskQuadrant;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -20,7 +20,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Random;
 
@@ -47,6 +46,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
     private File savePathFolder=new File(savePath);
 
     private JFileChooser fileChooser;
+
+    private CreateLabelDialog createLabelDialog;
 
     private boolean createFolder()
     {
@@ -91,6 +92,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         listPanel=new ListPanel(this,new Dimension(listPanelWidth,FRAME_HEIGHT));
 
         noteDialog=new NoteDialog(this,windowPanelWidth/2,windowPanelHeight*3/4);
+        createLabelDialog=new CreateLabelDialog(windowPanelWidth/2,windowPanelHeight/4);
     }
 
     public void setupFrame()
@@ -115,8 +117,9 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Object srcObject=e.getSource();
         // adding a new note
-        if(e.getSource()==topMenuBar.getNoteAdder())
+        if(srcObject==topMenuBar.getNoteAdder())
         {
             // close noteMenu and set its reference to selected note to be null
             noteMenu.reset();
@@ -142,7 +145,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             windowPanel.repaint();
             listPanel.repaint();
         }
-        else if(topMenuBar.isSaveDirectory(e.getSource()))
+        else if(topMenuBar.isSaveDirectory(srcObject))
         {
             // ref: https://www.tutorialspoint.com/How-to-create-and-write-JSON-array-to-a-file-in-java
             // https://docs.oracle.com/javase/tutorial/displayCode.html?code=https://docs.oracle.com/javase/tutorial/uiswing/examples/components/FileChooserDemoProject/src/components/FileChooserDemo.java
@@ -161,7 +164,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                 System.out.println(ex.getMessage());
             }
         }
-        else if(topMenuBar.isqLoadDirectory(e.getSource()))
+        else if(topMenuBar.isLoadDirectory(srcObject))
         {
 //            System.out.println("load");
             try {
@@ -189,6 +192,10 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             {
                 System.out.println(ex.getMessage());
             }
+        }
+        else if(topMenuBar.isCreateLabel(srcObject))
+        {
+            createLabelDialog.setVisible(true);
         }
     }
     @Override

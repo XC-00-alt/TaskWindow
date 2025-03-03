@@ -22,6 +22,8 @@ public class TopMenuBar extends JMenuBar{
         loadDirectory.addActionListener(al);
         saveDirectory.addActionListener(al);
         noteAdder.addActionListener(al);
+        createLabel.addActionListener(al);
+        manageLabel.addActionListener(al);
 
         this.add(directoryMenu);
         this.add(categoryLabelMenu);
@@ -35,8 +37,9 @@ public class TopMenuBar extends JMenuBar{
     {
         return saveDirectory.equals(o);
     }
-    public boolean isqLoadDirectory(Object o)
+    public boolean isLoadDirectory(Object o)
     {
         return loadDirectory.equals(o);
     }
+    public boolean isCreateLabel(Object o){return createLabel.equals(o);}
 }
