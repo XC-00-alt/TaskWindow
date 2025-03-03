@@ -39,6 +39,7 @@ public class CategoryLabelPane extends JPanel{
         add(pane1);
 
         if(isManage) setButtons(buttonLen,al);
+        else colorButton.setColor(Color.BLUE);
     }
     public void setButtons(int buttonLen,ActionListener al)
     {
@@ -63,6 +64,10 @@ public class CategoryLabelPane extends JPanel{
         pane2.add(deleteButton);
         add(pane2);
     }
+    public String getText()
+    {
+        return nameField.getText();
+    }
 
     public void setCategoryLabel(CategoryLabel categoryLabel) {
         try {
@@ -76,7 +81,16 @@ public class CategoryLabelPane extends JPanel{
     }
     public Color showColorDialog()
     {
-        return colorButton.showColorDialog();
+        Color newColor=colorButton.showColorDialog();
+        if(categoryLabel!=null)
+        {
+            categoryLabel.setColor(newColor);
+        }
+        return newColor;
+    }
+    public void setColor(Color color)
+    {
+        colorButton.setColor(color);
     }
 
     public boolean isColorButton(Object object)
@@ -90,5 +104,25 @@ public class CategoryLabelPane extends JPanel{
     public boolean isCancelButton(Object object)
     {
         return object.equals(cancelButton);
+    }
+
+    public CategoryLabel getCategoryLabel() {
+        if(categoryLabel==null&&!getText().isBlank())
+        {
+            categoryLabel=new CategoryLabel(colorButton.getColor(),getText());
+        }
+        return categoryLabel;
+    }
+    public void clearText()
+    {
+        nameField.setText(null);
+    }
+    public void setLabelColor(Color color)
+    {
+        if(categoryLabel!=null) categoryLabel.setColor(color);
+    }
+    public void setLabelName(String name)
+    {
+        if(categoryLabel!=null) categoryLabel.setName(name);
     }
 }

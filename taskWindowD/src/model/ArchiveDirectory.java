@@ -55,6 +55,15 @@ public class ArchiveDirectory {
         labelArray=labelArrayBuilder.build();
         return labelArray;
     }
+    public boolean addLabel(CategoryLabel label)
+    {
+        return labelList.add(label);
+    }
+
+    public boolean removeLabel(CategoryLabel label)
+    {
+        return labelList.remove(label);
+    }
 
     public TaskQuadrant getTaskQuadrant() {
         return taskQuadrant;

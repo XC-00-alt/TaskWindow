@@ -4,6 +4,7 @@ import GUIdelegate.component.big.*;
 import GUIdelegate.component.mid.CreateLabelDialog;
 import GUIdelegate.component.small.NoteMenu;
 import model.ArchiveDirectory;
+import model.CategoryLabel;
 import model.Note;
 import model.NoteUpdateEnum;
 
@@ -92,7 +93,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         listPanel=new ListPanel(this,new Dimension(listPanelWidth,FRAME_HEIGHT));
 
         noteDialog=new NoteDialog(this,windowPanelWidth/2,windowPanelHeight*3/4);
-        createLabelDialog=new CreateLabelDialog(windowPanelWidth/2,windowPanelHeight/4);
+        createLabelDialog=new CreateLabelDialog(windowPanelWidth/2,windowPanelHeight/4,this);
     }
 
     public void setupFrame()
@@ -196,6 +197,28 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         else if(topMenuBar.isCreateLabel(srcObject))
         {
             createLabelDialog.setVisible(true);
+        }
+        else if(createLabelDialog.isConfirmButton(srcObject))
+        {
+            if(createLabelDialog.getText().isBlank())
+                JOptionPane.showMessageDialog(createLabelDialog,"Label name should not be blank!");
+            else
+            {
+                CategoryLabel label=createLabelDialog.getCategoryLabel();
+                if(label!=null) {
+                    System.out.println(archiveDirectory.addLabel(label));
+                    System.out.println(label.getColor()+" "+label.getName());
+                }
+                createLabelDialog.reset();
+            }
+        }
+        else if(createLabelDialog.isCancelButton(srcObject))
+        {
+            createLabelDialog.reset();
+        }
+        else if(createLabelDialog.isColorButton(srcObject))
+        {
+            createLabelDialog.showColorDialog();
         }
     }
     @Override
