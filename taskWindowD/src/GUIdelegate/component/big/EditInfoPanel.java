@@ -95,10 +95,11 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
         return paperColorPane.showColorDialog();
     }
 
-    public boolean isLabelChooser(Object o){return labelChooser.equals(o);}
+    public boolean isLabelChooser(Object o){return labelChooser.isComboBox(o);}
     public CategoryLabel getChosenLabel()
     {
         // repeated calls, requires refactoring
+        System.out.println("call labelChooser bg setting");
         labelChooser.setBgColor();
         return labelChooser.getSelectedItem();
     }

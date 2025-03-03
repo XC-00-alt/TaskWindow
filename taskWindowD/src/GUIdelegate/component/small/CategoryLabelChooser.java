@@ -30,6 +30,9 @@ public class CategoryLabelChooser extends JPanel {
         comboBox.addItem(createNewLabel);
         add(comboBox);
     }
+    public boolean isComboBox(Object o){
+        return comboBox.equals(o);
+    }
     public void addActionListener(ActionListener al)
     {
         comboBox.addActionListener(al);
