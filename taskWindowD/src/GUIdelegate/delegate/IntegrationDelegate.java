@@ -208,6 +208,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                 if(label!=null) {
                     System.out.println(archiveDirectory.addLabel(label));
                     System.out.println(label.getColor()+" "+label.getName());
+                    noteDialog.addChooserItem(label);
                 }
                 createLabelDialog.reset();
             }

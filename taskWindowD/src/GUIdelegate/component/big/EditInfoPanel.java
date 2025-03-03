@@ -3,6 +3,8 @@ package GUIdelegate.component.big;
 import GUIdelegate.component.mid.ColorPane;
 import GUIdelegate.component.mid.SliderPane;
 import GUIdelegate.component.mid.TextAttributePanel;
+import GUIdelegate.component.small.CategoryLabelChooser;
+import model.CategoryLabel;
 import model.Note;
 import model.NoteUpdateEnum;
 import model.TextAttributes;
@@ -23,6 +25,7 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
     private int width;
     private int height;
 
+    private CategoryLabelChooser labelChooser;
     private ColorPane paperColorPane;
     private SliderPane rotationPane;
     private SliderPane widthPane;
@@ -44,7 +47,8 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
     }
     public void addActionListener(ActionListener al)
     {
-        paperColorPane.addActionListener(al);
+//        paperColorPane.addActionListener(al);
+        labelChooser.addActionListener(al);
         titlePane.addActionListener(al);
         descriptionPane.addActionListener(al);
     }
@@ -58,6 +62,7 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
     public void setComponents(int buttonLen)
     {
         setLayout(new FlowLayout());
+        labelChooser=new CategoryLabelChooser("label",this.width/4,buttonLen);
         paperColorPane=new ColorPane("paper color",buttonLen);
         rotationPane=new SliderPane("rotation",this.width/6,buttonLen,-180,180);
         widthPane=new SliderPane("width",this.width/6,buttonLen,25,this.width/4);
@@ -65,7 +70,8 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
         titlePane=new TextAttributePanel("title",this.width,this.height*3/10,buttonLen);
         descriptionPane=new TextAttributePanel("description",this.width,this.height*7/10,buttonLen);
 
-        add(paperColorPane);
+        add(labelChooser);
+//        add(paperColorPane);
         add(rotationPane);
         add(widthPane);
         add(heightPane);
@@ -91,6 +97,15 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
     public Color showColorDialog()
     {
         return paperColorPane.showColorDialog();
+    }
+
+    public void addChooserItem(CategoryLabel label)
+    {
+        labelChooser.addItem(label);
+    }
+    public void removeChooserItem(CategoryLabel label)
+    {
+        labelChooser.removeItem(label);
     }
 
 //    public void reset()
@@ -210,67 +225,4 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
             textAttributePanel.showEditButtons(false);
         }
     }
-//
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        try {
-//            if(selectedNote!=null)
-//            {
-//                if(e.getSource()==paperColorPane.getColorButton())
-//                {
-//                    Color newColor=paperColorPane.showColorDialog();
-//                    selectedNote.setPaperColor(newColor);
-//                }
-//                else
-//                {
-//                    /**
-//                     * ========= titlePane ActionEvent =========
-//                     */
-//                    textAttributePanelOp(selectedNote.getTitleAttributes(),
-//                            titlePane, e);
-//                    /**
-//                     * ========= descriptionPane ActionEvent =========
-//                     */
-//                    textAttributePanelOp(selectedNote.getDescriptionAttributes(),
-//                            descriptionPane, e);
-//                }
-//            }
-//        }catch (Exception exception)
-//        {
-//            System.out.print(exception.getMessage());
-//        }
-//
-//    }
-//
-//    @Override
-//    public void stateChanged(ChangeEvent e) {
-//        try {
-//            // when open a new edit after finishing last edit with the sliders
-//            // the dialog will pass the changed value to null object before the new selected note comes in
-//            if(selectedNote!=null)
-//            {
-//                if(e.getSource()==widthPane.getValueSlider())
-//                {
-//                    int newHalfWidth=widthPane.getValue();
-//                    selectedNote.setHalfWidth(newHalfWidth);
-//                    widthPane.setValue(newHalfWidth);
-//                }
-//                else if(e.getSource()==heightPane.getValueSlider())
-//                {
-//                    int newHalfHeight=heightPane.getValue();
-//                    selectedNote.setHalfHeight(newHalfHeight);
-//                    heightPane.setValue(newHalfHeight);
-//                }
-//                else if(e.getSource()==rotationPane.getValueSlider())
-//                {
-//                    int newRotation=rotationPane.getValue();
-//                    selectedNote.setRotationDegree(newRotation);
-//                    rotationPane.setValue(newRotation);
-//                }
-//            }
-//        }catch (Exception exception)
-//        {
-//            System.out.print(exception.getMessage());
-//        }
-//    }
 }

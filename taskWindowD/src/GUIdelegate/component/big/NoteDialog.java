@@ -3,6 +3,7 @@ package GUIdelegate.component.big;
 import GUIdelegate.component.mid.ColorPane;
 import GUIdelegate.component.mid.SliderPane;
 import GUIdelegate.component.mid.TextAttributePanel;
+import model.CategoryLabel;
 import model.Note;
 import model.NoteUpdateEnum;
 import model.TextAttributes;
@@ -55,6 +56,14 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
         tabbedPane.addTab("Info",infoPanel);
 
         add(tabbedPane);
+    }
+    public void addChooserItem(CategoryLabel label)
+    {
+        infoPanel.addChooserItem(label);
+    }
+    public void removeChooserItem(CategoryLabel label)
+    {
+        infoPanel.removeChooserItem(label);
     }
 
     public void setSelectedNote(Note selectedNote) {
