@@ -12,6 +12,7 @@ import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class Note {
@@ -61,9 +62,20 @@ public class Note {
         descriptionAttributes=new TextAttributes(jsonObject.getJsonObject("descriptionAttributes"));
 
         paperColor=JsonRelated.getColor(jsonObject,"paperColor");
-        categoryLabel=new CategoryLabel(jsonObject.getJsonObject("categoryLabel"));
+//        categoryLabel=new CategoryLabel(jsonObject.getJsonObject("categoryLabel"));
 
         notifier = new PropertyChangeSupport(this);
+    }
+    public void setNoteLabelWithList(JsonObject jsonObject, List<CategoryLabel> labelList)
+    {
+        CategoryLabel label=new CategoryLabel(jsonObject.getJsonObject("categoryLabel"));
+        if(labelList.contains(label))
+        {
+            // think: there has to be a better way
+            label=labelList.get(labelList.indexOf(label));
+        }
+        else labelList.add(label);
+        setCategoryLabel(label);
     }
     private int id;
     private Date startDate;
@@ -250,8 +262,8 @@ public class Note {
     }
 
     public Color getPaperColor() {
-        return paperColor;
-//        return categoryLabel.getColor();
+//        return paperColor;
+        return categoryLabel.getColor();
     }
 
     public void setPaperColor(Color paperColor) {

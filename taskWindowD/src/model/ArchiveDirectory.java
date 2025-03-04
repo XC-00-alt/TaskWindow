@@ -27,8 +27,6 @@ public class ArchiveDirectory {
     }
     public ArchiveDirectory(JsonObject jsonObject, PropertyChangeListener listener)
     {
-        taskQuadrant=new TaskQuadrant(jsonObject.getJsonObject(taskQuadrantKey),listener);
-
         JsonArray jsonArray=jsonObject.getJsonArray("labelList");
         for(int i=0;i< jsonArray.size();i++)
         {
@@ -37,6 +35,7 @@ public class ArchiveDirectory {
             label.addObserver(listener);
             labelList.add(label);
         }
+        taskQuadrant=new TaskQuadrant(jsonObject.getJsonObject(taskQuadrantKey),listener,labelList);
     }
 
     public CategoryLabel getDefaultLabel() {

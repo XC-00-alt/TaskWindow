@@ -8,6 +8,7 @@ import javax.json.JsonObjectBuilder;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Objects;
 
 public class CategoryLabel {
     private Color color;
@@ -92,4 +93,8 @@ public class CategoryLabel {
             return otherLabel.color.equals(this.color)&&otherLabel.name.equals(name);
         }
     }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(color,name);
+//    }
 }

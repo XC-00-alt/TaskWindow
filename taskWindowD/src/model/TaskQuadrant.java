@@ -40,7 +40,7 @@ public class TaskQuadrant {
         noteList=new ArrayList<>();
     }
 
-    public TaskQuadrant(JsonObject jsonObject, PropertyChangeListener listener)
+    public TaskQuadrant(JsonObject jsonObject, PropertyChangeListener listener,List<CategoryLabel> labelList)
     {
 //        count=Integer.parseInt(jsonObject.get("count").toString());
         count=jsonObject.getInt("count");
@@ -54,6 +54,7 @@ public class TaskQuadrant {
             JsonObject noteJson=jsonArray.getJsonObject(i);
             Note note=new Note(noteJson);
             note.addObserver(listener);
+            note.setNoteLabelWithList(noteJson,labelList);
             noteList.add(note);
         }
     }
