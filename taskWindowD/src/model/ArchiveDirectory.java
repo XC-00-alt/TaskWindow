@@ -15,13 +15,14 @@ public class ArchiveDirectory {
     private static final String taskQuadrantKey="taskQuadrant";
 //    private List<ArchiveView> archiveList=new ArrayList<>();
 
-    private Color defaultLabelColor=new Color(0x8B7EE7);
-    private String defaultLabelName="personal";
+    private static Color defaultLabelColor=new Color(0x8B7EE7);
+    private static String defaultLabelName="personal";
     private List<CategoryLabel> labelList=new ArrayList<>();
+    public static CategoryLabel defaultLabel =new CategoryLabel(defaultLabelColor,defaultLabelName);
     public ArchiveDirectory(TaskQuadrant taskQuadrant)
     {
         this.taskQuadrant=taskQuadrant;
-        labelList.add(new CategoryLabel(defaultLabelColor,defaultLabelName));
+        labelList.add(defaultLabel);
     }
     public ArchiveDirectory(JsonObject jsonObject, PropertyChangeListener listener)
     {
@@ -35,6 +36,11 @@ public class ArchiveDirectory {
             labelList.add(label);
         }
     }
+
+    public List<CategoryLabel> getLabelList() {
+        return labelList;
+    }
+
     public JsonObject toJsonObject()
     {
         JsonObjectBuilder info= Json.createObjectBuilder();
@@ -57,7 +63,8 @@ public class ArchiveDirectory {
     }
     public boolean addLabel(CategoryLabel label)
     {
-        return labelList.add(label);
+        if(!labelList.contains(label))  return labelList.add(label);
+        else return false;
     }
 
     public boolean removeLabel(CategoryLabel label)

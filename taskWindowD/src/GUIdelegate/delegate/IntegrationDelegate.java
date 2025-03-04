@@ -74,6 +74,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         setPanelSize();
         setupFrame();
         archiveDirectory=new ArchiveDirectory(windowPanel.getTaskQuadrant());
+        noteDialog.addLabels(archiveDirectory.getLabelList());
     }
 
     public void setPanelSize()
@@ -180,6 +181,9 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     reader.close();
 
                     archiveDirectory=new ArchiveDirectory(jsonObject,this);
+                    System.out.println(archiveDirectory.getLabelList().size());
+                    noteDialog.clearLabels();
+                    noteDialog.addLabels(archiveDirectory.getLabelList());
 //                    TaskQuadrant newTaskQuadrant=new TaskQuadrant(jsonObject,this);
                     windowPanel.setTaskQuadrant(archiveDirectory.getTaskQuadrant());
                     windowPanel.repaint();

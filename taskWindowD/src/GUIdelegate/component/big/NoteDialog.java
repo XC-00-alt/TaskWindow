@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.List;
 
 public class NoteDialog extends JDialog implements ActionListener, ChangeListener{
     private JTabbedPane tabbedPane;
@@ -52,6 +53,10 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
 
         add(tabbedPane);
     }
+    public void addLabels(List<CategoryLabel> labelList)
+    {
+        infoPanel.addLabels(labelList);
+    }
     public void addLabel(CategoryLabel label)
     {
         infoPanel.addLabel(label);
@@ -59,6 +64,11 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
     public void removeLabel(CategoryLabel label)
     {
         infoPanel.removeLabel(label);
+    }
+
+    public void clearLabels()
+    {
+        infoPanel.clearLabels();
     }
 
     public void setSelectedNote(Note selectedNote) {

@@ -56,6 +56,11 @@ public class CategoryLabelChooser extends JPanel {
             comboBox.addItem(categoryLabel);
         }
     }
+    public void clearItems()
+    {
+        comboBox.removeAllItems();
+        comboBox.addItem(createNewLabel);
+    }
     public void setSelectedItem(CategoryLabel label)
     {
         comboBox.setSelectedItem(label);
