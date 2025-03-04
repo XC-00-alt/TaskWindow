@@ -6,10 +6,14 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import java.awt.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class CategoryLabel {
     private Color color;
     private String name;
+
+    private PropertyChangeSupport notifier;
 
     public JsonObject toJsonObject()
     {
@@ -23,11 +27,16 @@ public class CategoryLabel {
         color=JsonRelated.getColor(jsonObject,"labelColor");
 //        name=jsonObject.getString("name");
         name=jsonObject.get("name").toString();
+        notifier = new PropertyChangeSupport(this);
     }
     public CategoryLabel(Color color,String name)
     {
         this.color=color;
         this.name=name;
+        notifier = new PropertyChangeSupport(this);
+    }
+    public void addObserver(PropertyChangeListener listener) {
+        notifier.addPropertyChangeListener(listener);
     }
 
     public Color getColor() {
@@ -44,6 +53,10 @@ public class CategoryLabel {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public void callLabelDelete()
+    {
+        notifier.firePropertyChange(LabelUpdateEnum.DELETE.message, this,null);
     }
 
     @Override

@@ -19,9 +19,10 @@ public class ArchiveDirectory {
     private static String defaultLabelName="personal";
     private List<CategoryLabel> labelList=new ArrayList<>();
     public static CategoryLabel defaultLabel =new CategoryLabel(defaultLabelColor,defaultLabelName);
-    public ArchiveDirectory(TaskQuadrant taskQuadrant)
+    public ArchiveDirectory(TaskQuadrant taskQuadrant,PropertyChangeListener listener)
     {
         this.taskQuadrant=taskQuadrant;
+        defaultLabel.addObserver(listener);
         labelList.add(defaultLabel);
     }
     public ArchiveDirectory(JsonObject jsonObject, PropertyChangeListener listener)
@@ -33,8 +34,13 @@ public class ArchiveDirectory {
         {
             JsonObject labelJson=jsonArray.getJsonObject(i);
             CategoryLabel label=new CategoryLabel(labelJson);
+            label.addObserver(listener);
             labelList.add(label);
         }
+    }
+
+    public CategoryLabel getDefaultLabel() {
+        return labelList.get(0);
     }
 
     public List<CategoryLabel> getLabelList() {

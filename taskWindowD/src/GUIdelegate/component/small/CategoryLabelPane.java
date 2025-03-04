@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * This class is used in creating new CategoryLabel and managing existing CategoryLabel
  */
-public class CategoryLabelPane extends JPanel{
+public class CategoryLabelPane extends JPanel implements ActionListener{
     private JPanel pane1=new JPanel();
     private ColorButton colorButton;
     private JTextField nameField;
@@ -25,7 +25,10 @@ public class CategoryLabelPane extends JPanel{
     public CategoryLabelPane(int pane1Width,int buttonLen,boolean isManage,ActionListener al)
     {
         int width=pane1Width+4;
-        if(isManage) width=pane1Width+buttonLen*5;
+        if(isManage) {
+            width=pane1Width+buttonLen*5;
+            al=this;
+        }
         int height=buttonLen*3/2;
         this.setPreferredSize(new Dimension(width, height));
 
@@ -53,6 +56,7 @@ public class CategoryLabelPane extends JPanel{
         confirmButton.addActionListener(al);
         cancelButton.addActionListener(al);
         deleteButton.addActionListener(al);
+//        nameField.add
 
         Dimension buttonDimension=new Dimension(buttonLen*6/5,buttonLen);
         confirmButton.setPreferredSize(buttonDimension);
@@ -104,6 +108,10 @@ public class CategoryLabelPane extends JPanel{
     {
         return object.equals(cancelButton);
     }
+    public boolean isDeleteButton(Object object)
+    {
+        return object.equals(deleteButton);
+    }
 
     public CategoryLabel getCategoryLabel() {
         if(categoryLabel==null&&!getText().isBlank())
@@ -123,5 +131,34 @@ public class CategoryLabelPane extends JPanel{
     public void setLabelName(String name)
     {
         if(categoryLabel!=null) categoryLabel.setName(name);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object srcObject=e.getSource();
+        if(isColorButton(srcObject))
+        {
+            Color newColor=colorButton.showColorDialog();
+            // redo undo require notifier
+            setLabelColor(newColor);
+        }
+        else if(isConfirmButton(srcObject))
+        {
+            if(nameField.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Label name should not be blank!");
+                nameField.setText(categoryLabel.getName());
+            }
+            else {
+                setLabelName(nameField.getText());
+            }
+        }
+        else if(isCancelButton(srcObject))
+        {
+            nameField.setText(categoryLabel.getName());
+        }
+        else if(isDeleteButton(srcObject))
+        {
+            if(categoryLabel!=null) categoryLabel.callLabelDelete();
+        }
     }
 }

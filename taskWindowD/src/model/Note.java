@@ -73,6 +73,7 @@ public class Note {
     private Point centre;
     private Color boundColor=Color.black;
     private Color paperColor;
+    private CategoryLabel categoryLabel;
     private int rotationDegree;
     // half of the width of this note
     private int halfWidth=25;
@@ -130,6 +131,10 @@ public class Note {
         paperColor =new Color(0xFFE562);
         this.quadrantCode = quadrantEnum;
         notifier = new PropertyChangeSupport(this);
+    }
+
+    public void setCategoryLabel(CategoryLabel categoryLabel) {
+        this.categoryLabel = categoryLabel;
     }
 
     public int getId() {

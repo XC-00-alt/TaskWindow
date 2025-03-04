@@ -4,10 +4,7 @@ import GUIdelegate.component.big.*;
 import GUIdelegate.component.mid.CreateLabelDialog;
 import GUIdelegate.component.mid.ManageLabelDialog;
 import GUIdelegate.component.small.NoteMenu;
-import model.ArchiveDirectory;
-import model.CategoryLabel;
-import model.Note;
-import model.NoteUpdateEnum;
+import model.*;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -75,7 +72,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         FRAME_HEIGHT=(int) Math.round(screenSize.height*0.8);
         setPanelSize();
         setupFrame();
-        archiveDirectory=new ArchiveDirectory(windowPanel.getTaskQuadrant());
+        archiveDirectory=new ArchiveDirectory(windowPanel.getTaskQuadrant(),this);
         noteDialog.addLabels(archiveDirectory.getLabelList());
         manageLabelDialog.addLabels(archiveDirectory.getLabelList());
     }
@@ -141,6 +138,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             int x=randomN.nextInt(0, windowPanel.getWidth());
             int y=randomN.nextInt(0, windowPanel.getHeight());
             Note newNote=new Note(windowPanel.getNewNoteId(),x, y,windowPanel.getQuadrantCode(x,y));
+            newNote.setCategoryLabel(archiveDirectory.getDefaultLabel());
             System.out.println("new id:"+newNote.getId());
             newNote.addObserver(this);
 
@@ -188,6 +186,8 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     System.out.println(archiveDirectory.getLabelList().size());
                     noteDialog.clearLabels();
                     noteDialog.addLabels(archiveDirectory.getLabelList());
+                    manageLabelDialog.clearLabels();
+                    manageLabelDialog.addLabels(archiveDirectory.getLabelList());
 //                    TaskQuadrant newTaskQuadrant=new TaskQuadrant(jsonObject,this);
                     windowPanel.setTaskQuadrant(archiveDirectory.getTaskQuadrant());
                     windowPanel.repaint();
@@ -217,10 +217,11 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
             else
             {
                 CategoryLabel label=createLabelDialog.getCategoryLabel();
+                label.addObserver(this);
                 if(label!=null) {
-                    System.out.println(archiveDirectory.addLabel(label));
-                    System.out.println(label.getColor()+" "+label.getName());
+                    archiveDirectory.addLabel(label);
                     noteDialog.addLabel(label);
+                    manageLabelDialog.addLabel(label);
                 }
                 createLabelDialog.reset();
             }
@@ -449,6 +450,15 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                     listPanel.repaint();
 //                }
 //            });
+        }
+        else if(propName.equals(LabelUpdateEnum.DELETE.toString()))
+        {
+            // A safe check should be here in case some notes are still labeled with it
+            CategoryLabel label= (CategoryLabel) event.getOldValue();
+            noteDialog.removeLabel(label);
+            manageLabelDialog.removeLabel(label);
+            noteDialog.repaint();
+            manageLabelDialog.repaint();
         }
     }
 }
