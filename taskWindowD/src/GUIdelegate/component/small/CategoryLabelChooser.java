@@ -63,8 +63,10 @@ public class CategoryLabelChooser extends JPanel {
     }
     public void setSelectedItem(CategoryLabel label)
     {
-        comboBox.setSelectedItem(label);
-        comboBox.setBackground(label.getColor());
+        if(!label.equals(createNewLabel)) {
+            comboBox.setSelectedItem(label);
+            comboBox.setBackground(label.getColor());
+        }
     }
     public void setBgColor()
     {

@@ -86,6 +86,10 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
         titlePane.setValue(selectedNote.getTitleAttributes());
         descriptionPane.setValue(selectedNote.getDescriptionAttributes());
     }
+    public void restoreLabel(Note selectedNote)
+    {
+        labelChooser.setSelectedItem(selectedNote.getCategoryLabel());
+    }
 
     public boolean isColorButton(Object o)
     {
@@ -101,7 +105,7 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
     public CategoryLabel getChosenLabel()
     {
         // repeated calls, requires refactoring
-        System.out.println("call labelChooser bg setting");
+//        System.out.println("call labelChooser bg setting");
         labelChooser.setBgColor();
         return labelChooser.getSelectedItem();
     }

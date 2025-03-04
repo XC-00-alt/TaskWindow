@@ -156,7 +156,7 @@ public class Note {
     {
         CategoryLabel oldLabel=this.categoryLabel;
         setCategoryLabel(categoryLabel);
-        notifier.firePropertyChange(LabelUpdateEnum.CHOOSER_REQUEST_CREATE.toString(), oldLabel,categoryLabel);
+        notifier.firePropertyChange(NoteUpdateEnum.CATEGORY_LABEL.toString(), oldLabel,categoryLabel);
     }
 
     public CategoryLabel getCategoryLabel() {
