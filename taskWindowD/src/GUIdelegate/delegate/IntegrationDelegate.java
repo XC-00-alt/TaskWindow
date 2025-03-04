@@ -453,12 +453,18 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         }
         else if(propName.equals(LabelUpdateEnum.DELETE.toString()))
         {
-            // A safe check should be here in case some notes are still labeled with it
             CategoryLabel label= (CategoryLabel) event.getOldValue();
-            noteDialog.removeLabel(label);
-            manageLabelDialog.removeLabel(label);
-            noteDialog.repaint();
-            manageLabelDialog.repaint();
+            // A safe check
+            if(label.getNoteCount()>0)
+                JOptionPane.showMessageDialog(manageLabelDialog,
+                        "This label can't be deleted since it's attached to one note or more ");
+            else
+            {
+                noteDialog.removeLabel(label);
+                manageLabelDialog.removeLabel(label);
+                noteDialog.repaint();
+                manageLabelDialog.repaint();
+            }
         }
     }
 }

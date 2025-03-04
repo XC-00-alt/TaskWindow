@@ -32,6 +32,7 @@ public class Note {
                 .add("quadrantCode",quadrantCode.name())
                 .add("titleAttributes",titleAttributes.toJsonObject())
                 .add("descriptionAttributes",descriptionAttributes.toJsonObject())
+                .add("categoryLabel",categoryLabel.toJsonObject())
         ;
 //        JsonRelated.addColor(info,"boundColor",boundColor);
         JsonRelated.addColor(info,"paperColor",paperColor);
@@ -60,6 +61,7 @@ public class Note {
         descriptionAttributes=new TextAttributes(jsonObject.getJsonObject("descriptionAttributes"));
 
         paperColor=JsonRelated.getColor(jsonObject,"paperColor");
+        categoryLabel=new CategoryLabel(jsonObject.getJsonObject("categoryLabel"));
 
         notifier = new PropertyChangeSupport(this);
     }
@@ -134,7 +136,13 @@ public class Note {
     }
 
     public void setCategoryLabel(CategoryLabel categoryLabel) {
+        if(this.categoryLabel!=null) this.categoryLabel.removeUsage();
         this.categoryLabel = categoryLabel;
+        categoryLabel.addUsage();
+    }
+
+    public CategoryLabel getCategoryLabel() {
+        return categoryLabel;
     }
 
     public int getId() {
@@ -243,6 +251,7 @@ public class Note {
 
     public Color getPaperColor() {
         return paperColor;
+//        return categoryLabel.getColor();
     }
 
     public void setPaperColor(Color paperColor) {

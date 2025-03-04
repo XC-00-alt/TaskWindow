@@ -12,6 +12,7 @@ import java.beans.PropertyChangeSupport;
 public class CategoryLabel {
     private Color color;
     private String name;
+    private int noteCount=0;
 
     private PropertyChangeSupport notifier;
 
@@ -35,6 +36,19 @@ public class CategoryLabel {
         this.name=name;
         notifier = new PropertyChangeSupport(this);
     }
+    public void addUsage()
+    {
+        noteCount++;
+    }
+    public void removeUsage()
+    {
+        noteCount--;
+    }
+
+    public int getNoteCount() {
+        return noteCount;
+    }
+
     public void addObserver(PropertyChangeListener listener) {
         notifier.addPropertyChangeListener(listener);
     }

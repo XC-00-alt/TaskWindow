@@ -118,6 +118,7 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
                     System.out.println("call infoPanel.getChosenLabel()");
                     CategoryLabel label=infoPanel.getChosenLabel();
                     // note attribute update TBA
+                    selectedNote.setCategoryLabel(label);
                 }
                 else if(statePanel.isCheckBox(srcObject))
                 {

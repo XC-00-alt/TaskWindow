@@ -79,6 +79,7 @@ public class EditInfoPanel extends JPanel //implements ActionListener, ChangeLis
     public void setValue(Note selectedNote)
     {
         paperColorPane.setColor(selectedNote.getPaperColor());
+        labelChooser.setSelectedItem(selectedNote.getCategoryLabel());
         rotationPane.setValue(selectedNote.getRotationDegree());
         widthPane.setValue(selectedNote.getWidth()/2);
         heightPane.setValue(selectedNote.getHeight()/2);
