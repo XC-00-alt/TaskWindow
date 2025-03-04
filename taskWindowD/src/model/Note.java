@@ -152,6 +152,12 @@ public class Note {
         this.categoryLabel = categoryLabel;
         categoryLabel.addUsage();
     }
+    public void setCategoryLabelAndNotify(CategoryLabel categoryLabel)
+    {
+        CategoryLabel oldLabel=this.categoryLabel;
+        setCategoryLabel(categoryLabel);
+        notifier.firePropertyChange(LabelUpdateEnum.CHOOSER_REQUEST_CREATE.toString(), oldLabel,categoryLabel);
+    }
 
     public CategoryLabel getCategoryLabel() {
         return categoryLabel;

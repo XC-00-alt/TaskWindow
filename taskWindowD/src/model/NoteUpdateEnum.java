@@ -2,6 +2,7 @@ package model;
 
 public enum NoteUpdateEnum {
     PAPER_COLOR("paper color"),
+    CATEGORY_LABEL("categoryLabel"),
     NOTE_WIDTH("note width"),
     NOTE_HEIGHT("note height"),
     ROTATION("rotation"),
@@ -29,7 +30,8 @@ public enum NoteUpdateEnum {
 
     public static boolean isUpdateProp(String prop)
     {
-        return prop.equals(PAPER_COLOR.message)||prop.equals(ROTATION.message)||
+        return prop.equals(PAPER_COLOR.message)||
+                prop.equals(CATEGORY_LABEL.message)||prop.equals(ROTATION.message)||
                 prop.equals(NOTE_WIDTH.message)||prop.equals(NOTE_HEIGHT.message)||
                 prop.equals(TITLE_COLOR.message)||prop.equals(TITLE_FONT.message)||prop.equals(TITLE_CONTENT.message)||
                 prop.equals(DESCRIPTION_COLOR.message)||prop.equals(DESCRIPTION_FONT.message)

@@ -1,6 +1,8 @@
 package GUIdelegate.component.big;
 
+import GUIdelegate.component.small.CategoryLabelChooser;
 import model.CategoryLabel;
+import model.LabelUpdateEnum;
 import model.Note;
 
 import javax.swing.*;
@@ -115,10 +117,18 @@ public class NoteDialog extends JDialog implements ActionListener, ChangeListene
 //                }
                 if(infoPanel.isLabelChooser(srcObject))
                 {
-                    System.out.println("call infoPanel.getChosenLabel()");
+//                    System.out.println("call infoPanel.getChosenLabel()");
                     CategoryLabel label=infoPanel.getChosenLabel();
-                    // note attribute update TBA
-                    selectedNote.setCategoryLabel(label);
+                    if(label.equals(CategoryLabelChooser.createNewLabel))
+                    {
+                        notifier.firePropertyChange(
+                                LabelUpdateEnum.CHOOSER_REQUEST_CREATE.toString()
+                        ,null,null);
+                    }
+                    else {
+                        // note attribute update TBA
+                        selectedNote.setCategoryLabel(label);
+                    }
                 }
                 else if(statePanel.isCheckBox(srcObject))
                 {

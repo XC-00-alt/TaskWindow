@@ -16,7 +16,7 @@ import java.util.List;
 public class CategoryLabelChooser extends JPanel {
     private JLabel attributeName;
     private JComboBox<CategoryLabel> comboBox;
-    private CategoryLabel createNewLabel=new CategoryLabel(Color.WHITE,"+");
+    public static CategoryLabel createNewLabel=new CategoryLabel(Color.WHITE,"+");
     public CategoryLabelChooser(String attributeStr,int boxWidth, int height)
     {
 //        setPreferredSize(new Dimension(width,height));

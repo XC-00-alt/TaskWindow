@@ -95,7 +95,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
         noteDialog=new NoteDialog(this,windowPanelWidth/2,windowPanelHeight*3/4);
         createLabelDialog=new CreateLabelDialog(windowPanelWidth/2,windowPanelHeight/4,this);
-        manageLabelDialog=new ManageLabelDialog(windowPanelWidth/2,windowPanelHeight);
+        manageLabelDialog=new ManageLabelDialog(windowPanelWidth*3/5,windowPanelHeight);
     }
 
     public void setupFrame()
@@ -355,9 +355,13 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                 public void run() {
                     Note noteUpdate=(Note)eventSrc;
                     windowPanel.repaint();
+//                    if(propName.equals(NoteUpdateEnum.PAPER_COLOR.toString()))
+//                    {
+//                        Color newColor=(Color)event.getNewValue();
+//                        windowPanel.repaintDescriptionDialog();
+//                    }
                     if(propName.equals(NoteUpdateEnum.PAPER_COLOR.toString()))
                     {
-                        Color newColor=(Color)event.getNewValue();
                         windowPanel.repaintDescriptionDialog();
                     }
                     else if(propName.equals(NoteUpdateEnum.ROTATION.toString()))
@@ -465,6 +469,11 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
                 noteDialog.repaint();
                 manageLabelDialog.repaint();
             }
+        }
+        else if(propName.equals(LabelUpdateEnum.CHOOSER_REQUEST_CREATE.toString()))
+        {
+            createLabelDialog.setVisible(true);
+            noteDialog.repaint();
         }
     }
 }
