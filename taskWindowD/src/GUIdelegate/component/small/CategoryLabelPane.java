@@ -25,7 +25,7 @@ public class CategoryLabelPane extends JPanel{
     public CategoryLabelPane(int pane1Width,int buttonLen,boolean isManage,ActionListener al)
     {
         int width=pane1Width+4;
-        if(isManage) width=pane1Width+buttonLen*6;
+        if(isManage) width=pane1Width+buttonLen*5;
         int height=buttonLen*3/2;
         this.setPreferredSize(new Dimension(width, height));
 
@@ -38,13 +38,13 @@ public class CategoryLabelPane extends JPanel{
         pane1.add(nameField);
         add(pane1);
 
-        if(isManage) setButtons(buttonLen,al);
+        if(isManage) setButtons(height,buttonLen,al);
         else colorButton.setColor(Color.BLUE);
     }
-    public void setButtons(int buttonLen,ActionListener al)
+    public void setButtons(int pane2Height,int buttonLen,ActionListener al)
     {
         pane2=new JPanel();
-        pane2.setPreferredSize(new Dimension(buttonLen*5,buttonLen));
+        pane2.setPreferredSize(new Dimension(buttonLen*4,pane2Height));
 
         confirmButton.setForeground(Color.BLUE);
         cancelButton.setForeground(Color.DARK_GRAY);
@@ -54,7 +54,7 @@ public class CategoryLabelPane extends JPanel{
         cancelButton.addActionListener(al);
         deleteButton.addActionListener(al);
 
-        Dimension buttonDimension=new Dimension(buttonLen,buttonLen);
+        Dimension buttonDimension=new Dimension(buttonLen*6/5,buttonLen);
         confirmButton.setPreferredSize(buttonDimension);
         cancelButton.setPreferredSize(buttonDimension);
         deleteButton.setPreferredSize(buttonDimension);

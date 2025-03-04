@@ -2,6 +2,7 @@ package GUIdelegate.delegate;
 
 import GUIdelegate.component.big.*;
 import GUIdelegate.component.mid.CreateLabelDialog;
+import GUIdelegate.component.mid.ManageLabelDialog;
 import GUIdelegate.component.small.NoteMenu;
 import model.ArchiveDirectory;
 import model.CategoryLabel;
@@ -49,6 +50,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
     private JFileChooser fileChooser;
 
     private CreateLabelDialog createLabelDialog;
+    private ManageLabelDialog manageLabelDialog;
 
     private boolean createFolder()
     {
@@ -75,6 +77,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         setupFrame();
         archiveDirectory=new ArchiveDirectory(windowPanel.getTaskQuadrant());
         noteDialog.addLabels(archiveDirectory.getLabelList());
+        manageLabelDialog.addLabels(archiveDirectory.getLabelList());
     }
 
     public void setPanelSize()
@@ -95,6 +98,7 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
 
         noteDialog=new NoteDialog(this,windowPanelWidth/2,windowPanelHeight*3/4);
         createLabelDialog=new CreateLabelDialog(windowPanelWidth/2,windowPanelHeight/4,this);
+        manageLabelDialog=new ManageLabelDialog(windowPanelWidth/2,windowPanelHeight);
     }
 
     public void setupFrame()
@@ -201,6 +205,10 @@ public class IntegrationDelegate implements ActionListener, PropertyChangeListen
         else if(topMenuBar.isCreateLabel(srcObject))
         {
             createLabelDialog.setVisible(true);
+        }
+        else if(topMenuBar.isManageLabel(srcObject))
+        {
+            manageLabelDialog.setVisible(true);
         }
         else if(createLabelDialog.isConfirmButton(srcObject))
         {

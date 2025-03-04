@@ -42,4 +42,5 @@ public class TopMenuBar extends JMenuBar{
         return loadDirectory.equals(o);
     }
     public boolean isCreateLabel(Object o){return createLabel.equals(o);}
+    public boolean isManageLabel(Object o){return manageLabel.equals(o);}
 }
